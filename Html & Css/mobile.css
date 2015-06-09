@@ -1,0 +1,296 @@
+* {margin:0; padding:0;}
+body {
+font-family:'Maven Pro';
+color:white;
+background:url('pattern.png');
+}
+li {
+list-style:none;
+}
+a {
+text-decoration:none;
+color:black;
+}
+.textbox {
+width:250px;
+background:white;
+outline:none;
+padding:10px;
+border:none;
+box-shadow:0 0 2px #424242;
+margin:2px;
+}
+.buttons {
+width:80px;
+padding:10px;
+margin:2px;
+outline:white;
+border:none;
+color:white;
+}
+header {
+height:50px;
+width:100%;
+background:linear-gradient(white,lightgray);
+box-shadow: 0 0 8px #424242;
+}
+#logo {
+height:40px;
+float:left;
+padding:3px 0;
+margin-left:1%;
+}
+.navmenu {
+display:none;
+width: 160px;
+position: absolute;
+font-size: 15px;
+right: 10px;
+font-weight: 500;
+top: 51px;
+height: 180px;
+background:#125e90;
+}
+.menu-align {
+margin-top:13px;
+}
+.navmenu  li{
+padding: 4px 16px;
+font-size: 16px;
+}
+.navmenu  li a {
+color:#ffffff;
+}
+.menu-btn{
+height:100%;
+outline:none;
+background:transparent;
+border:none;
+float:right;
+}
+.menu-icon {
+display:block;
+width:90px;
+height:50%;
+font-size:15px;
+}
+.menu-icon img{
+height:100%;
+vertical-align:middle;
+}
+.menu-icon:active .navmenu, .menu-icon:hover .navmenu{
+display:block;
+}
+.loginpanel, .signuppanel {
+display:none;
+}
+
+.container {
+width:100%;
+}
+.loaddetails, .truckdetails {
+width: 100%;
+height: 400px;
+background:rgba(0,0,0,.8);
+margin-top: 20px;
+}
+.slider {
+width:100%;
+height:325px;
+}
+.loaddetailpane, .truckdetailpane {
+padding:2% 5%;
+display:none;
+}
+.first-slide {
+display:block;
+}
+.loaddetailpane li, .truckdetailpane li {
+padding-bottom:3%;
+height:20px;
+}
+#profilepic {
+height:60px;
+vertical-align:middle;
+background:url('proholder.png') no-repeat;
+background-size:cover;
+margin-right: 11px;
+}
+.nameplace a:hover {
+color:#C24C0F;
+}
+.nameplace a {
+color:white;
+font-size: 17px;
+font-weight: 700;
+}
+.nameplace {
+height:60px;
+padding:30px 20px;
+}
+.infos {
+padding:4px 10px;
+color:white;
+font-size: 17px;
+font-weight: 700;
+}
+.button-opt {
+margin-top:0;
+}
+.button-option {
+padding:4px 15px;
+font-size:13px;
+font-weight:700;
+background:transparent;
+outline:none;
+border:2px solid white;
+color:white;
+}
+.view-more-btn {
+float:right;
+padding-right:25px;
+}
+.find-more-btn {
+float:left;
+padding-left:25px;
+}
+.button-option:hover {
+background:#ffffff;
+color:#242424;
+cursor:pointer;
+}
+
+@media screen and (min-width:1000px){
+
+header {
+height:50px;
+width:100%;
+background:linear-gradient(white,lightgray);
+box-shadow: 0 0 8px #424242;
+}
+#logo {
+height:40px;
+float:left;
+padding:3px 0;
+margin-left:1%;
+}
+.navmenu {
+display:none;
+width: 160px;
+position: absolute;
+font-size: 15px;
+right: 10px;
+font-weight: 500;
+top: 51px;
+height: 180px;
+background:#125e90;
+}
+.menu-align {
+margin-top:13px;
+}
+.navmenu  li{
+padding: 4px 16px;
+font-size: 16px;
+}
+.navmenu  li a {
+color:#ffffff;
+}
+.menu-btn{
+height:100%;
+outline:none;
+background:transparent;
+border:none;
+float:right;
+}
+.menu-icon {
+display:block;
+width:90px;
+height:100%;
+font-size:15px;
+}
+.menu-icon img{
+height:100%;
+vertical-align:middle;
+}
+.menu-icon:active .navmenu, .menu-icon:hover .navmenu{
+display:block;
+}
+.loginpanel, .signuppanel {
+display:none;
+}
+.container {
+width:100%;
+}
+.loaddetails, .truckdetails {
+width: 400px;
+height: 400px;
+background:rgba(0,0,0,.8);
+float:left;
+margin:3% 3%;
+}
+.nameplace {
+height:60px;
+padding:30px 20px;
+}
+.slider {
+width:100%;
+height:325px;
+}
+.loaddetailpane, .truckdetailpane {
+padding:2% 5%;
+display:none;
+}
+.first-slide {
+display:block;
+}
+.loaddetailpane li, .truckdetailpane li {
+padding-bottom:3%;
+height:20px;
+}
+#profilepic {
+height:60px;
+vertical-align:middle;
+background:url('proholder.png') no-repeat;
+background-size:cover;
+margin-right: 11px;
+}
+.nameplace a:hover {
+color:#C24C0F;
+}
+.nameplace a {
+color:white;
+font-size: 17px;
+font-weight: 700;
+}
+.infos {
+padding:4px 10px;
+color:white;
+font-size: 17px;
+font-weight: 700;
+}
+.button-opt {
+margin-top:0;
+}
+.find-more-btn {
+float:left;
+padding-left:25px;
+}
+.button-option {
+padding:4px 15px;
+font-size:13px;
+font-weight:700;
+background:transparent;
+outline:none;
+border:2px solid white;
+color:white;
+}
+.button-option:hover {
+background:#ffffff;
+color:#242424;
+cursor:pointer;
+}
+.view-more-btn {
+float:right;
+padding-right:25px;
+}
+}

@@ -1,0 +1,331 @@
+* {margin:0; padding:0;}
+body {
+font-family:'Maven Pro';
+color:white;
+background:url('pattern.png');
+}
+li {
+list-style:none;
+}
+a {
+text-decoration:none;
+color:black;
+}
+::-webkit-input-placeholder {
+   color: black;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: black;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: black;  
+}
+
+:-ms-input-placeholder {  
+   color: black;  
+}
+.textbox {
+width:250px;
+background:white;
+outline:none;
+padding:10px;
+border:none;
+box-shadow:0 0 2px #424242;
+margin:2px;
+}
+.buttons {
+width:80px;
+padding:10px;
+margin:2px;
+outline:white;
+border:none;
+color:white;
+}
+
+header {
+height:45px;
+width:1366px;
+background:linear-gradient(white,lightgray);
+box-shadow: 0 0 8px #424242;
+}
+#logo {
+height:40px;
+float:left;
+padding:2px 0;
+margin-left:4%;
+}
+.navmenu {
+width: 700px;
+height: 100%;
+float: right;
+font-size: 15px;
+font-weight: 500;
+margin-right: 60px;
+}
+.menu-btn{
+display:none;
+}
+.navmenu  li {
+float:right;
+padding: 14px 12px;
+}
+.navmenu  li  a:hover {
+color:#006FD7;
+}
+.loginpanel {
+background:rgba(0,0,0,0.9);
+z-index:100;
+position:fixed;
+width:60%;
+height:400px;
+display:none;
+margin:5% 20%;
+}
+.loginpanel ul {
+width:274px;
+margin:10% auto;
+}
+.loginpanel ul li{
+margin:10px auto;
+}
+.signuppanel {
+background:rgba(0,0,0,0.9);
+z-index:100;
+position:fixed;
+width:60%;
+height:500px;
+display:none;
+margin:3% 20%;
+}
+.signuppanel ul {
+width:274px;
+margin:5% auto;
+}
+.signuppanel ul li{
+margin:10px auto;
+}
+.steps {
+width: 30px;
+text-align: -webkit-center;
+background: url('next.png') no-repeat;
+background-size: cover;
+font-size: 16px;
+float: left;
+height: 30px;
+margin-left: 46px;
+line-height: 28px;
+margin-bottom: 30px;
+}
+.step2, .step3 {
+display:none;
+}
+.closediv {
+float:right;
+position:absolute;
+top:0;
+right:0;
+margin-right: 11px;
+color: white;
+margin-top: 7px;
+}
+.container {
+width:1300px;
+height:600px;
+margin:0 auto;
+}
+
+
+/* Home page Styles */
+
+
+.loaddetails, .truckdetails {
+width: 400px;
+height: 400px;
+background:rgba(0,0,0,.8);
+float:left;
+margin:3% 3%;
+}
+.slider {
+width:100%;
+height:325px;
+}
+.loaddetailpane, .truckdetailpane {
+padding:2% 5%;
+display:none;
+}
+.first-slide {
+display:block;
+}
+.loaddetailpane li, .truckdetailpane li {
+padding-bottom:3%;
+height:20px;
+}
+#profilepic {
+height:60px;
+vertical-align:middle;
+background:url('proholder.png') no-repeat;
+background-size:cover;
+margin-right: 11px;
+}
+.nameplace {
+height:60px;
+padding:30px 20px;
+}
+.nameplace a:hover {
+color:#C24C0F;
+}
+.nameplace a {
+color:white;
+font-size: 17px;
+font-weight: 700;
+}
+.infos {
+padding:4px 10px;
+color:white;
+font-size: 17px;
+font-weight: 700;
+}
+.button-opt {
+margin-top:0;
+}
+.button-opt li {
+float:left;
+padding:0 25px;
+}
+.button-option {
+padding:4px 15px;
+font-size:13px;
+font-weight:700;
+background:transparent;
+outline:none;
+border:2px solid white;
+color:white;
+}
+.button-option:hover {
+background:#ffffff;
+color:#242424;
+cursor:pointer;
+}
+
+
+/* My trucks page Style */
+
+.pagepane{
+height:500px;
+width:400px;
+margin-top:20px;
+box-shadow:0 0 12px #848484;
+}
+.mytruckpane {
+background:rgba(152, 178, 202, 0.94);
+float:left;
+}
+.mypostpane{
+background:rgba(152, 178, 202, 0.94);
+float:right;
+}
+.div-header {
+width:100%;
+height:75px;
+}
+.pane-icon {
+height:50px;
+padding:10px;
+float:left;
+}
+.div-header h4 {
+padding: 23px 4px;
+float:left;
+color:black;
+}
+
+.searchbox {
+outline:none;
+border:none;
+background:transparent;
+width:150px;
+padding:7px;
+}
+.div-header .searchbox {
+margin:20px 0px 0 15px;
+float:left;
+border-bottom:2px solid #000000;
+color:white;
+}
+.div-header button {
+outline: none;
+background-color: transparent;
+border: none;
+height: 50px;
+float: left;
+border-bottom: 2px solid #000000;
+margin-top:1px;
+}
+.div-header button img {
+height: 36%;
+margin-top: 20px;
+}
+.posts {
+height:400px;
+width:380px;
+padding:10px;
+overflow-y:scroll;
+overflow-x:hidden;
+}
+.runtime-div {
+width:380px;
+height:75px;
+margin-bottom: 10px;
+}
+.runtime-details{
+font-size:14px;
+padding:2px;
+width: 245px;
+color:black;
+}
+.runtime-icon {
+height:55px;
+padding:10px;
+float:left;
+}
+.runtime-options {
+float:right;
+width: 125px;
+height: 75px;
+margin-top: -63px;
+}
+.runtime-options button {
+outline: none;
+background-color: transparent;
+border: none;
+float: left;
+height: 45px;
+margin: 17px 3px;
+font-size: 11px;
+width: 32px;
+color: #000000;
+}
+.runtime-options button img {
+padding-bottom:3px;;
+}
+::-webkit-scrollbar {
+      width: 5px;
+	  border-radius:1px;
+}
+::-webkit-scrollbar-track {
+  background-color: #D4DEE8;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-button {
+  background-color: #7D92A6;
+  height: 10px;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-corner {
+  background-color: white;
+}
