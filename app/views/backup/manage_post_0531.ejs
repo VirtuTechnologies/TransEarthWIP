@@ -1,0 +1,263 @@
+<div class="col-md-12" id="truckPostManagePage" ng-controller="truckPostManageCtrl">
+
+	<!-- PAGE HEADER -->
+	<!-- div class="page-header">
+		<h3>{{page.header}}</h3>
+		<div id="goto_home">
+			<a href="#" ng-click="gotoHome()" class="pull-right" ><span class="label label-info">Back toMy Loads</span></a>
+		</div>
+	</div -->
+
+	<div id="manage_truck_post_alert" ng-show="truckPostProcess.indicator.showAlert"></div>
+
+	<!-- FORM : YOU CAN DISABLE, HTML5 VALIDATION BY USING "novalidate" ATTRIBUTE-->
+	<form name="truckPostForm" name="truckPostForm" ng-submit="submitForm()" novalidate>
+		<div class="bs-component" id="truckManagePanel">
+			<!-- Truck Details -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							{{page.header}}
+						</div>
+						<div class="panel-body">
+							<fieldset>
+								<!-- Truck NAME -->
+								<div class="form-group-sm">
+									<label class="col-lg-3 control-label">Truck Type</label>
+									<div class="col-lg-9">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-truck"></i></span>
+											<input readonly type="text" class="form-control" name="truck_type" id="truck_type" ng-model="truckToPost.details.type"
+												   placeholder="Enter Truck Type">
+										</div>
+									</div>
+								</div>
+
+								<!-- Make -->
+								<div class="form-group-sm">
+									<label class="col-lg-3 control-label">Make</label>
+									<div class="col-lg-9">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<input readonly type="text" class="form-control" name="make" id="make" ng-model="truckToPost.details.make" placeholder="Enter Make" ng-minlength="1" ng-required="true">
+										</div>
+									</div>
+								</div>
+
+								<!-- Model -->
+								<div class="form-group-sm">
+									<label class="col-lg-3 control-label">Model</label>
+									<div class="col-lg-9">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<input readonly type="text" class="form-control" name="model" id="model" ng-model="truckToPost.details.model" placeholder="Enter Model" ng-minlength="1" ng-required="true">
+										</div>
+									</div>
+								</div>
+
+								<!-- Reg No -->
+								<div class="form-group-sm">
+									<label class="col-lg-3 control-label">Registration Number</label>
+									<div class="col-lg-9">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<input readonly type="text" class="form-control" name="regno" id="regno" ng-model="truckToPost.details.reg_no" placeholder="Enter Reg No" ng-minlength="4" ng-required="true">
+										</div>
+									</div>
+								</div>
+
+								<!-- Capacity -->
+								<div class="form-group-sm">
+									<label class="col-lg-3 control-label">Load</label>
+									<div class="col-lg-9">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<input readonly type="text" class="form-control" name="load" id="load" ng-model="truckToPost.details.load" placeholder="Enter Load in Tons" ng-required="true">
+										</div>
+									</div>
+								</div>
+
+								<!-- From -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckPostForm.source.$invalid,
+							 				'has-success' : !(truckPostForm.source.$invalid),
+					 						'has-feedback' : truckPostForm.source.$invalid}">
+									<label class="col-lg-3 control-label">From</label>
+									<div class="col-lg-9">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<!-- input type="text" class="form-control" name="source" id="source" ng-model="truckToPost.post.source"
+												   placeholder="Enter Source" ng-minlength="1" ng-maxlength="35" ng-required="true" -->
+											<google-places
+													tagId="source" tagName="source" location=truckToPost.post.source></google-places>
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckPostForm.source.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckPostForm.source.$invalid),
+					 						'has-feedback' : truckPostForm.source.$valid}"
+										   for="source">
+										</i>
+										<div ng-if="truckPostForm.source.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckPostForm.source.$invalid,
+							 				'has-success' : !(truckPostForm.source.$invalid),
+					 						'has-feedback' : truckPostForm.source.$invalid}"
+											 for="source">Source Location for Pickup
+										</div>
+									</div>
+								</div>
+
+								<!-- To -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckPostForm.destination.$invalid,
+							 				'has-success' : !(truckPostForm.destination.$invalid),
+					 						'has-feedback' : truckPostForm.destination.$invalid}">
+									<label class="col-lg-3 control-label">To</label>
+									<div class="col-lg-9">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<!-- input type="text" class="form-control" name="destination" id="destination" ng-model="truckToPost.post.destination"
+												   placeholder="Enter Destination" ng-minlength="1" ng-maxlength="35" ng-required="true" -->
+											<google-places
+													tagId="destination" tagName="destination" location=truckToPost.post.destination></google-places>
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckPostForm.destination.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckPostForm.destination.$invalid),
+					 						'has-feedback' : truckPostForm.destination.$valid}"
+										   for="destination">
+										</i>
+										<div ng-if="truckPostForm.destination.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckPostForm.destination.$invalid,
+							 				'has-success' : !(truckPostForm.destination.$invalid),
+					 						'has-feedback' : truckPostForm.destination.$invalid}"
+											 for="destination">Destination Location for Delivery
+										</div>
+									</div>
+								</div>
+
+								<!-- Available weight for load -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckPostForm.weight.$invalid,
+							 				'has-success' : !(truckPostForm.weight.$invalid),
+					 						'has-feedback' : truckPostForm.weight.$invalid}">
+									<label class="col-lg-3 control-label">Available Ton</label>
+									<div class="col-lg-9">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<input type="number" class="form-control" name="weight" id="weight" ng-model="truckToPost.post.load" placeholder="Enter Load in Tons" ng-minlength="1" ng-minlength="4" ng-required="true">
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckPostForm.weight.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckPostForm.weight.$invalid),
+					 						'has-feedback' : truckPostForm.weight.$valid}"
+										   for="weight">
+										</i>
+										<div ng-if="truckPostForm.weight.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckPostForm.weight.$invalid,
+							 				'has-success' : !(truckPostForm.weight.$invalid),
+					 						'has-feedback' : truckPostForm.weight.$invalid}"
+											 for="weight">Available weight is manadatory
+										</div>
+									</div>
+								</div>
+
+								<!-- Available Date for Pickup -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckPostForm.pickup_date.$invalid,
+							 										'has-success' : !(truckPostForm.pickup_date.$invalid),
+					 												'has-feedback' : truckPostForm.pickup_date.$invalid}">
+									<label class="col-lg-3 control-label">Date</label>
+									<div class="col-lg-9">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-import"></i></span>
+											<input class="form-control input-sm" type="text" placeholder="Available Pickup Date"
+												   id="pickupDaterange" name="pickupDaterange" class="form-control"
+												   datepicker-popup="dd-MMMM-yyyy" ng-model="truckToPost.post.pickup.date"
+												   min="minDate"
+												   is-open="pickup.opened" datepicker-options="pickup.dateOptions" ng-required="true" close-text="Close" />
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckPostForm.pickup_date.$invalid,
+							 							'glyphicon glyphicon-ok' : !(truckPostForm.pickup_date.$invalid),
+					 									'has-feedback' : truckPostForm.pickup_date.$valid}"
+										   for="pickup_date">
+										</i>
+										<div ng-if="truckPostForm.pickup_date.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckPostForm.pickup_date.$invalid,
+							 							'has-success' : !(truckPostForm.pickup_date.$invalid),
+					 									'has-feedback' : truckPostForm.pickup_date.$invalid}"
+											 for="pickup_date">Pickup Date is mandatory
+										</div>
+									</div>
+									<!-- pre>{{userForm.user_type.$valid}}</pre -->
+								</div>
+							</fieldset>
+
+							<!-- TERMS & CONDITIONS -->
+							<fieldset>
+							<!-- fieldset ng-if="truckToPost.post.destination" -->
+							<!-- fieldset ng-if="truckPostForm.$valid" -->
+								<!-- legend> Terms and Mailing </legend>
+								<div class="form-group-sm">
+									<div class="col-md-offset-3 col-md-9">
+										<div class="row">
+											<input type="checkbox" value="" name="terms" ng-model="truckProcess.indicator.tncAccepted" ng-required="true" />
+											<label>I agree with the
+												<a data-toggle="modal" href="#tcModal">Terms and Conditions</a>
+											</label>
+										</div>
+									</div>
+								</div -->
+								<div class="form-group-sm">
+									<div class="col-md-offset-3 col-md-3">
+										<!-- button type="submit" class="btn btn-success btn-sm" ng-model="button" ng-disabled="!truckProcess.indicator.tncAccepted">{{page.header}}</button -->
+										<button type="submit" class="btn btn-success btn-sm" ng-model="button">{{page.header}}</button>
+									</div>
+									<!-- div class="col-md-4">
+										<button type="button" class="btn btn-danger btn-sm" ng-click="truck={}">Clear</button>
+									</div -->
+								</div>
+								<!-- div class="form-group-sm text-danger" ng-show="!(truckProcess.indicator.tncAccepted)">
+									<div class="col-md-offset-3 col-md-9">
+										<strong>***Please Accept terms to enable login</strong>
+									</div>
+								</div -->
+
+								<!-- div class="form-group" ng-class="{ 'has-error' : userForm.terms.$invalid && (userForm.terms.$dirty || submitted)}">
+                                    <label>Accept Terms & Conditions</label>
+                                    <input type="checkbox" value="" name="terms" ng-model="user.terms" ng-required="true" />
+                                    <p ng-show="userForm.terms.$error.required && (userForm.terms.$dirty || submitted)" class="help-block">Accept terms & conditions.</p>
+                                </div -->
+							</fieldset>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="tcModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">Terms and Conditions</h4>
+			</div>
+			<div class="modal-body">
+				Terms & conditions text here
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">I Agree</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script src="manage_post.js"></script>

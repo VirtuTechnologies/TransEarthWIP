@@ -1,0 +1,196 @@
+<div class="page-header" ng-controller="loadListCtrl" ng-init="init()">
+	<div class="bs-docs-section">
+		<!-- div class="row">
+			<div class="col-lg-12">
+				<div class="well bs-component">
+					<div id="source-button" class="btn btn-primary btn-xs" style="display: block;">&lt; &gt;</div>
+				</div>
+			</div>
+		</div -->
+		<!-- div class="row">
+			<div class="col-lg-12">
+				<div class="page-header">
+					<h1 id="forms">Search Trucks</h1>
+				</div>
+			</div>
+		</div -->
+		<div class="panel panel-default">
+			<div class="panel-heading">Search Loads</div>
+			<div class="panel-body">
+				<div class="container">
+					<form id="searchLoadForm" name="searchLoadForm" role="form">
+						<div class="form-group-sm col-md-3" ng-class="{ 'has-error' : !loadPostList.filter.from.isSelected,
+										'has-success' : loadPostList.filter.from.isSelected,
+										'has-feedback' : loadPostList.filter.from.isSelected}">
+							<label class="col-lg-6 control-label" for="from_city">From:</label>
+							<div class="col-lg-12 no-padding">
+								<google-places tagId="from_city" tagName="from_city" holder="From Location" glyph="false"
+											   location=loadPostList.filter.from></google-places>
+							</div>
+						</div>
+						<div class="form-group-sm col-md-3" ng-class="{ 'has-error' : !loadPostList.filter.to.isSelected,
+										'has-success' : loadPostList.filter.to.isSelected,
+										'has-feedback' : loadPostList.filter.to.isSelected}">
+							<label class="col-lg-6 control-label" for="to_city">To:</label>
+							<div class="col-lg-12 no-padding">
+								<google-places tagId="to_city" tagName="to_city" holder="To Location" glyph="false"
+											   location=loadPostList.filter.to></google-places>
+							</div>
+						</div>
+						<div class="form-group-sm col-md-3">
+							<label for="material">Material</label>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-cube"></i></span>
+								<select selectpicker id="material" name="material"
+										ng-model="loadPostList.filter.material"
+										ng-options="material for material in materialList"
+										class="form-control col-lg-12" data-dropup-auto="false">
+									<option value="">Choose one</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group-sm col-md-2">
+							<!-- label class="col-md-9"> On</label -->
+							<div class="col-md-4 no-padding">
+								<input type="radio" ng-change="resetSearchCategory()"
+									   ng-model="loadPostList.filter.dateRange"
+									   name="optionsRadios" id="optionsRadios1" value=1>On
+							</div>
+							<div class="col-md-4 no-padding">
+								<input type="radio" ng-change="resetSearchCategory()"
+									   ng-model="loadPostList.filter.dateRange"
+									   name="optionsRadios" id="optionsRadios2" value=2 selected>After
+							</div>
+							<div class="col-md-12" ng-if="loadPostList.filter.dateRange!=null">
+								<input class="form-control input-sm" type="text" ng-change="resetSearchCategory()" placeholder="Available Date"
+									   id="daterange" name="daterange" class="form-control" datepicker-popup="dd-MMMM-yyyy"
+									   ng-model="loadPostList.filter.dt" is-open="opened"
+									   min="minDate"
+									   datepicker-options="loadPostList.dateOptions" ng-required="true" close-text="Close" />
+								<!-- span class="glyphicon error" ng-show="truckListForm.daterange.$error.required">*</span -->
+							</div>
+						</div>
+						<div class="form-group-sm col-md-1" ng-if="loadPostList.filter.dateRange!=null">
+							<label class="col-md-12">&nbsp;</label>
+							<button type="button" ng-click="searchLoads()"
+									class="btn btn-success btn-sm" id="search">{{loadPostList.searchButtonName}}</button>
+						</div>
+						<!-- button type="submit" class="btn btn-default">Submit</button -->
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="bs-docs-section" id="search_list" ng-if="loadPostList.searchTriggered">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="bs-component">
+					<div class="panel panel-success">
+						<div class="panel-heading">
+							<h3 class="panel-title">Load List</h3>
+							<!-- div collapse-section></div -->
+						</div>
+						<div class="panel-body">
+							<div id="loadListMessage" ng-show="!loadPostList.listShow || loadPostList.messageAvailable">
+								<div id="loadlist_alert" ></div>
+							</div>
+							<div ng-show="loadPostList.listShow" class="gridMaxStyle" ng-grid="loadPostList.gridOptions"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<!-- Load Details Modal -->
+<script type="text/ng-template" id="loadDetailModal.html">
+	<!-- div ng-controller="LoadDetailModalCtrl" -->
+	<!-- div class="modal-dialog">
+		<div class="modal-content" -->
+	<div class="modal-header">
+		<h3 class="modal-title">Load Information</h3>
+	</div>
+	<div class="modal-body">
+		<div id="load_detail_alert"></div>
+		<div class="row">
+			<!-- div class="col-sm-4">
+				<div class="col-xs-5 col-sm-12">
+					<h4>Owner Details</h4>
+					<ul class="profile-details">
+						<li>
+							<div><i class="fa fa-user"></i> Name</div>
+							{{loadModal.owner.name}}
+						</li>
+						<li>
+							<div><i class="fa fa-map-marker"></i> Address</div>
+							<p class="nopadding">{{loadModal.owner.address.line1}}</p>
+							<p class="nopadding" ng-if="showText(loadModal.owner.address.line2)">{{loadModal.owner.address.line2}}</p>
+							<p class="nopadding">{{loadModal.owner.address.city}}</p>
+							<p class="nopadding">{{loadModal.owner.address.state}}</p>
+							<p class="nopadding">{{loadModal.owner.address.country}}</p>
+							<p class="nopadding">{{loadModal.owner.address.pincode}}</p>
+						</li>
+						<li>
+							<div><i class="fa fa-phone"></i> Contact</div>
+							{{loadModal.owner.contact}}
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="col-xs-5 col-sm-12">
+					<h4>Company Details</h4>
+					<ul class="profile-details">
+						<li>
+							<div><i class="fa fa-user"></i> Name</div>
+							{{loadModal.company.name}}
+						</li>
+						<li>
+							<div><i class="fa fa-map-marker"></i> Address</div>
+							<p class="nopadding">{{loadModal.company.address.line1}}</p>
+							<p class="nopadding" ng-if="showText(loadModal.company.address.line2)">{{loadModal.company.address.line2}}</p>
+							<p class="nopadding">{{loadModal.company.address.city}}</p>
+							<p class="nopadding">{{loadModal.company.address.state}}</p>
+							<p class="nopadding">{{loadModal.company.address.country}}</p>
+							<p class="nopadding">{{loadModal.company.address.pincode}}</p>
+						</li>
+						<li>
+							<div><i class="fa fa-phone"></i> Contact</div>
+							{{loadModal.company.contact}}
+						</li>
+					</ul>
+				</div>
+			</div -->
+			<div class="col-sm-12">
+				<div class="col-xs-6 col-sm-6">
+					<!-- h4>Load Details</h4 -->
+					<ul class="profile-details">
+						<li>
+							<div><i class="fa fa-suitcase"></i> Quantity/ Weight</div>
+							{{loadModal.load.quantity}}
+						</li>
+						<li>
+							<div><i class="fa fa-cube"></i> Material</div>
+							{{loadModal.load.material.type}} <br/>
+						</li>
+					</ul>
+				</div>
+				<div class="col-xs-6 col-sm-6">
+					<ul class="profile-details">
+						<li>
+							<div><i class="fa fa-map-marker"></i> Pickup City</div>
+							{{loadModal.load.pickup.address.city}} <br/>
+						</li>
+						<li>
+							<div><i class="fa fa-map-marker"></i> Delivery City</div>
+							{{loadModal.load.delivery.address.city}}
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script src="load.js"></script>

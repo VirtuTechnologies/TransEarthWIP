@@ -1,0 +1,74 @@
+#drop{
+    border:2px dashed #bbb;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+    padding:25px;
+    text-align:center;
+    font:20pt bold,"Vollkorn";color:#bbb
+}
+#b64data{
+    width:100%;
+}
+#menu {
+
+    border:#009ACD 2.3px solid;
+    position:relative;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(247, 240, 240)), to(rgb(223, 217, 217)));
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(247, 240, 240)), to(rgb(224, 219, 219)));
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(247, 240, 240)), to(rgb(226, 220, 220)));
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(247, 240, 240)), to(rgb(228, 222, 222)));
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(247, 240, 240)), to(rgb(230, 224, 224)));
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(247, 240, 240)), to(rgb(231, 225, 225)));
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(247, 240, 240)), to(rgb(233, 227, 227)));
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(247, 240, 240)), to(rgb(235, 229, 229)));
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(247, 240, 240)), to(rgb(236, 230, 230)));
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(247, 240, 240)), to(rgb(238, 232, 232)));
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(247, 240, 240)), to(rgb(240, 234, 234)));
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(247, 240, 240)), to(rgb(241, 235, 235)));
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(247, 240, 240)), to(rgb(243, 237, 237)));
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(247, 240, 240)), to(rgb(245, 239, 239)));
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(247, 240, 240)), to(rgb(247, 240, 240)));
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(247, 240, 240)), to(rgb(248, 242, 242)));
+    list-style: none;
+    margin: -33px -50px auto auto;
+    width: 900px;
+    height: 45px;
+    padding: 0px 20px 0px 20px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    background: #666666;
+    background: -moz-linear-gradient(top, #000, #999);
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F7F0F0), to( #BEB6B6));
+    box-shadow: inset 1px 1px 10px #FFFFFF;
+    -moz-box-shadow: inset 1px 1px 10px #FFFFFF;
+    -webkit-box-shadow: inset 1px 1px 10px #FFFFFF;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(245, 232, 232)), to(rgb(148, 169, 172)));
+}
+
+
+#menu li /*Styling the li part of the menu*/
+{
+    float:left;
+    padding:4px 10px 4px 10px;
+    display: block;
+    position:relative;
+    text-align:center;
+    margin-right:30px;
+    margin-top:7px;
+    border:none;
+
+
+}
+
+#menu li a {
+    text-decoration: none;
+    color: Black;
+    text-shadow: 1px 1px 10px #C4BDB7;
+}
+#menu li:hover a /*Styling the link part of the menu li in hover state*/
+{
+    color:#5F5757;
+    text-shadow:1px 1px 10px #CCC;
+}

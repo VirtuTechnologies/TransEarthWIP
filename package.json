@@ -1,0 +1,26 @@
+{
+  "name": "TransEarth",
+  "version": "0.0.1",
+  "author": "",
+  "description": "Transport Sample",
+  "contributors": [{
+    "org": "Test"
+  }],
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ejs": "*",
+    "express": "3.4.7",
+    "mongodb": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "mongoose": "~3.8.3",
+    "debug": "*",
+    "bcrypt-nodejs": "*",
+    "sanitizer": "*",
+    "string": "*",
+    "csvtojson": "*"
+  }
+}

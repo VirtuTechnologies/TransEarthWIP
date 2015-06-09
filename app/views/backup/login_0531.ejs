@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="TransEarthApp">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+		<meta name="description" content="" />
+		<meta name="author" content="" />
+		<!--[if IE]>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<![endif]-->
+		<title>Free Responsive Admin Theme - ZONTAL</title>
+		<!-- BOOTSTRAP CORE STYLE  -->
+		<link href="bootstrap/css/bootstrap.css" rel="stylesheet" />
+		<link href="css/bootswatch.less" rel="stylesheet" />
+		<!-- FONT AWESOME ICONS  -->
+		<link href="images/icons/css/font-awesome.css" rel="stylesheet" />
+		<link type="text/css" href="bootstrap/css/bootstrap-select.min.css" rel="stylesheet"/>
+
+		<!-- CUSTOM STYLE  -->
+		<link href="angular/css/ng-grid.css" rel="stylesheet" type="text/css" />
+		<link href="css/transEarthStyle.css" rel="stylesheet" />
+		<!-- HTML5 Shiv and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		<script src="scripts/html5shiv.js"></script>
+		<script src="scripts/respond.min.js"></script>
+		<![endif]-->
+		<!-- Google Places API -->
+		<!-- script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+
+		<script src="maps.js"></script -->
+
+	</head>
+	<body>
+		<div class="navbar navbar-default transearth-header navbar-fixed-top">
+			<div class="container" ng-controller="coreController" >
+				<div class="navbar-header">
+					<a href="../"><img src="images/transearth.png" height="70px" style="float:left; clear:right; margin-left:20px;  margin-top:5px; position:static"></a>
+					<!-- a href="../" class="navbar-brand">
+						<span class="fa-stack">
+  							<i class="fa fa-truck fa-2x pull-left">TransEarth</i>
+						</span>
+					</a -->
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+				<div class="navbar-collapse collapse" id="navbar-main">
+					<ul class="nav navbar-nav navbar-right">
+						<!-- li class="dropdown" ng-if="core.loggedIn">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes" aria-expanded="false">Truck Owners <span class="caret"></span></a>
+							<ul class="dropdown-menu" aria-labelledby="themes">
+								<li><a href="#">Home Page</a></li>
+								<!-- li class="divider"></li ->
+								<li><a href="#" data-toggle="modal" data-target="#addtruck">Add Truck</a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes" aria-expanded="false">Load Owners <span class="caret"></span></a>
+							<ul class="dropdown-menu" aria-labelledby="themes">
+								<li><a href="#">Home Page</a></li>
+								<!-- li class="divider"></li ->
+								<li><a href="#" data-toggle="modal" data-target="#addtruck">Add Load</a></li>
+							</ul>
+						</li -->
+						<li><a href="/#truckList">Search Trucks</a></li>
+						<li><a href="/#loadList">Search Load</a></li>
+						<!-- li ng-if="!core.loggedIn">
+							<a href="/TransEarth/login" >
+								<button type="button" id="btn" class="btn btn-primary">
+									Login
+								</button>
+							</a>
+							<!-- button type="button" id="btn" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
+								Login
+							</button ->
+							<!-- form class="navbar-form navbar-left" role="search">
+								<a href="#" ng-click="signin()">
+									<button type="button" id="btn" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+										Login
+									</button>
+								</a>
+							</form ->
+						</li>
+						<li class="dropdown" ng-if="core.loggedIn">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes" aria-expanded="false"><i class="caret fa fa-user fa-3-4"></i></a>
+							<ul class="dropdown-menu" aria-labelledby="themes">
+								<li><a href="/TransEarth/logout">Logout</a></li>
+							</ul>
+
+						</li -->
+						<!-- li><!-- a href="#myModal" role="button" class="btn" data-toggle="modal">Login</a --></li -->
+					</ul>
+				</div>
+			</div>
+		</div>
+
+        <div class="container" ng-controller="loginCtrl" ng-init="error = '<%= JSON.stringify(error) %>';">
+			<div class="main">
+				<div class="user">
+					<img src="images/user.png" alt="">
+				</div>
+				<div class="login">
+					<div class="inset">
+						<form class="form-horizontal" method="post" name="loginForm" action="/TransEarth/login">
+						<!-- form class="form-horizontal" method="post" name="loginForm" id="loginStyle" -->
+							<div>
+								<span><label>Username</label></span>
+								<span><input type="text" name="username" ng-model="user.username" class="input-sm"></span>
+							</div>
+							<div>
+								<span><label>Password</label></span>
+								<span><input type="password" name="password" ng-model="user.password" class="password input-sm"></span>
+							</div>
+							<div class="sign">
+								<div class="submit">
+									<!-- input type="submit" ng-click="transEarthLogin()" value="LOGIN"  -->
+									<!-- a href="/#index" class="btn btn-primary">Login</a -->
+									<button type="submit" class="btn btn-primary" ng-model="button"
+											style="width: 91%;">Login</button>
+								</div>
+								<!-- span class="forget-pass pull-right">
+									<a href="#">Forgot Password?</a>
+								</span -->
+								<span class="forget-pass">
+									<a href="/TransEarth/Signup">Sigup</a>
+								</span>
+								<div class="clear"> </div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-----//end-main-->
+			</div>
+		</div>
+
+		<footer class="navbar navbar-info navbar-fixed-bottom">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+
+						<!-- ul class="list-unstyled">
+							<li class="pull-right"><a href="#top">Back to top</a></li>
+						</ul -->
+						<span class="label label-info">
+							Made by Virtu Technologies</a>. Contact <a style="color:#85d0a1;" href="mailto:dhinesh@virtu.com">Dhinesh<script cf-hash="f9e31" type="text/javascript">
+									/* <![CDATA[ */!function(){try{var t="currentScript"in document?document.currentScript:function(){for(var t=document.getElementsByTagName("script"),e=t.length;e--;)if(t[e].getAttribute("cf-hash"))return t[e]}();if(t&&t.previousSibling){var e,r,n,i,c=t.previousSibling,a=c.getAttribute("data-cfemail");if(a){for(e="",r=parseInt(a.substr(0,2),16),n=2;a.length-n;n+=2)i=parseInt(a.substr(n,2),16)^r,e+=String.fromCharCode(i);e=document.createTextNode(e),c.parentNode.replaceChild(e,c)}}}catch(u){}}();/* ]]> */</script></a>
+						</span>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<!-- script src="assets/js/jquery-1.11.1.js"></script -->
+		<script src="scripts/jquery-1.9.1.min.js"></script>
+		<script src="scripts/jquery-ui-1.10.1.custom.min.js"></script>
+		<!-- BOOTSTRAP SCRIPTS  -->
+		<!-- script src="assets/js/bootstrap.js"></script -->
+		<script src="bootstrap/js/bootstrap-select.min.js"></script>
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<!-- Angular -->
+		<script src="angular/angular.min.js"></script>
+		<script src="angular/angular-route.min.js"></script>
+		<script src="angular/ui-bootstrap-tpls-0.10.0.js"></script>
+		<script src="angular/angular-bootstrap-select.min.js"></script>
+		<!-- Load Date & Time picker plugins -->
+		<script src="bootstrap/js/daterangepicker.js"></script>
+		<script src="angular/angular-daterangepicker.js"></script>
+		<!-- Load Angular ng-grid -->
+		<script src="angular/ng-grid.debug.js"></script>
+		<!-- Load Angular ng-table -->
+		<script src="angular/ng-table.js"></script>
+		<script src="scripts/alert.js"></script>
+		<script src="core.js"></script>
+	</body>
+</html>

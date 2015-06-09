@@ -1,0 +1,26 @@
+/*Body Styles starts*/
+	.overlay{display: block; filter: alpha(opacity=80); background-color: white;}
+	.bootstrap-select {width: 92%;}
+	.bootstrap-select button.btn{width: 100%;}
+	.jumbotron .container{max-width: 97%;}
+	.dashBoardBody .dashBoardBodyContainer .inlineTb .fixedTb .fixedTbWrapper2 thead th{height: 44px;}
+
+	.nav-tabs > li.active > a,
+	.nav-tabs > li.active > a:hover,
+	.nav-tabs > li.active > a:focus {
+		background: rgb(0,124,194);
+	}
+
+	.nav-tabs > li > a {
+		background-color: #717171;
+	}
+	.nav-tabs > li > a:hover {
+		background-color: #717171;
+	}
+
+/*Body Styles ends*/
+/*Footer Styles starts*/
+	.ie8Foot {/*background-color: rgb(5, 76, 103);*/ background-color: #f5f3f3;/*color: white;*/ height: 30px;}
+	.ie8Foot .container{line-height: 30px; vertical-align: middle;}
+	.ie8Foot .row {line-height: 28px;vertical-align: middle;}
+/*Footer Styles ends*/

@@ -1,0 +1,21 @@
+ <!--Start: Metrics File Upload Styles-->
+        
+        
+        <style>
+            .header-link {
+                text-decoration: none;
+                color: white;
+            }
+            #drop{
+                border:2px dashed #9A9A9A;
+                -moz-border-radius:5px;
+                -webkit-border-radius:5px;
+                border-radius:5px;
+                padding:25px;
+                text-align:center;
+                font:small-caption;
+                color:gray;
+            }
+           
+        </style>
+<!--End: Metrics File Upload Styles-->

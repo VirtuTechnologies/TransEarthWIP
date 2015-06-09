@@ -1,0 +1,334 @@
+* {margin:0; padding:0;}
+body {
+    font-family:'Maven Pro';
+    color:white;
+}
+li {
+    list-style:none;
+}
+a {
+    text-decoration:none;
+    color:black;
+}
+.textbox {
+    width:250px;
+    background:white;
+    outline:none;
+    padding:10px;
+    border:none;
+    box-shadow:0 0 2px #424242;
+    margin:2px;
+}
+.buttons {
+    width:80px;
+    padding:10px;
+    margin:2px;
+    outline:white;
+    border:none;
+    color:white;
+}
+header {
+    height:45px;
+    width:100%;
+    background:linear-gradient(white,lightgray);
+    box-shadow: 0 0 8px #424242;
+}
+
+@media screen and (min-width:800px){
+    body {
+        background:url('/TransEarth/images/pattern.png');
+    }
+    header {
+        height:45px;
+        width:100%;
+        background:linear-gradient(white,lightgray);
+        box-shadow: 0 0 8px #424242;
+    }
+    #logo {
+        height:40px;
+        float:left;
+        padding:2px 0;
+        margin-left:4%;
+    }
+    .navmenu {
+        width:45%;
+        height:100%;
+        float:right;
+        font-size: 15px;
+        font-weight: 500;
+    }
+    .navmenu  li {
+        float:left;
+        padding: 14px 4%;
+    }
+    .navmenu  li  a:hover {
+        color:#006FD7;
+    }
+    .truck-owner {
+        display:none;
+    }
+    .load-owner {
+        display:none;
+    }
+    .loginpanel {
+        background:rgba(0,0,0,0.9);
+        z-index:100;
+        position:fixed;
+        width:60%;
+        height:400px;
+        display:none;
+        margin:5% 20%;
+    }
+    .loginpanel ul {
+        width:274px;
+        margin:10% auto;
+    }
+    .loginpanel ul li{
+        margin:10px auto;
+    }
+    .signuppanel {
+        background:rgba(0,0,0,0.9);
+        z-index:100;
+        position:fixed;
+        width:60%;
+        height:500px;
+        display:none;
+        margin:3% 20%;
+    }
+    .signuppanel ul {
+        width:274px;
+        margin:5% auto;
+    }
+    .signuppanel ul li{
+        margin:10px auto;
+    }
+    .steps {
+        width: 30px;
+        text-align: -webkit-center;
+        background: url('/TransEarth/images/next.png') no-repeat;
+        background-size: cover;
+        font-size: 16px;
+        float: left;
+        height: 30px;
+        margin-left: 46px;
+        line-height: 28px;
+        margin-bottom: 30px;
+    }
+    .step2, .step3 {
+        display:none;
+    }
+    .closediv {
+        float:right;
+        position:absolute;
+        top:0;
+        right:0;
+        margin-right: 11px;
+        color: white;
+        margin-top: 7px;
+    }
+    .container {
+        width:100%;
+        height:90%;
+    }
+    .loaddetails, .truckdetails {
+        width: 400px;
+        height: 400px;
+        background:rgba(0,0,0,.8);
+        float:left;
+        margin:3% 3%;
+    }
+    .slider {
+        width:100%;
+        height:325px;
+    }
+    .truckdetailpane {
+        padding:2% 5%;
+    }
+    .loaddetailpane {
+        padding:2% 5%;
+        /*display:none;*/
+    }
+    .first-slide {
+        display:block;
+    }
+    .loaddetailpane li, .truckdetailpane li {
+        padding-bottom:3%;
+        height:20px;
+    }
+
+    .slide-frame {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .wave-enter-setup, .wave-leave-setup {
+        -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
+        -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+        -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+        transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
+        position:relative;
+        display:table;
+        float:left;
+    }
+
+    .wave-enter-setup {
+        left:100%;
+    }
+
+    .wave-enter-start {
+        left:0;
+    }
+
+    .wave-leave-setup {
+        left:0%;
+    }
+
+    .wave-leave-setup.wave-leave-start {
+        left:-100%;
+    }
+
+    .floatNone{ clear:both; position:relative;}
+
+    .my-special-animation.ng-enter {
+        opacity : 0;
+    }
+    .my-special-animation.ng-leave {
+        opacity : 0;
+    }
+    .my-special-animation.ng-enter.ng-enter-active {
+        opacity : 1;
+        width: 100px;
+        height: 100px;
+        background: red;
+        position: relative;
+        -webkit-animation: myfirst 5s infinite; /* Chrome, Safari, Opera */
+        -webkit-animation-direction: alternate; /* Chrome, Safari, Opera */
+        animation: myfirst 5s;
+        animation-direction: alternate;
+    }
+
+    /* Chrome, Safari, Opera */
+    @-webkit-keyframes myfirst {
+        0%   {background: red; left: 0px; top: 0px;}
+        25%  {background: yellow; left: 200px; top: 0px;}
+        50%  {background: blue; left: 200px; top: 200px;}
+        75%  {background: green; left: 0px; top: 200px;}
+        100% {background: red; left: 0px; top: 0px;}
+    }
+
+    @keyframes myfirst {
+        0%   {background: red; left: 0px; top: 0px;}
+        25%  {background: yellow; left: 200px; top: 0px;}
+        50%  {background: blue; left: 200px; top: 200px;}
+        75%  {background: green; left: 0px; top: 200px;}
+        100% {background: red; left: 0px; top: 0px;}
+    }
+
+    .switch {
+        position: relative;
+    }
+
+    .switch > div {
+        width: 655px;
+        display: inline-block;
+        position: absolute;
+    }
+    .animate-enter,
+    .animate-leave
+    {
+        -webkit-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+        -moz-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+        -ms-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+        -o-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+        transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    }
+
+    .animate-enter {
+        left: 100%;
+    }
+    .animate-enter.animate-enter-active {
+        left: 0;
+    }
+
+    .animate-leave {
+        left: 0;
+    }
+    .animate-leave.animate-leave-active{
+        left: -100%;
+    }
+
+    #profilepic {
+        height:60px;
+        vertical-align:middle;
+        background:url('/TransEarth/images/proholder.png') no-repeat;
+        background-size:cover;
+        margin-right: 11px;
+    }
+    .nameplace a:hover {
+        color:#C24C0F;
+    }
+    .nameplace a {
+        color:white;
+        font-size: 17px;
+        font-weight: 700;
+    }
+    .infos {
+        padding:4px 10px;
+        color:white;
+        font-size: 17px;
+        font-weight: 700;
+    }
+    .insert-enter {
+        background-color: red;
+        animation-name: example;
+        animation-duration: 4s;
+    }
+    .insert-enter.insert-enter-active {
+        -webkit-transform:scale(1);
+        transform:scale(1);
+        transition-delay:500ms;
+    }
+    .insert-transition-delay-1 {
+        -webkit-transition-delay:1000ms;
+        transition-delay:1000ms;
+    }
+    .insert-transition-delay-2 {
+        -webkit-transition-delay:2000ms;
+        transition-delay:2000ms;
+    }
+    .insert-transition-delay-3 {
+        -webkit-transition-delay:3000ms;
+        transition-delay:3000ms;
+    }
+    .insert-transition-delay-4 {
+        -webkit-transition-delay:4000ms;
+        transition-delay:4000ms;
+    }
+
+    @keyframes example {
+        from {background-color: red;}
+        to {background-color: yellow;}
+    }
+    .button-opt {
+        margin-top:0;
+    }
+    .button-opt li {
+        float:left;
+        padding:0 25px;
+    }
+    .button-option {
+        padding:4px 15px;
+        font-size:13px;
+        font-weight:700;
+        background:transparent;
+        outline:none;
+        border:2px solid white;
+        color:white;
+    }
+    .button-option:hover {
+        background:#ffffff;
+        color:#242424;
+        cursor:pointer;
+    }
+}

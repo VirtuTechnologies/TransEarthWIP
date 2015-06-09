@@ -1,0 +1,302 @@
+<div class="col-md-12" id="truckManagePage" ng-controller="truckManageCtrl" ng-init="init()">
+
+	<!-- PAGE HEADER -->
+	<div class="page-header">
+		<h3>{{page.header}}</h3>
+		<div id="goto_home">
+			<!-- a href="/TransEarth/truck_owner_home" class="btn btn-primary btn-sm">Back to Home</a -->
+			<!-- a href="#" ng-click="gotoHome()" class="pull-right" ><span class="label label-info">Go Back Home</span></a -->
+			<a href="#" ng-click="gotoAddTrucksPage()" class="pull-right" ><span class="badge">Add Multiple Trucks</span></a>
+			<a href="#" ng-click="gotoHome()" class="pull-right" ><span class="badge">Go Back Home</span></a>
+		</div>
+	</div>
+
+	<div id="manage_truck_alert" ng-show="truckProcess.indicator.showAlert"></div>
+
+	<div>
+		<!-- FORM : YOU CAN DISABLE, HTML5 VALIDATION BY USING "novalidate" ATTRIBUTE-->
+		<!--div ng-style="{width : width}" class="stepwizard col-md-offset-3">
+			<div class="stepwizard-row setup-panel">
+				<div class="stepwizard-step">
+					<a href="#step-1" type="button" class="btn btn-primary btn-circle">1</a>
+					<p>Truck</p>
+				</div>
+			</div>
+		</div -->
+
+		<form id="truckForm" name="truckForm" ng-submit="submitForm()" novalidate>
+			<div class="row setup-content" id="step-1">
+				<div class="col-xs-6 col-md-offset-3">
+					<div class="col-md-12">
+						<!-- h3> Step 1</h3 -->
+						<div id="truck_alert"></div>
+						<div class="panel panel-info">
+							<div class="panel-heading">
+								<h5>Truck Details</h5>
+							</div>
+							<div class="panel-body">
+								<fieldset>
+									<!-- Truck Type -->
+									<div class="form-group-sm"
+										 ng-class="{ 'has-error' : truckForm.truck_type.$invalid,
+							 				'has-success' : !(truckForm.truck_type.$invalid),
+					 						'has-feedback' : truckForm.truck_type.$invalid,
+					 						'error' : truckForm.truck_type.$invalid,
+					 						'success' : !truckForm.truck_type.$invalid}">
+										<label class="col-lg-3 control-label">Truck Type</label>
+										<div class="col-lg-9">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-truck"></i></span>
+												<select selectpicker id="truck_type" name="truck_type"
+														ng-model="truck.details.type"  ng-required="true"
+														class="form-control col-lg-12" data-dropup-auto="false">
+												</select>
+												<!-- input type="text" class="form-control" name="truck_type" id="truck_type" ng-required="true"
+													   ng-model="truck.details.type"
+													   placeholder="Enter Truck Type" -->
+											</div>
+											<!-- i class="form-control-feedback"
+											   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.truck_type.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckForm.truck_type.$invalid),
+					 						'has-feedback' : truckForm.truck_type.$valid}"
+											   for="truck_type">
+											</i -->
+											<div ng-if="truckForm.truck_type.$invalid"
+												 class="help-block pull-right"
+												 ng-class="{ 'has-error' : truckForm.truck_type.$invalid,
+							 				'has-success' : !(truckForm.truck_type.$invalid),
+					 						'has-feedback' : truckForm.truck_type.$invalid}"
+												 for="truck_type">Truck Type is mandatory <!--Luck favors - Add Truck Name if you have -->
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group-sm col-lg-12"
+										 ng-class="{ 'has-error' : truckForm.truckTypeDesc.$invalid,
+							 				'has-success' : !(truckForm.truckTypeDesc.$invalid),
+					 						'has-feedback' : truckForm.truckTypeDesc.$invalid}">
+										<div class="col-lg-offset-3" ng-if="truck.details.type=='Others'">
+											<div class="input-group col-lg-12">
+												<input type="text" class="form-control" name="truckTypeDesc" id="truckTypeDesc"
+													   ng-model="truck.details.typeDescription"
+													   ng-minlength="1" ng-required="true" placeholder="Enter Other Truck Type">
+											</div>
+											<i class="form-control-feedback"
+											   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.truckTypeDesc.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckForm.truckTypeDesc.$invalid),
+					 						'has-feedback' : truckForm.truckTypeDesc.$valid}"
+											   for="truckTypeDesc">
+											</i>
+											<div ng-if="truckForm.truckTypeDesc.$invalid"
+												 class="help-block pull-right"
+												 ng-class="{ 'has-error' : truckForm.truckTypeDesc.$invalid,
+							 				'has-success' : !(truckForm.truckTypeDesc.$invalid),
+					 						'has-feedback' : truckForm.truckTypeDesc.$invalid}"
+												 for="truckTypeDesc">Truck Type is mandatory
+											</div>
+										</div>
+									</div>
+
+									<!-- Make -->
+									<div class="form-group-sm"
+										 ng-class="{ 'has-error' : truckForm.make.$invalid,
+							 				'has-success' : !(truckForm.make.$invalid),
+					 						'has-feedback' : truckForm.make.$invalid,
+					 						'error' : truckForm.make.$invalid,
+					 						'success' : !truckForm.make.$invalid}">
+										<label class="col-lg-3 control-label">Make</label>
+										<div class="col-lg-9">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-cog fa-2"></i></span>
+												<select selectpicker id="make" name="make"
+														ng-model="truck.details.make"  ng-required="true"
+														class="form-control col-lg-12" data-dropup-auto="false">
+													<option value="">Choose one</option>
+												</select>
+												<!-- input type="text" class="form-control" name="make" id="make" ng-model="truck.details.make"
+													   placeholder="Enter Make" ng-minlength="1" maxlength="35" ng-required="true" -->
+											</div>
+											<!-- i class="form-control-feedback"
+											   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.make.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckForm.make.$invalid),
+					 						'has-feedback' : truckForm.make.$valid}"
+											   for="make">
+											</i -->
+											<div ng-if="truckForm.make.$invalid"
+												 class="help-block pull-right"
+												 ng-class="{ 'has-error' : truckForm.make.$invalid,
+							 				'has-success' : !(truckForm.make.$invalid),
+					 						'has-feedback' : truckForm.make.$invalid}"
+												 for="make">Make is mandatory
+											</div>
+										</div>
+									</div>
+
+									<!-- Model -->
+									<div class="form-group-sm"
+										 ng-class="{ 'has-error' : truckForm.model.$invalid,
+							 				'has-success' : !(truckForm.model.$invalid),
+					 						'has-feedback' : truckForm.model.$invalid}">
+										<label class="col-lg-3 control-label">Model</label>
+										<div class="col-lg-9">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-tag fa-2"></i></span>
+												<input type="text" class="form-control" name="model" id="model" ng-model="truck.details.model" placeholder="Enter Model"
+													   ng-minlength="1" maxlength="35" ng-required="true">
+											</div>
+											<i class="form-control-feedback"
+											   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.model.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckForm.model.$invalid),
+					 						'has-feedback' : truckForm.model.$valid}"
+											   for="model">
+											</i>
+											<div ng-if="truckForm.model.$invalid"
+												 class="help-block pull-right"
+												 ng-class="{ 'has-error' : truckForm.model.$invalid,
+							 				'has-success' : !(truckForm.model.$invalid),
+					 						'has-feedback' : truckForm.model.$invalid}"
+												 for="model">Model is mandatory
+											</div>
+										</div>
+									</div>
+
+									<!-- Reg No -->
+									<div class="form-group-sm"
+										 ng-class="{ 'has-error' : truckForm.regno.$invalid || truck.details.regno.length < 7,
+							 				'has-success' : !(truckForm.regno.$invalid) && truck.details.regno.length >= 7,
+					 						'has-feedback' : truckForm.regno.$invalid  || truck.details.regno.length < 7}">
+										<label class="col-lg-3 control-label">Registration Number</label>
+										<div class="col-lg-9">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-file-text-o fa-2"></i></span>
+												<input type="text" class="form-control" name="regno" id="regno" ng-model="truck.details.regno"
+													   placeholder="Enter Reg No"
+													   capitalize-no-blanks maxlength="10" ng-required="true">
+											</div>
+											<i class="form-control-feedback"
+											   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.regno.$invalid || truck.details.regno.length < 7,
+							 				'glyphicon glyphicon-ok' : !(truckForm.regno.$invalid && truck.details.regno.length >= 7),
+					 						'has-feedback' : truckForm.regno.$valid || truck.details.regno.length < 7}"
+											   for="regno">
+											</i>
+											<div ng-if="truckForm.regno.$invalid"
+												 class="help-block pull-right"
+												 ng-class="{ 'has-error' : truckForm.regno.$invalid || truck.details.regno.length < 7,
+							 				'has-success' : !(truckForm.regno.$invalid || truck.details.regno.length < 7),
+					 						'has-feedback' : truckForm.regno.$invalid || truck.details.regno.length < 7}"
+												 for="regno">Registration Number is mandatory. Enter without spaces e.g. TN01XX0001
+											</div>
+										</div>
+									</div>
+
+									<!-- Load -->
+									<div class="form-group-sm"
+										 ng-class="{ 'has-error' : truckForm.load.$invalid,
+							 				'has-success' : !(truckForm.load.$invalid),
+					 						'has-feedback' : truckForm.load.$invalid}">
+										<label class="col-lg-3 control-label">Carrying Capacity (in tons)</label>
+										<div class="col-lg-9">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-anchor fa-2"></i></span>
+												<input type="text" numbers-only class="form-control" name="load" id="load" ng-model="truck.details.load"
+													   maxlength="2"
+													   placeholder="Enter Load in Tons" ng-minlength="1" ng-maxlength="2" ng-required="true">
+											</div>
+											<i class="form-control-feedback"
+											   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.load.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckForm.load.$invalid),
+					 						'has-feedback' : truckForm.load.$valid}"
+											   for="load">
+											</i>
+											<div ng-if="truckForm.load.$invalid"
+												 class="help-block pull-right"
+												 ng-class="{ 'has-error' : truckForm.load.$invalid,
+							 				'has-success' : !(truckForm.load.$invalid),
+					 						'has-feedback' : truckForm.load.$invalid}"
+												 for="load">Carrying Capacity is mandatory. Enter it in numbers
+											</div>
+										</div>
+									</div>
+									<!-- button class="btn btn-primary prevBtn btn-sm pull-left" type="button">Previous</button -->
+									<button ng-disabled="truckForm.load.$invalid" class="btn btn-success btn-sm pull-right" type="submit">Submit</button>
+								</fieldset>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="tcModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+				<h4 class="modal-title">Terms and Conditions</h4>
+			</div>
+			<div class="modal-body">
+				Terms & conditions text here
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">I Agree</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+	$(document).ready(function () {
+		var navListItems = $('div.setup-panel div a'),
+				allWells = $('.setup-content'),
+				allNextBtn = $('.nextBtn'),
+				allPrevBtn = $('.prevBtn');
+
+		//allWells.hide();
+
+		navListItems.click(function (e) {
+			e.preventDefault();
+			var $target = $($(this).attr('href')),
+					$item = $(this);
+
+			if (!$item.hasClass('disabled')) {
+				navListItems.removeClass('btn-primary').addClass('btn-default');
+				$item.addClass('btn-primary');
+				allWells.hide();
+				$target.show();
+				$target.find('input:eq(0)').focus();
+			}
+		});
+
+		allPrevBtn.click(function(){
+			var curStep = $(this).closest(".setup-content"),
+					curStepBtn = curStep.attr("id"),
+					prevStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().prev().children("a");
+
+			prevStepWizard.removeAttr('disabled').trigger('click');
+		});
+
+		allNextBtn.click(function(){
+			var curStep = $(this).closest(".setup-content"),
+					curStepBtn = curStep.attr("id"),
+					nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
+					curInputs = curStep.find("input[type='text'],input[type='url']"),
+					isValid = true;
+
+			$(".form-group").removeClass("has-error");
+			for(var i=0; i<curInputs.length; i++){
+				if (!curInputs[i].validity.valid){
+					isValid = false;
+					$(curInputs[i]).closest(".form-group").addClass("has-error");
+				}
+			}
+
+			if (isValid)
+				nextStepWizard.removeAttr('disabled').trigger('click');
+		});
+
+		$('div.setup-panel div a.btn-primary').trigger('click');
+	});
+</script>
+<script src="manage_truck.js"></script>

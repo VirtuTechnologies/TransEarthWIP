@@ -1,0 +1,57 @@
+.h3
+{
+    color: White;
+}
+
+.radioBtnStyle
+{
+    font-size: 88.9%;
+    font-family: initial;
+}
+.uploadStatus
+{
+    width:1000px;
+}
+.uploadStyle
+{
+    width:860px;
+}
+.hdrData
+{
+    color: White;
+    background-color: #009ABC;
+    font-size: smaller;
+    font-weight: bold;
+}
+.textError
+{
+    color:red;
+    font-size: smaller;
+}
+/*.error
+{
+    color:red;
+    font-size: medium;
+}*/
+.note
+{
+    color:black;
+    font-weight: bold;
+    font-size: smaller;
+    font-style: italic;
+}
+.tblCellData
+{
+    color: Black;
+    background-color: #f7f7f7;
+    font-size: smaller;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+

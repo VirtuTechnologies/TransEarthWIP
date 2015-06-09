@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+		<meta name="description" content="" />
+		<meta name="author" content="" />
+		<!--[if IE]>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<![endif]-->
+		<title>Test</title>
+		<!-- link href="css/style.css" rel="stylesheet" / -->
+		<link href="bootstrap/css/bootstrap.css" rel="stylesheet" />
+		<link href="angular/css/ng-animation.css" rel="stylesheet" />
+		<style>
+			.switch {
+				position: relative;
+			}
+
+			.switch > div {
+				width: 655px;
+				display: inline-block;
+				position: absolute;
+			}
+			.animate-enter,
+			.animate-leave
+			{
+				-webkit-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+				-moz-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+				-ms-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+				-o-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+				transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+			}
+
+			.animate-enter {
+				left: 100%;
+			}
+			.animate-enter.animate-enter-active {
+				left: 0;
+			}
+
+			.animate-leave {
+				left: 0;
+			}
+			.animate-leave.animate-leave-active{
+				left: -100%;
+			}
+		</style>
+	</head>
+	<body ng-app="Otd" ng-controller="SearchForm">
+		<div class="container">
+			<div class="row">
+				<ul class="item-container">
+					<li ng-repeat="post in posts" class="item" ng-class="animation" ng-show="1==1">
+						From: &nbsp; {{post.source}}<br/>
+						To: &nbsp; {{post.destination}}<br/>
+						Capacity: &nbsp; {{post.capacity}}<br/>
+						Available Date: &nbsp; {{post.availableDate}}<br/>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- script src="assets/js/jquery-1.11.1.js"></script -->
+		<script src="scripts/jquery-1.9.1.min.js"></script>
+		<!-- Angular -->
+		<script src="angular/angular.min.js"></script>
+		<script src="angular/angular-animate.min.js"></script>
+		<script>
+			'use strict';
+
+			angular.module('Otd', ['ngAnimate']);
+
+			/* Controllers */
+			function SearchForm($scope, $http, $timeout){
+				$scope.layoutMode = 0;
+				$scope.animation = "spin-toggle";
+				$scope.index = {};
+				$scope.index.truckSelection = null;
+				$scope.index.loadSelection = null;
+				$scope.index.truckPostList = [];
+				$scope.index.loadPostList = [];
+
+				$scope.posts = [];
+				$scope.timeOutFn = function(index){
+					$timeout(function(){
+						$scope.posts.pop();
+						console.log("Current truck post displayed:"+JSON.stringify($scope.index.truckPostList[$scope.nextItem]));
+						var post = $scope.index.truckPostList[index];
+						if(index>$scope.index.truckPostList.length - 2){
+							$scope.nextItem = 0;
+						}else{
+							$scope.nextItem++;
+						}
+						$timeout(function(){
+							$scope.posts.push(post);
+							console.log("Next truck post to display:"+JSON.stringify($scope.index.truckPostList[$scope.nextItem]));
+							$scope.timeOutFn($scope.nextItem);
+						}, 500);
+
+					}, 5000);
+				};
+				$scope.timeOut = function(index){
+					$scope.timeOutFn(index);
+				};
+				$http.post("/TransEarth/getTruckPostingsSummaryTest", {filters : []})
+						.success(function(data) {
+							if(typeof data != 'undefined' && data != null
+									&& data.truckPostList != 'undefined' && data.truckPostList != null
+									&& data.truckPostList.details.length > 0){
+								console.log(JSON.stringify(data));
+								$scope.index.loadPostList = data.truckPostList.details;
+								$scope.index.truckPostList = data.truckPostList.details;
+								$scope.nextItem = 1;
+								$scope.index.loadSelection = 0;
+								$scope.index.truckSelection = 0;
+								$scope.posts.push($scope.index.loadPostList[0]);
+								$scope.timeOutFn($scope.nextItem);
+							}else{
+								$scope.index.truckPostListMessageAvailable = true;
+								$scope.index.truckPostListMessage = "No data available";
+								//succesWarning($scope.index.truckPostListMessage, 'indexTruckPostListMessage');
+								//console.log("No data available");
+							}
+						}).error(function(data) {
+							$scope.index.truckPostListMessageAvailable = true;
+							succesError(data.statusMsg, 'indexTruckPostListMessage');
+						});
+			}
+		</script>
+	</body>
+</html>

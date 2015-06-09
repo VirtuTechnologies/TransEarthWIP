@@ -1,0 +1,787 @@
+<div class="col-md-12" id="truckManagePage" ng-controller="truckManageCtrl"">
+
+	<!-- PAGE HEADER -->
+	<div class="page-header">
+		<h3>{{page.header}}</h3>
+		<div id="goto_home">
+			<!-- a href="/TransEarth/truck_owner_home" class="btn btn-primary btn-sm">Back to Home</a -->
+			<!-- a href="#" ng-click="gotoHome()" class="pull-right" ><span class="label label-info">Go Back Home</span></a -->
+			<a href="#" ng-click="gotoHome()" class="pull-right" ><span class="badge">Go Back Home</span></a>
+		</div>
+	</div>
+
+	<div id="manage_truck_alert" ng-show="truckProcess.indicator.showAlert"></div>
+
+	<!-- FORM : YOU CAN DISABLE, HTML5 VALIDATION BY USING "novalidate" ATTRIBUTE-->
+	<form name="truckForm" name="truckForm" ng-submit="submitForm()" novalidate>
+		<div class="well bs-component" id="truckManagePanel">
+			<!-- Confirmation -->
+			<div class="row">
+				<!-- TERMS & CONDITIONS -->
+				<fieldset class="pull-right" ng-if="truckForm.load.$valid">
+					<!-- fieldset ng-if="truckForm.$valid" -->
+					<!-- legend> Terms and Mailing </legend>
+                    <div class="form-group-sm">
+                        <div class="col-md-offset-3 col-md-9">
+                            <div class="row">
+                                <input type="checkbox" value="" name="terms" ng-model="truckProcess.indicator.tncAccepted" ng-required="true" />
+                                <label>I agree with the
+                                    <a data-toggle="modal" href="#tcModal">Terms and Conditions</a>
+                                </label>
+                            </div>
+                        </div>
+                    </div -->
+					<div class="form-group-sm">
+						<div class="col-md-6">
+							<!-- button type="submit" class="btn btn-success btn-sm" ng-model="button" ng-disabled="!truckProcess.indicator.tncAccepted">{{page.header}}</button -->
+							<!-- button type="submit" class="btn btn-success btn-sm" ng-model="button" >{{page.header}}</button -->
+							<button type="submit" class="btn btn-success btn-sm" ng-model="button" >Save</button>
+						</div>
+						<div class="col-md-6">
+							<button type="button" class="btn btn-danger btn-sm" ng-click="truck={}">Reset</button>
+						</div>
+					</div>
+					<!-- div class="form-group-sm text-danger" ng-show="!(truckProcess.indicator.tncAccepted)">
+                    <div class="form-group-sm text-danger" ng-show="!(truckForm.load.$invalid)">
+                        <div class="col-md-offset-3 col-md-9">
+                            <strong>***Please Accept terms to enable login</strong>
+                        </div>
+                    </div -->
+
+					<!-- div class="form-group" ng-class="{ 'has-error' : userForm.terms.$invalid && (userForm.terms.$dirty || submitted)}">
+                        <label>Accept Terms & Conditions</label>
+                        <input type="checkbox" value="" name="terms" ng-model="user.terms" ng-required="true" />
+                        <p ng-show="userForm.terms.$error.required && (userForm.terms.$dirty || submitted)" class="help-block">Accept terms & conditions.</p>
+                    </div -->
+				</fieldset>
+			</div>
+
+			<div class="row">
+				<!-- Owner Details -->
+				<div class="col-md-4">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h5>Owner Details</h5>
+						</div>
+						<div class="panel-body">
+							<fieldset>
+								<!-- Indicator for user registered details carryover-->
+								<div class="form-group-sm">
+									<div class="col-md-offset-1 col-md-12">
+										<div class="input-group">
+											<input type="checkbox"
+												   ng-change="canDisableOwnerDetails()"
+												   ng-value="false" name="user_owner" id="user_owner" ng-model="truck.owner.details_same_as_user"/>
+											<label>&nbsp;Carry over registered user details?</label>
+											<!--pre>{{truck.same_address}}</pre -->
+										</div>
+									</div>
+								</div>
+
+								<!-- FIRST NAME -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckForm.first_name.$invalid,
+							 				'has-success' : !(truckForm.first_name.$invalid),
+					 						'has-feedback' : truckForm.first_name.$invalid}">
+									<label class="col-lg-8 control-label">First Name</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-user"></i></span>
+											<input type="text" class="form-control" name="first_name"
+												   ng-disabled="truck.owner.details_same_as_user" id="first_name" ng-model="truck.owner.first_name" placeholder="Enter Owner First Name"
+												   ng-maxlength="35" MAXLENGTH="35" ng-required="true">
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.first_name.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckForm.first_name.$invalid),
+					 						'has-feedback' : truckForm.first_name.$valid}"
+										   for="first_name">
+										</i>
+										<div ng-if="truckForm.first_name.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckForm.first_name.$invalid,
+							 				'has-success' : !(truckForm.first_name.$invalid),
+					 						'has-feedback' : truckForm.first_name.$invalid}"
+											 for="first_name">First Name is mandatory
+										</div>
+									</div>
+									<!-- pre>{{userForm.user_type.$valid}}</pre -->
+								</div>
+								<!-- LAST NAME -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckForm.last_name.$invalid,
+							 				'has-success' : !(truckForm.last_name.$invalid),
+					 						'has-feedback' : truckForm.last_name.$invalid}">
+									<label class="col-lg-8 control-label">Last Name</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-user"></i></span>
+											<input type="text" class="form-control" name="last_name" id="last_name"
+												   ng-disabled="truck.owner.details_same_as_user" ng-model="truck.owner.last_name" placeholder="Enter Last Name"
+												   ng-maxlength="35" maxlength="35" ng-required="true">
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.last_name.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckForm.last_name.$invalid),
+					 						'has-feedback' : truckForm.last_name.$valid}"
+										   for="last_name">
+										</i>
+										<div ng-if="truckForm.last_name.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckForm.last_name.$invalid,
+							 				'has-success' : !(truckForm.last_name.$invalid),
+					 						'has-feedback' : truckForm.last_name.$invalid}"
+											 for="last_name">Last Name is mandatory
+										</div>
+									</div>
+									<!-- pre>{{userForm.user_type.$valid}}</pre -->
+								</div>
+								<!-- Address Line 1 -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckForm.owner_line1.$invalid,
+							 				'has-success' : !(truckForm.owner_line1.$invalid),
+					 						'has-feedback' : truckForm.owner_line1.$invalid}">
+									<label class="col-lg-8 control-label">Address Line 1</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<input type="text" class="form-control" name="owner_line1" id="owner_line1"
+												   ng-disabled="truck.owner.details_same_as_user"
+												   ng-maxlength="35" maxlength="35"
+												   ng-model="truck.owner.address.line1" placeholder="Enter Address Line1" ng-required="true">
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.owner_line1.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckForm.owner_line1.$invalid),
+					 						'has-feedback' : truckForm.owner_line1.$valid}"
+										   for="owner_line1">
+										</i>
+										<div ng-if="truckForm.owner_line1.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckForm.owner_line1.$invalid,
+							 				'has-success' : !(truckForm.owner_line1.$invalid),
+					 						'has-feedback' : truckForm.owner_line1.$invalid}"
+											 for="owner_line1">Address Line 1 is mandatory
+										</div>
+									</div>
+								</div>
+
+								<!-- Address Line 2 -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckForm.owner_line2.$invalid,
+							 				'has-success' : !(truckForm.owner_line2.$invalid),
+					 						'has-feedback' : truckForm.owner_line2.$invalid}">
+									<label class="col-lg-8 control-label">Address Line 2</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<input type="text" class="form-control" name="owner_line2" id="owner_line2"
+												   ng-disabled="truck.owner.details_same_as_user"
+												   ng-maxlength="35" maxlength="35"
+												   ng-model="truck.owner.address.line2" placeholder="Enter Address Line2">
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.owner_line2.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckForm.owner_line2.$invalid),
+					 						'has-feedback' : truckForm.owner_line2.$valid}"
+										   for="owner_line2">
+										</i>
+										<div ng-if="truckForm.owner_line2.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckForm.owner_line2.$invalid,
+							 				'has-success' : !(truckForm.owner_line2.$invalid),
+					 						'has-feedback' : truckForm.owner_line2.$invalid}"
+											 for="owner_line2">Line 2 is optional
+										</div>
+									</div>
+								</div>
+
+								<!-- CITY -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : (!truck.owner.address.mapLocation.isSelected),
+										'has-success' : (truck.owner.address.mapLocation.isSelected),
+										'has-feedback' : truckForm.owner_city.$invalid}">
+									<label class="col-lg-8 control-label">City</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<!-- input type="text" class="form-control" name="owner_city" id="owner_city"
+												   ng-disabled="truck.owner.details_same_as_user"
+												   ng-model="truck.owner.address.city" placeholder="Enter City" ng-required="true" -->
+											<div id="city" ng-if="!truck.owner.details_same_as_user">
+												<google-places
+														tagId="owner_city" tagName="owner_city" location=truck.owner.address.mapLocation></google-places>
+											</div>
+											<div id="city" ng-if="truck.owner.details_same_as_user">
+												<input type="text" class="form-control" name="owner_city" id="owner_city"
+													   ng-disabled="true"
+													   ng-model="truck.owner.address.mapLocation.place" ng-required="true">
+											</div>
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : (!truck.owner.address.mapLocation.isSelected),
+										'glyphicon glyphicon-ok' : (truck.owner.address.mapLocation.isSelected),
+										'has-feedback' : truckForm.owner_city.$valid}"
+										   for="owner_city">
+										</i>
+										<div ng-if="truckForm.owner_city.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : (!truck.owner.address.mapLocation.isSelected),
+															'has-success' : (truck.owner.address.mapLocation.isSelected),
+															'has-feedback' : truckForm.owner_city.$invalid}"
+											 for="owner_city">City is mandatory
+										</div>
+									</div>
+									<!-- pre>{{userForm.city.$invalid}}</pre>
+                                    <pre>{{userForm.city.$error}}</pre -->
+								</div>
+
+								<!-- STATE -->
+								<!-- div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckForm.owner_state.$invalid,
+										'has-success' : !(truckForm.owner_state.$invalid),
+										'has-feedback' : truckForm.owner_state.$invalid}">
+									<label class="col-lg-8 control-label">State</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<input type="text" class="form-control" name="owner_state" id="owner_state"
+												   ng-disabled="truck.owner.details_same_as_user"
+												   ng-model="truck.owner.address.state" placeholder="Enter State" ng-minlength="1" ng-maxlength="35" ng-required="true">
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.owner_state.$invalid,
+										'glyphicon glyphicon-ok' : !(truckForm.owner_state.$invalid),
+										'has-feedback' : truckForm.owner_state.$valid}"
+										   for="owner_state">
+										</i>
+										<div ng-if="truckForm.owner_state.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckForm.owner_state.$invalid,
+										'has-success' : !(truckForm.owner_state.$invalid),
+										'has-feedback' : truckForm.owner_state.$invalid}"
+											 for="owner_state">State is mandatory
+										</div>
+									</div>
+								</div -->
+
+								<!-- PINCODE -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckForm.owner_pincode.$invalid,
+										'has-success' : !(truckForm.owner_pincode.$invalid),
+										'has-feedback' : truckForm.owner_pincode.$invalid}">
+									<label class="col-lg-8 control-label">PIN</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<input type="text" numbers-only class="form-control" name="owner_pincode" id="owner_pincode"
+												   ng-disabled="truck.owner.details_same_as_user"
+												   ng-model="truck.owner.address.pincode" placeholder="Enter Pincode"
+												   ng-minlength="6" ng-maxlength="6" maxlength="6"
+												   ng-required="true">
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.owner_pincode.$invalid,
+										'glyphicon glyphicon-ok' : !(truckForm.owner_pincode.$invalid),
+										'has-feedback' : truckForm.owner_pincode.$valid}"
+										   for="owner_pincode">
+										</i>
+										<div ng-if="truckForm.owner_pincode.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckForm.owner_pincode.$invalid,
+										'has-success' : !(truckForm.owner_pincode.$invalid),
+										'has-feedback' : truckForm.owner_pincode.$invalid}"
+											 for="owner_pincode">Pincode is mandatory
+										</div>
+									</div>
+									<!-- pre>{{userForm.user_type.$valid}}</pre -->
+								</div>
+
+								<!-- CONTACTNO -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckForm.owner_contact.$invalid,
+										'has-success' : !(truckForm.owner_contact.$invalid),
+										'has-feedback' : truckForm.owner_contact.$invalid}">
+									<label class="col-lg-8 control-label">Contact Number</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-mobile fa-2"></i></span>
+											<input type="text" numbers-only maxlength="10" class="form-control" name="owner_contact" id="owner_contact"
+												   ng-disabled="truck.owner.details_same_as_user"
+												   ng-model="truck.owner.contact" placeholder="Enter Contact Number"
+												   ng-minlength="10" ng-maxlength="11" maxlength="11" ng-required="true" >
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.owner_contact.$invalid,
+										'glyphicon glyphicon-ok' : !(truckForm.owner_contact.$invalid),
+										'has-feedback' : truckForm.owner_contact.$valid}"
+										   for="owner_contact">
+										</i>
+										<div ng-if="truckForm.owner_contact.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckForm.owner_contact.$invalid,
+										'has-success' : !(truckForm.owner_contact.$invalid),
+										'has-feedback' : truckForm.owner_contact.$invalid}"
+											 for="owner_contact">Contact Number is mandatory
+										</div>
+									</div>
+									<!-- pre>{{userForm.user_type.$valid}}</pre -->
+								</div>
+							</fieldset>
+						</div>
+					</div>
+				</div>
+				<!-- Company Details -->
+				<div class="col-md-4">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h5>Company Details</h5>
+						</div>
+						<div class="panel-body">
+							<fieldset>
+								<!-- Indicator for user registered details carryover-->
+								<div class="form-group-sm">
+									<div class="col-md-offset-1 col-md-12">
+										<div class="input-group">
+											<input type="checkbox"
+												   ng-change="canDisableCompanyDetails()"
+												   ng-value="false" name="user_company" id="user_company" ng-model="truck.company.details_same_as_user"/>
+											<label>&nbsp;Carry over registered user details?</label>
+											<!--pre>{{truck.same_address}}</pre -->
+										</div>
+									</div>
+								</div>
+								<!-- Company NAME -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckForm.company_name.$invalid,
+							 				'has-success' : !(truckForm.company_name.$invalid),
+					 						'has-feedback' : truckForm.company_name.$invalid}">
+									<label class="col-lg-8 control-label">Company Name</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-user"></i></span>
+											<input type="text" class="form-control" name="company_name" id="company_name"
+												   ng-disabled="truck.company.details_same_as_user"
+												   ng-model="truck.company.name" placeholder="Enter Company Name"
+												   ng-maxlength="35" maxlength="35" ng-required="true">
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.company_name.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckForm.company_name.$invalid),
+					 						'has-feedback' : truckForm.company_name.$valid}"
+										   for="company_name">
+										</i>
+										<div ng-if="truckForm.company_name.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckForm.company_name.$invalid,
+							 				'has-success' : !(truckForm.company_name.$invalid),
+					 						'has-feedback' : truckForm.company_name.$invalid}"
+											 for="company_name">Company Name is mandatory
+										</div>
+									</div>
+									<!-- pre>{{userForm.user_type.$valid}}</pre -->
+								</div>
+
+								<!-- Indicator for same address and mobile -->
+								<div class="form-group-sm">
+									<div class="col-md-offset-1 col-md-12">
+										<div class="input-group">
+											<input type="checkbox"
+												   ng-change="canDisableSameAddress()"
+												   ng-disabled="truck.company.details_same_as_user"
+												   ng-value="false" name="same_address" id="same_address" ng-model="truck.company.address_same_as_owner"/>
+											<label>&nbsp;Is Address same as Owner?</label>
+											<!--pre>{{truck.same_address}}</pre -->
+										</div>
+									</div>
+								</div>
+								<!-- div class="form-group-sm">
+									<label class="col-lg-8 control-label"></label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<input type="checkbox" ng-click="" class="form-control" name="same_address" id="same_address" ng-model="truck.same_address">
+										</div>
+									</div>
+								</div -->
+
+								<!-- Address Line 1 -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckForm.company_line1.$invalid,
+							 				'has-success' : !(truckForm.company_line1.$invalid),
+					 						'has-feedback' : truckForm.company_line1.$invalid}">
+									<label class="col-lg-8 control-label">Address Line 1</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<input type="text" class="form-control"
+												   ng-disabled="truck.company.address_same_as_owner||truck.company.details_same_as_user"
+												   name="company_line1" id="company_line1" ng-model="truck.company.address.line1" p
+												   laceholder="Enter Address Line1" ng-maxlength="35" maxlength="35" ng-required="true">
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.company_line1.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckForm.company_line1.$invalid),
+					 						'has-feedback' : truckForm.company_line1.$valid}"
+										   for="company_line1">
+										</i>
+										<div ng-if="truckForm.company_line1.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckForm.company_line1.$invalid,
+							 				'has-success' : !(truckForm.company_line1.$invalid),
+					 						'has-feedback' : truckForm.company_line1.$invalid}"
+											 for="company_line1">Address Line 1 is mandatory
+										</div>
+									</div>
+								</div>
+
+								<!-- Address Line 2 -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckForm.company_line2.$invalid,
+							 				'has-success' : !(truckForm.company_line2.$invalid),
+					 						'has-feedback' : truckForm.company_line2.$invalid}">
+									<label class="col-lg-8 control-label">Address Line 2</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<input type="text" class="form-control"
+												   ng-disabled="truck.company.address_same_as_owner||truck.company.details_same_as_user"
+												   maxlength="35"
+												   name="company_line2" id="company_line2" ng-model="truck.company.address.line2" placeholder="Enter Address Line2">
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.company_line2.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckForm.company_line2.$invalid),
+					 						'has-feedback' : truckForm.company_line2.$valid}"
+										   for="company_line2">
+										</i>
+										<div ng-if="truckForm.company_line2.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckForm.company_line2.$invalid,
+							 				'has-success' : !(truckForm.company_line2.$invalid),
+					 						'has-feedback' : truckForm.company_line2.$invalid}"
+											 for="company_line2">Line 2 is optional
+										</div>
+									</div>
+								</div>
+
+								<!-- CITY -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : !truck.company.address.mapLocation.isSelected,
+										'has-success' : truck.company.address.mapLocation.isSelected,
+										'has-feedback' : truck.company.address.mapLocation.isSelected}">
+									<label class="col-lg-8 control-label">City</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<!-- input type="text" class="form-control"
+												   ng-disabled="truck.company.address_same_as_owner||truck.company.details_same_as_user"
+												   name="company_city" id="company_city"
+												   ng-model="truck.company.address.city" placeholder="Enter City" ng-required="true" -->
+											<div id="city" ng-if="!(truck.company.address_same_as_owner||truck.company.details_same_as_user)">
+												<google-places
+														tagId="company_city" tagName="company_city" location=truck.company.address.mapLocation></google-places>
+											</div>
+											<div id="city" ng-if="(truck.company.address_same_as_owner||truck.company.details_same_as_user)">
+												<input type="text" class="form-control" name="owner_city" id="owner_city"
+													   ng-disabled="truck.company.details_same_as_user||truck.company.address_same_as_owner"
+													   ng-model="truck.company.address.mapLocation.place" ng-required="true">
+											</div>
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : !truck.company.address.mapLocation.isSelected,
+										'glyphicon glyphicon-ok' : truck.company.address.mapLocation.isSelected,
+										'has-feedback' : truck.company.address.mapLocation.isSelected}"
+										   for="company_city">
+										</i>
+										<div ng-if="truckForm.company_city.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : !truck.company.address.mapLocation.isSelected,
+										'has-success' : truck.company.address.mapLocation.isSelected,
+										'has-feedback' : truck.company.address.mapLocation.isSelected}"
+											 for="company_city">City is mandatory
+										</div>
+									</div>
+									<!-- pre>{{userForm.city.$invalid}}</pre>
+                                    <pre>{{userForm.city.$error}}</pre -->
+								</div>
+
+								<!-- STATE -->
+								<!-- div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckForm.company_state.$invalid,
+										'has-success' : !(truckForm.company_state.$invalid),
+										'has-feedback' : truckForm.company_state.$invalid}">
+									<label class="col-lg-8 control-label">State</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<input type="number" class="form-control" ng-disabled="truck.company.address_same_as_owner" name="company_state" id="company_state" ng-model="truck.company.address.state" placeholder="Enter State" ng-minlength="1" ng-maxlength="35" ng-required="true">
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.company_state.$invalid,
+										'glyphicon glyphicon-ok' : !(truckForm.company_state.$invalid),
+										'has-feedback' : truckForm.company_state.$valid}"
+										   for="company_state">
+										</i>
+										<div ng-if="truckForm.company_state.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckForm.company_state.$invalid,
+										'has-success' : !(truckForm.company_state.$invalid),
+										'has-feedback' : truckForm.company_state.$invalid}"
+											 for="company_state">State is mandatory
+										</div>
+									</div>
+								</div -->
+
+								<!-- PINCODE -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckForm.company_pincode.$invalid,
+										'has-success' : !(truckForm.company_pincode.$invalid),
+										'has-feedback' : truckForm.company_pincode.$invalid}">
+									<label class="col-lg-8 control-label">PIN</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<input type="text" numbers-only
+												   ng-disabled="truck.company.address_same_as_owner||truck.company.details_same_as_user"
+												   class="form-control" name="company_pincode" id="company_pincode" ng-model="truck.company.address.pincode"
+												   placeholder="Enter Pincode" ng-minlength="6" ng-maxlength="6" maxlength="6" ng-required="true">
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.company_pincode.$invalid,
+										'glyphicon glyphicon-ok' : !(truckForm.company_pincode.$invalid),
+										'has-feedback' : truckForm.company_pincode.$valid}"
+										   for="company_pincode">
+										</i>
+										<div ng-if="truckForm.company_pincode.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckForm.company_pincode.$invalid,
+										'has-success' : !(truckForm.company_pincode.$invalid),
+										'has-feedback' : truckForm.company_pincode.$invalid}"
+											 for="company_pincode">Pincode is mandatory
+										</div>
+									</div>
+									<!-- pre>{{userForm.user_type.$valid}}</pre -->
+								</div>
+
+								<div class="form-group-sm">
+									<div class="col-md-offset-1 col-md-12">
+										<div class="input-group">
+											<input type="checkbox"
+												   ng-change="canDisableSameContact()"
+												   ng-disabled="truck.company.details_same_as_user"
+												   ng-value="false" name="same_contact" id="same_contact" ng-model="truck.company.contact_same_as_owner">
+											<label>&nbsp;Is Contact same as Owner?</label>
+											<!-- pre>{{truck.same_contact}}</pre -->
+										</div>
+									</div>
+								</div>
+
+								<!-- CONTACTNO -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckForm.company_contact.$invalid,
+										'has-success' : !(truckForm.company_contact.$invalid),
+										'has-feedback' : truckForm.company_contact.$invalid}">
+									<label class="col-lg-8 control-label">Contact Number</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-mobile fa-2"></i></span>
+											<input type="text" numbers-only
+												   ng-disabled="truck.company.contact_same_as_owner||truck.company.details_same_as_user"
+												   class="form-control" name="company_contact" id="company_contact" ng-model="truck.company.contact"
+												   placeholder="Enter Contact Number" ng-minlength="10" ng-maxlength="11" maxlength="11" ng-required="true">
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.company_contact.$invalid,
+										'glyphicon glyphicon-ok' : !(truckForm.company_contact.$invalid),
+										'has-feedback' : truckForm.company_contact.$valid}"
+										   for="company_contact">
+										</i>
+										<div ng-if="truckForm.company_contact.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckForm.company_contact.$invalid,
+										'has-success' : !(truckForm.company_contact.$invalid),
+										'has-feedback' : truckForm.company_contact.$invalid}"
+											 for="company_contact">Contact Number is mandatory
+										</div>
+									</div>
+									<!-- pre>{{userForm.user_type.$valid}}</pre -->
+								</div>
+							</fieldset>
+						</div>
+					</div>
+				</div>
+				<!-- Truck Details -->
+				<div class="col-md-4">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h5>Truck Details</h5>
+						</div>
+						<div class="panel-body">
+							<fieldset>
+								<!-- Truck NAME -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckForm.truck_type.$invalid,
+							 				'has-success' : !(truckForm.truck_type.$invalid),
+					 						'has-feedback' : truckForm.truck_type.$invalid}">
+									<label class="col-lg-8 control-label">Truck Type</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-truck"></i></span>
+											<input type="text" class="form-control" name="truck_type" id="truck_type" ng-required="true" ng-model="truck.details.type" placeholder="Enter Truck Type">
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.truck_type.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckForm.truck_type.$invalid),
+					 						'has-feedback' : truckForm.truck_type.$valid}"
+										   for="truck_type">
+										</i>
+										<div ng-if="truckForm.truck_type.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckForm.truck_type.$invalid,
+							 				'has-success' : !(truckForm.truck_type.$invalid),
+					 						'has-feedback' : truckForm.truck_type.$invalid}"
+											 for="truck_type">Truck Type is madatory <!--Luck favors - Add Truck Name if you have -->
+										</div>
+									</div>
+								</div>
+
+								<!-- Make -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckForm.make.$invalid,
+							 				'has-success' : !(truckForm.make.$invalid),
+					 						'has-feedback' : truckForm.make.$invalid}">
+									<label class="col-lg-8 control-label">Make</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<input type="text" class="form-control" name="make" id="make" ng-model="truck.details.make"
+												   placeholder="Enter Make" ng-minlength="1" maxlength="35" ng-required="true">
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.make.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckForm.make.$invalid),
+					 						'has-feedback' : truckForm.make.$valid}"
+										   for="make">
+										</i>
+										<div ng-if="truckForm.make.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckForm.make.$invalid,
+							 				'has-success' : !(truckForm.make.$invalid),
+					 						'has-feedback' : truckForm.make.$invalid}"
+											 for="make">Make is mandatory
+										</div>
+									</div>
+								</div>
+
+								<!-- Model -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckForm.model.$invalid,
+							 				'has-success' : !(truckForm.model.$invalid),
+					 						'has-feedback' : truckForm.model.$invalid}">
+									<label class="col-lg-8 control-label">Model</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<input type="text" class="form-control" name="model" id="model" ng-model="truck.details.model" placeholder="Enter Model"
+												   ng-minlength="1" maxlength="35" ng-required="true">
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.model.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckForm.model.$invalid),
+					 						'has-feedback' : truckForm.model.$valid}"
+										   for="model">
+										</i>
+										<div ng-if="truckForm.model.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckForm.model.$invalid,
+							 				'has-success' : !(truckForm.model.$invalid),
+					 						'has-feedback' : truckForm.model.$invalid}"
+											 for="model">Model is mandatory
+										</div>
+									</div>
+								</div>
+
+								<!-- Reg No -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckForm.regno.$invalid,
+							 				'has-success' : !(truckForm.regno.$invalid),
+					 						'has-feedback' : truckForm.regno.$invalid}">
+									<label class="col-lg-8 control-label">Registration Number</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<input type="text" class="form-control" name="regno" id="regno" ng-model="truck.details.regno" placeholder="Enter Reg No"
+												   capitalize maxlength="10" ng-required="true">
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.regno.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckForm.regno.$invalid),
+					 						'has-feedback' : truckForm.regno.$valid}"
+										   for="regno">
+										</i>
+										<div ng-if="truckForm.regno.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckForm.regno.$invalid,
+							 				'has-success' : !(truckForm.regno.$invalid),
+					 						'has-feedback' : truckForm.regno.$invalid}"
+											 for="regno">Registration Number is mandatory. Enter without spaces e.g. TN01XX0001
+										</div>
+									</div>
+								</div>
+
+								<!-- Load -->
+								<div class="form-group-sm"
+									 ng-class="{ 'has-error' : truckForm.load.$invalid,
+							 				'has-success' : !(truckForm.load.$invalid),
+					 						'has-feedback' : truckForm.load.$invalid}">
+									<label class="col-lg-8 control-label">Capacity (in tons)</label>
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+											<input type="number" class="form-control" name="load" id="load" ng-model="truck.details.load"
+												   maxlength="2"
+												   placeholder="Enter Load in Tons" ng-minlength="1" ng-maxlength="2" ng-required="true">
+										</div>
+										<i class="form-control-feedback"
+										   ng-class="{ 'glyphicon glyphicon-remove' : truckForm.load.$invalid,
+							 				'glyphicon glyphicon-ok' : !(truckForm.load.$invalid),
+					 						'has-feedback' : truckForm.load.$valid}"
+										   for="load">
+										</i>
+										<div ng-if="truckForm.load.$invalid"
+											 class="help-block"
+											 ng-class="{ 'has-error' : truckForm.load.$invalid,
+							 				'has-success' : !(truckForm.load.$invalid),
+					 						'has-feedback' : truckForm.load.$invalid}"
+											 for="load">Load is mandatory. Enter it in numbers
+										</div>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="tcModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+				<h4 class="modal-title">Terms and Conditions</h4>
+			</div>
+			<div class="modal-body">
+				Terms & conditions text here
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal">I Agree</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script src="manage_truck.js"></script>

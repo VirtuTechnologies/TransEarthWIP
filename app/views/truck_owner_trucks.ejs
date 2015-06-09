@@ -1,0 +1,140 @@
+<div class="col-md-12" ng-controller="truckOwnerTrucksCtrl">
+	<div class="bs-component">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<h3 class="panel-title">My Trucks</h3>
+			</div>
+			<div class="panel-body">
+				<div id="myTruckListMessage" ng-show="!myTruckList.listShow">
+					<div id="myTrucklist_alert" ></div>
+				</div>
+				<div ng-show="myTruckList.listShow" class="gridMaxStyle" ng-grid="myTruckList.gridOptions"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Remove Truck Confirmation Modal -->
+<script type="text/ng-template" id="myTruckRemoveModal.html">
+	<!-- div ng-controller="TruckRemoveModalCtrl" -->
+		<div class="modal-header">
+			<h3 class="modal-title">Remove Truck Confirmation</h3>
+		</div>
+		<div class="modal-body">
+			<div id="remove_truck_alert"></div>
+			<form name="removeTruckForm" id="removeTruckForm">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-6 col-md-offset-1">Do you want to remove this truck?</div>
+						<div class="col-md-6 col-md-offset-3 strong">
+							<h3>{{truckToInactivate.reg_no}}</h3>
+						</div>
+					</div>
+				</div>
+				<button type="button" ng-if="!showClose" class="btn btn-danger" ng-click="inActivateTruck(truckToInactivate)">Yes</button>
+				<button type="button" ng-if="!showClose" class="btn btn-default pull-right" ng-click="cancel()">Cancel</button>
+			</form>
+		</div>
+		<div class="modal-footer" ng-if="showClose">
+			<!-- button type="button" class="btn btn-danger">Yes</button -->
+			<button class="btn btn-warning" ng-click="cancel()">Close</button>
+		</div>
+	<!-- /div -->
+</script>
+<!-- Truck Details Modal -->
+<script type="text/ng-template" id="myTruckDetailModal.html">
+	<!-- div ng-controller="TruckDetailModalCtrl" -->
+	<!-- div class="modal-dialog">
+		<div class="modal-content" -->
+	<div class="modal-header">
+		<h3 class="modal-title">Truck Information</h3>
+	</div>
+	<div class="modal-body">
+		<div id="truck_detail_alert"></div>
+		<div class="row">
+			<!--div class="col-sm-4">
+				<div class="col-xs-5 col-sm-12">
+					<h4>Owner Details</h4>
+					<ul class="profile-details">
+						<li>
+							<div><i class="fa fa-user"></i> Name</div>
+							{{truckModal.owner.name}}
+						</li>
+						<li>
+							<div><i class="fa fa-map-marker"></i> Address</div>
+							<p class="nopadding">{{truckModal.owner.address.line1}}</p>
+							<p  class="nopadding" ng-if="showText(truckModal.owner.address.line2)">{{truckModal.owner.address.line2}}</p>
+							<p class="nopadding">{{truckModal.owner.address.city}}</p>
+							<p class="nopadding">{{truckModal.owner.address.state}}</p>
+							<p class="nopadding">{{truckModal.owner.address.country}}</p>
+							<p class="nopadding">{{truckModal.owner.address.pincode}}</p>
+						</li>
+						<li>
+							<div><i class="fa fa-phone"></i> Contact</div>
+							{{truckModal.owner.contact}}
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="col-xs-5 col-sm-12">
+					<h4>Company Details</h4>
+					<ul class="profile-details">
+						<li>
+							<div><i class="fa fa-user"></i> Name</div>
+							{{truckModal.company.name}}
+						</li>
+						<li>
+							<div><i class="fa fa-map-marker"></i> Address</div>
+							<p class="nopadding">{{truckModal.company.address.line1}}</p>
+							<p  class="nopadding" ng-if="showText(truckModal.company.address.line2)">{{truckModal.company.address.line2}}</p>
+							<p class="nopadding">{{truckModal.company.address.city}}</p>
+							<p class="nopadding">{{truckModal.company.address.state}}</p>
+							<p class="nopadding">{{truckModal.company.address.country}}</p>
+							<p class="nopadding">{{truckModal.company.address.pincode}}</p>
+						</li>
+						<li>
+							<div><i class="fa fa-phone"></i> Contact</div>
+							{{truckModal.company.contact}}
+						</li>
+					</ul>
+				</div>
+			</div -->
+			<div class="col-sm-12">
+				<div class="col-xs-4 col-sm-4">
+					<!-- h4>Truck Details</h4 -->
+					<ul class="profile-details">
+						<li>
+							<div><i class="fa fa-truck"></i> Type</div>
+							{{truckModal.truck_details.type}}
+						</li>
+						<li>
+							<div><i class="fa fa-tag"></i> Make</div>
+							{{truckModal.truck_details.make}} <br/>
+						</li>
+					</ul>
+				</div>
+				<div class="col-xs-4 col-sm-4">
+					<ul class="profile-details">
+						<li>
+							<div><i class="fa fa-bookmark"></i> Model</div>
+							{{truckModal.truck_details.model}} <br/>
+						</li>
+						<li>
+							<div><i class="fa fa-gavel"></i> Reg No</div>
+							{{truckModal.truck_details.reg_no}}
+						</li>
+					</ul>
+				</div>
+				<div class="col-xs-4 col-sm-4">
+					<ul class="profile-details">
+						<li>
+							<div><i class="fa fa-shopping-cart"></i> Load</div>
+							{{truckModal.truck_details.maximum_load.quantity}} &nbsp; Tons
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script src="truck_owner_trucks.js"></script>

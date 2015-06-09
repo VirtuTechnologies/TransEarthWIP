@@ -1,0 +1,53 @@
+<div ng-controller="loginCtrl">
+	<div class="row">
+		<div class="col-lg-4 col-lg-offset-4">
+			<div class="panel panel-default" id="loginPanel">
+				<div class="panel-heading">
+					<h5>Sign in:</h5>
+				</div>
+				<div class="panel-body">
+					<div id="indexTruckListMessage" ng-show="!login.messageAvailable">
+						<div id="login_alert" >{{login.message}}</div>
+					</div>
+					<!-- form class="form-horizontal" method="post" name="loginForm" -->
+					<form class="form-horizontal" method="post" name="loginForm" action="/TransEarth/login">
+						<div class="form-group">
+							<div class="input-group" ng-class="{ 'has-error' : loginForm.username.$error.required}">
+								<span class="input-group-addon"><i class="fa fa-user"></i></span>
+								<input type="text" name="username" ng-model="user.username" placeholder="Enter Email/User Name" class="form-control input-sm" ng-required="true"/>
+							</div>
+							<span class="text-danger" ng-show="loginForm.username.$error.required">Username required</span>
+						</div>
+						<div class="form-group has-feedback">
+							<div class="input-group" ng-class="{ 'has-error' : loginForm.username.$error.required}">
+								<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+								<input type="password" id="password" name="password" ng-model="user.password" placeholder="Enter Password" class="form-control input-sm" ng-required="true">
+							</div>
+							<span class="text-danger" ng-show="loginForm.password.$error.required">Password required</span>
+						</div>
+						<hr>
+						<div class="form-group">
+							<div id="register_icon">
+								Don't have an account? &nbsp;
+								<a href="#" ng-click="signUp()"><i class="fa fa-user fa-2x" data-toggle="tooltip" data-placement="bottom" title="Register" ></i></a>
+								<div class="pull-right">
+									<button type="submit" class="btn btn-primary btn-sm active"><i class="fa fa-sign-in fa-1"></i> &nbsp;Login</button>
+								</div>
+							</div>
+						</div>
+						<!-- div class="checkbox">
+							<label><input type="checkbox" name="rememberMe" ng-model="user.rememberMe">Remember Me</label>
+							<div class="pull-right" -->
+								<!-- button type="button" class="btn btn-primary btn-sm active" ng-click="login()"><i class="fa fa-sign-in fa-1"></i> &nbsp;Login</button -->
+								<!-- button type="submit" class="btn btn-primary btn-sm active"><i class="fa fa-sign-in fa-1"></i> &nbsp;Login</button -->
+							<!-- /div -->
+						<!-- /div -->
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="login.js"></script>

@@ -1,0 +1,221 @@
+<div class="page-header" ng-controller="truckListCtrl" ng-init="init()">
+	<div class="bs-docs-section">
+		<!-- div class="row">
+			<div class="col-lg-12">
+				<div class="well bs-component">
+					<div id="source-button" class="btn btn-primary btn-xs" style="display: block;">&lt; &gt;</div>
+				</div>
+			</div>
+		</div -->
+		<!-- div class="row">
+			<div class="col-lg-12">
+				<div class="page-header">
+					<h1 id="forms">Search Trucks</h1>
+				</div>
+			</div>
+		</div -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Search Trucks
+			</div>
+			<div class="panel-body">
+				<div class="container">
+					<form id="searchTruckForm" name="searchTruckForm" role="form">
+						<div class="form-group-sm col-md-3" ng-class="{ 'has-error' : !truckPostList.filter.from.isSelected,
+										'has-success' : truckPostList.filter.from.isSelected,
+										'has-feedback' : truckPostList.filter.from.isSelected}">
+							<label class="col-lg-6 control-label">From</label>
+							<div class="col-lg-12">
+								<google-places tagId="from_city" tagName="from_city" holder="From Location" glyph="false"
+											   location=truckPostList.filter.from></google-places>
+							</div>
+						</div>
+						<div class="form-group-sm col-md-3" ng-class="{ 'has-error' : !truckPostList.filter.to.isSelected,
+										'has-success' : truckPostList.filter.to.isSelected,
+										'has-feedback' : truckPostList.filter.to.isSelected}">
+							<label class="col-lg-6 control-label">To</label>
+							<div class="col-lg-12">
+								<google-places tagId="to_city" tagName="to_city" holder="To Location" glyph="false"
+											   location=truckPostList.filter.to></google-places>
+							</div>
+						</div>
+						<div class="form-group-sm col-md-3">
+							<label for="type">Truck Type</label>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-truck"></i></span>
+								<select selectpicker id="truck_type" name="truck_type"
+										ng-model="truckPostList.filter.type"
+										ng-options="type for type in truckTypeList"
+										class="form-control col-lg-12" data-dropup-auto="false">
+									<option value="">Choose one</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group-sm col-md-2">
+							<!-- label class="col-md-9"> On</label -->
+							<div class="col-md-4 no-padding">
+								<input type="radio" ng-change="resetSearchCategory()"
+									   ng-model="truckPostList.filter.dateRange"
+									   name="optionsRadios" id="optionsRadios1" value=1>On
+							</div>
+							<div class="col-md-4 no-padding">
+								<input type="radio" ng-change="resetSearchCategory()"
+									   ng-model="truckPostList.filter.dateRange"
+									   name="optionsRadios" id="optionsRadios2" value=2 selected>After
+							</div>
+							<div class="col-md-12" ng-if="truckPostList.filter.dateRange!=null">
+								<input class="form-control input-sm" type="text" ng-change="resetSearchCategory()" placeholder="Available Date"
+									   id="daterange" name="daterange" class="form-control" datepicker-popup="dd-MMMM-yyyy"
+									   ng-model="truckPostList.filter.dt" is-open="opened"
+									   min="minDate"
+									   datepicker-options="truckPostList.dateOptions" ng-required="true" close-text="Close" />
+								<!-- span class="glyphicon error" ng-show="truckListForm.daterange.$error.required">*</span -->
+							</div>
+						</div>
+						<div class="form-group-sm col-md-1" ng-if="truckPostList.filter.dateRange!=null">
+							<label class="col-md-12">&nbsp;</label>
+							<button type="button" ng-click="searchTrucks()"
+									class="btn btn-success btn-sm" id="search">{{truckPostList.searchButtonName}}</button>
+						</div>
+						<!-- button type="submit" class="btn btn-default">Submit</button -->
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="bs-docs-section" id="search_list" ng-if="truckPostList.searchTriggered">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="bs-component">
+					<div class="panel panel-success">
+						<div class="panel-heading">
+							<h3 class="panel-title">Truck </h3>
+							<!--div collapse-section></div -->
+						</div>
+						<div class="panel-body">
+							<div id="truckPostListMessage" ng-show="!truckPostList.listShow || truckPostDetails.messageAvailable">
+								<div id="trucklist_alert" ></div>
+							</div>
+							<div ng-show="truckPostList.listShow" class="gridMaxStyle" ng-grid="truckPostList.gridOptions"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<!-- Truck Post Details Modal -->
+<script type="text/ng-template" id="truckPostDetailModal.html">
+	<!-- div ng-controller="TruckPostDetailModalCtrl" -->
+	<!-- div class="modal-dialog">
+		<div class="modal-content" -->
+	<div class="modal-header">
+		<h3 class="modal-title">Truck Post Information</h3>
+	</div>
+	<div class="modal-body">
+		<div id="truck_detail_alert"></div>
+		<div class="row">
+			<!-- div class="col-sm-3">
+				<div class="col-xs-5 col-sm-12">
+					<h4>Owner Details</h4>
+					<ul class="profile-details">
+						<li>
+							<div><i class="fa fa-user"></i> Name</div>
+							{{truckPostModal.owner.name}}
+						</li>
+						<li>
+							<div><i class="fa fa-map-marker"></i> Address</div>
+							<p class="nopadding">{{truckPostModal.owner.address.line1}}</p>
+							<p  class="nopadding" ng-if="showText(truckPostModal.owner.address.line2)">{{truckPostModal.owner.address.line2}}</p>
+							<p class="nopadding">{{truckPostModal.owner.address.city}}</p>
+							<p class="nopadding">{{truckPostModal.owner.address.state}}</p>
+							<p class="nopadding">{{truckPostModal.owner.address.country}}</p>
+							<p class="nopadding">{{truckPostModal.owner.address.pincode}}</p>
+						</li>
+						<li>
+							<div><i class="fa fa-phone"></i> Contact</div>
+							{{truckPostModal.owner.contact}}
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="col-xs-5 col-sm-12">
+					<h4>Company Details</h4>
+					<ul class="profile-details">
+						<li>
+							<div><i class="fa fa-user"></i> Name</div>
+							{{truckPostModal.company.name}}
+						</li>
+						<li>
+							<div><i class="fa fa-map-marker"></i> Address</div>
+							<p class="nopadding">{{truckPostModal.company.address.line1}}</p>
+							<p  class="nopadding" ng-if="showText(truckPostModal.company.address.line2)">{{truckPostModal.company.address.line2}}</p>
+							<p class="nopadding">{{truckPostModal.company.address.city}}</p>
+							<p class="nopadding">{{truckPostModal.company.address.state}}</p>
+							<p class="nopadding">{{truckPostModal.company.address.country}}</p>
+							<p class="nopadding">{{truckPostModal.company.address.pincode}}</p>
+						</li>
+						<li>
+							<div><i class="fa fa-phone"></i> Contact</div>
+							{{truckPostModal.company.contact}}
+						</li>
+					</ul>
+				</div>
+			</div -->
+			<div class="col-sm-6">
+				<div class="col-xs-4 col-sm-12">
+					<h4>Truck Details</h4>
+					<ul class="profile-details">
+						<li>
+							<div><i class="fa fa-truck"></i> Type</div>
+							{{truckPostModal.truck_details.type}}
+						</li>
+						<li>
+							<div><i class="fa fa-tag"></i> Make</div>
+							{{truckPostModal.truck_details.make}} <br/>
+						</li>
+						<li>
+							<div><i class="fa fa-bookmark"></i> Model</div>
+							{{truckPostModal.truck_details.model}} <br/>
+						</li>
+						<li>
+							<div><i class="fa fa-gavel"></i> Reg No</div>
+							{{truckPostModal.truck_details.reg_no}}
+						</li>
+						<li>
+							<div><i class="fa fa-shopping-cart"></i> Load</div>
+							{{truckModal.truck_details.maximum_load.quantity}} &nbsp; Tons
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="col-xs-5 col-sm-12">
+					<h4>Truck Post Details</h4>
+					<ul class="profile-details">
+						<li>
+							<div><i class="fa fa-truck"></i> From</div>
+							{{truckPostModal.posts.truck_post.availability.pickup_location}}
+						</li>
+						<li>
+							<div><i class="fa fa-tag"></i> To</div>
+							{{truckPostModal.posts.truck_post.availability.delivery_location}} <br/>
+						</li>
+						<li>
+							<div><i class="fa fa-bookmark"></i> Load</div>
+							{{truckPostModal.posts.truck_post.maximum_load.quantity}}&nbsp; {{truckPostModal.posts.truck_post.maximum_load.unit}} <br/>
+						</li>
+						<li>
+							<div><i class="fa fa-gavel"></i> Available Date</div>
+							{{truckPostModal.posts.truck_post.availability.date}}
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script src="truck.js"></script>
