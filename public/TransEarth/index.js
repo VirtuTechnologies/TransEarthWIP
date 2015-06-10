@@ -105,4 +105,5 @@ function indexCtrl($scope, $http, $location, $timeout, $route, UserRequest) {
             succesError(data.statusMsg, 'indexLoadPostListMessage');
         });
     //$location.url('/TransEarth/forms');
+
 }

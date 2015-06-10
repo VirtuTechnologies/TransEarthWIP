@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<script src="jquery-1.11.3.min.js"></script>
+		<link href="style.css" rel="stylesheet" type="text/css" />
+		<link href="pace.css" rel="stylesheet" type="text/css" />
+		<script src="mobile.js"></script>
+		<script src="pace.js"></script>
+		<link href='http://fonts.googleapis.com/css?family=Maven+Pro' rel='stylesheet' type='text/css'>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+		<script>
+		$(document).on("pageload",function(){
+  alert("pageload event fired - the external page has been successfully loaded and inserted into the DOM!");
+});
+		$(document).ready(function(){
+		
+		$('.logindiv').click(function(){
+		$('.loginpanel').show();
+		});		
+		
+		$('.signupdiv').click(function(){
+		$('.loginpanel').hide();
+		$('.signuppanel').show();
+		});
+		
+		$('.closediv').click(function(){
+		$(this).parent().hide();
+		});
+var count = $('.loaddetailpane').length;
+var check = 0;
+	$(function loop(){
+
+		$('.loaddetailpane:visible li:first-child').delay(2500).animate({ marginLeft: "-100px", opacity: 0 }, 170, function nextitem(){ 
+			$(this).next().animate({ marginLeft: "-100px", opacity: 0 }, 170, nextitem);
+		if($('.loaddetailpane:visible li:last-child').css("opacity") == "0") {
+		check++;
+		$(this).parent().css({
+		display:"none"
+		});		
+		$(this).parent().children().css({
+		marginLeft:"0px",
+		opacity:"1"
+		});
+		if(check == count){
+		$('.loaddetailpane:first').fadeIn(function(){
+		check = 0;
+		loop();
+		});
+		}		
+		$(this).parent().next().fadeIn(1000, function() {
+		loop();
+		});
+		}
+		});
+    });
+	var counting = $('.truckdetailpane').length;
+	var checking = 0;
+		$(function loop(){
+
+		$('.truckdetailpane:visible li:first-child').delay(2500).animate({ marginLeft: "-100px", opacity: 0 }, 170, function nextitem(){ 
+			$(this).next().animate({ marginLeft: "-100px", opacity: 0 }, 170, nextitem);
+		if($('.truckdetailpane:visible li:last-child').css("opacity") == "0") {
+		checking++;
+		$(this).parent().css({
+		display:"none"
+		});		
+		$(this).parent().children().css({
+		marginLeft:"0px",
+		opacity:"1"
+		});
+		if(checking == counting){
+		$('.truckdetailpane:first').fadeIn(function(){
+		checking = 0;
+		loop();
+		});
+		}		
+		$(this).parent().next().fadeIn(1000, function() {
+		loop();
+		});
+		}
+		});
+    });
+		$('.next-btn, .back-btn').click(function( event ) {
+		event.preventDefault();});
+		
+		$('.next-btn').click(function() {
+		if($('.step1').is(':visible')){
+		$('.step1').hide();
+		$('.step2').show();
+		$('.step-note2').css({"background" : "url('current.png')",'background-size' : 'cover','color' : '#000000'});
+		clicks++;
+		}
+		else{
+		if($('.step2').is(':visible')){
+		$('.step2').hide();
+		$('.step3').show();
+		$('.next-btn').hide();
+		$('.submit-button').show();
+		$('.step-note3').css({"background" : "url('current.png')",'background-size' : 'cover','color' : '#000000'});
+		}
+		}
+		});
+		
+		$('.back-btn').click(function() {
+		if($('.step3').is(':visible')){
+		$('.step3').hide();
+		$('.step2').show();
+		$('.step-note3').css({"background" : "url('next.png')",'background-size' : 'cover','color' : '#ffffff'});
+		$('.submit-button').hide();
+		$('.next-btn').show();
+		}
+		else{
+		if($('.step2').is(':visible')){
+		$('.step2').hide();
+		$('.step1').show();
+		$('.step-note2').css({"background" : "url('next.png')",'background-size' : 'cover','color' : '#ffffff'});
+		}
+		}
+		});
+		
+
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Uc Browser/i.test(navigator.userAgent) ) {
+  // tasks to do if it is a Mobile Device
+  $('link[rel=stylesheet][href~="style.css"]').remove();
+  $('head').append('<link rel="stylesheet" type="text/css" href="mobile.css">');
+ 
+}
+ 
+		
+		});
+		
+
+		</script>
+	</head>
+	<body>
+		<header>
+			<img id="logo" 	src="logo.png" alt="" />
+			<button class="menu-btn">
+			<p class="menu-icon">Menu<img src="menu-icon.png" alt="" /></p>
+			</button>
+			<ul class="navmenu">
+				
+				<li><a class="logindiv" href="#">Login</a></li>
+				<li><a href="loads.html">Signup</a></li>
+				<li><a href="trucks.html">Search Trucks</a></li>
+				<li><a href="loads.html">Search Loads</a></li>
+				<li class="menu-align"><a href="trucks.html">Home</a></li>
+			</ul>			
+		</header>
+		<div class="loginpanel">
+		<form>
+			<ul>
+			<li><img style="margin-left:15px; margin-bottom: 20px;" src="logo1.png" alt="" /></li>
+			<li><input class="textbox" type="textbox" value="" name="email" placeholder="USERNAME/EMAIL" /></li>
+			<li><input class="textbox" type="textbox" value="" name="password" placeholder="PASSWORD" /></li>
+			<li><input style="background:#006FD7; margin-left:95px;" class="buttons" type="submit" name="login" value="Login" /></li>
+			<li><a style="color:white; float:left;" href="#">Forgot Password ?</a><a class="signupdiv" style="color:white; float:right;" href="#">Sign up</a></li>
+			
+			</ul>
+		</form>
+		<a class="closediv" href="#"><p>CLOSE</p></a>
+		</div>		
+		<div class="signuppanel">
+		<form>
+		<ul class="signup-head">
+			<li><img style="margin-left:15px;" src="logo1.png" alt="" /></li>
+			<li><p class="steps" style="background-image:url('current.png'); color:#000000;">1</p>
+			<p class="steps step-note2">2</p>
+			<p class="steps step-note3">3</p></li>
+		</ul>
+		<ul class="steps-list">
+			<li class="step1"><select style="  width: 270px;" class="textbox"><option>Truck owner</option><option>Load Owner</option></select></li>
+			<li class="step2"><input class="textbox" type="textbox" value="" name="email" placeholder="PASSWORD" /></li>
+			<li class="step2"><input class="textbox" type="textbox" value="" name="email" placeholder="PASSWORD" /></li>
+			<li class="step2"><input class="textbox" type="textbox" value="" name="email" placeholder="PASSWORD" /></li>
+			<li class="step3"><input class="textbox" type="textbox" value="" name="email" placeholder="TEST" /></li>
+			<li class="step3"><input class="textbox" type="textbox" value="" name="email" placeholder="TEST" /></li>
+			<li class="step3"><input class="textbox" type="textbox" value="" name="email" placeholder="TEST" /></li>
+			<li><button style="background:#006FD7; float:left;" class="buttons back-btn">Back</button></li>
+			<li><button style="background:#006FD7; float:right;" class="buttons next-btn">Next</button></li>
+			<li><input style="background:#006FD7; float:right; display:none;" class="buttons submit-button" type="submit" name="login" value="Submit" /></li>
+		</ul>
+		</form>
+		<a class="closediv" href="#"><p>CLOSE</p></a>
+		</div>
+		<div class="container">
+		<div class="loaddetails">
+		<div class="slider">
+		<p class="nameplace"><img id="profilepic" src="load.png" alt=""><a href="#">Load Posts</a></p>
+			<ul class="loaddetailpane first-slide">
+				<li><p class="infos">FROM: Chennai</p></li>
+				<li><p class="infos">TO: Madurai</p></li>
+				<li><p class="infos">TONS: 30 Tons</p></li>
+				<li><p class="infos">DATE: 10.06.2015</p></li>
+			</ul>
+			<ul class="loaddetailpane">
+				<li><p class="infos">FROM: Madurai</p></li>
+				<li><p class="infos">TO: Bangalore</p></li>
+				<li><p class="infos">TONS: 30 Tons</p></li>
+				<li><p class="infos">DATE: 5.06.2015</p></li>
+			</ul>
+			<ul class="loaddetailpane">
+				<li><p class="infos">FROM: Chennai</p></li>
+				<li><p class="infos">TO: Bangalore</p></li>
+				<li><p class="infos">TONS: 30 Tons</p></li>
+				<li><p class="infos">DATE: 8.06.2015</p></li>
+			</ul>
+		</div>
+			<ul class="button-opt">
+				<li class="find-more-btn" style="padding-right: 65px;"><input class="button-option" type="submit" name="findmore" value="FIND MORE" /></li>
+				<li class="view-more-btn"><input class="button-option" type="submit" name="viewthis" value="VIEW THIS LOAD" /></li>
+			</ul>
+		</div>
+		<div class="truckdetails">
+		<div class="slider">
+		<p class="nameplace truckks"><img id="profilepic" src="truck.png" alt=""><a href="#">Trucks Posts</a></p>
+			<ul class="truckdetailpane first-slide">
+				<li><p class="infos">FROM: Chennai</p></li>
+				<li><p class="infos">TO: Bangalore</p></li>
+				<li><p class="infos">TONS: 30 Tons</p></li>
+				<li><p class="infos">DATE: 5.06.2015</p></li>
+			</ul>			
+			<ul class="truckdetailpane">
+				<li><p class="infos">FROM: Chennai</p></li>
+				<li><p class="infos">TO: Madurai</p></li>
+				<li><p class="infos">TONS: 30 Tons</p></li>
+				<li><p class="infos">DATE: 8.06.2015</p></li>
+			</ul>			
+			<ul class="truckdetailpane">
+				<li><p class="infos">FROM: Madurai</p></li>
+				<li><p class="infos">TO: Bangalore</p></li>
+				<li><p class="infos">TONS: 30 Tons</p></li>
+				<li><p class="infos">DATE: 10.06.2015</p></li>
+			</ul>
+		</div>
+			<ul class="button-opt">
+				<li class="find-more-btn" style="padding-right: 65px;"><input class="button-option" type="submit" name="findmore" value="FIND MORE" /></li>
+				<li class="view-more-btn"><input class="button-option" type="submit" name="viewthis" value="VIEW THIS LOAD" /></li>
+			</ul>
+		</div>
+		</div>
+	</body>
+</html>

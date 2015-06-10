@@ -2,6 +2,8 @@
 body {
     font-family:'Maven Pro';
     color:white;
+    background:url('../images/pattern.png');
+    overflow:hidden;
 }
 li {
     list-style:none;
@@ -9,6 +11,26 @@ li {
 a {
     text-decoration:none;
     color:black;
+}
+::-webkit-input-placeholder {
+    color: black;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    color: black;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+    color: black;
+}
+
+:-ms-input-placeholder {
+    color: black;
+}
+button {
+    outline: none;
+    background-color: transparent;
+    border: none;
 }
 .textbox {
     width:250px;
@@ -27,308 +49,454 @@ a {
     border:none;
     color:white;
 }
+
 header {
     height:45px;
-    width:100%;
+    width:1366px;
     background:linear-gradient(white,lightgray);
     box-shadow: 0 0 8px #424242;
 }
+#logo {
+    height:40px;
+    float:left;
+    padding:2px 0;
+    margin-left:4%;
+}
+.navmenu {
+    width: 700px;
+    height: 100%;
+    float: right;
+    font-size: 15px;
+    font-weight: 500;
+    margin-right: 60px;
+}
+.username-place {
+    color:#0040D0;
+    font-weight: 500;
+    font-size: 17px;
+    margin-top: -3px;
+}
 
-@media screen and (min-width:800px){
-    body {
-        background:url('/TransEarth/images/pattern.png');
-    }
-    header {
-        height:45px;
-        width:100%;
-        background:linear-gradient(white,lightgray);
-        box-shadow: 0 0 8px #424242;
-    }
-    #logo {
-        height:40px;
-        float:left;
-        padding:2px 0;
-        margin-left:4%;
-    }
-    .navmenu {
-        width:45%;
-        height:100%;
-        float:right;
-        font-size: 15px;
-        font-weight: 500;
-    }
-    .navmenu  li {
-        float:left;
-        padding: 14px 4%;
-    }
-    .navmenu  li  a:hover {
-        color:#006FD7;
-    }
-    .truck-owner {
-        display:none;
-    }
-    .load-owner {
-        display:none;
-    }
-    .loginpanel {
-        background:rgba(0,0,0,0.9);
-        z-index:100;
-        position:fixed;
-        width:60%;
-        height:400px;
-        display:none;
-        margin:5% 20%;
-    }
-    .loginpanel ul {
-        width:274px;
-        margin:10% auto;
-    }
-    .loginpanel ul li{
-        margin:10px auto;
-    }
-    .signuppanel {
-        background:rgba(0,0,0,0.9);
-        z-index:100;
-        position:fixed;
-        width:60%;
-        height:500px;
-        display:none;
-        margin:3% 20%;
-    }
-    .signuppanel ul {
-        width:274px;
-        margin:5% auto;
-    }
-    .signuppanel ul li{
-        margin:10px auto;
-    }
-    .steps {
-        width: 30px;
-        text-align: -webkit-center;
-        background: url('/TransEarth/images/next.png') no-repeat;
-        background-size: cover;
-        font-size: 16px;
-        float: left;
-        height: 30px;
-        margin-left: 46px;
-        line-height: 28px;
-        margin-bottom: 30px;
-    }
-    .step2, .step3 {
-        display:none;
-    }
-    .closediv {
-        float:right;
-        position:absolute;
-        top:0;
-        right:0;
-        margin-right: 11px;
-        color: white;
-        margin-top: 7px;
-    }
-    .container {
-        width:100%;
-        height:90%;
-    }
-    .loaddetails, .truckdetails {
-        width: 400px;
-        height: 400px;
-        background:rgba(0,0,0,.8);
-        float:left;
-        margin:3% 3%;
-    }
-    .slider {
-        width:100%;
-        height:325px;
-    }
-    .truckdetailpane {
-        padding:2% 5%;
-    }
-    .loaddetailpane {
-        padding:2% 5%;
-        /*display:none;*/
-    }
-    .first-slide {
-        display:block;
-    }
-    .loaddetailpane li, .truckdetailpane li {
-        padding-bottom:3%;
-        height:20px;
-    }
+.dropdown-menu {
+    display:block;
+    background-color: rgb(9, 70, 133);
+    width: 125px;
+    height: 70px;
+    position: absolute;
+    margin-top: 11px;
+    margin-left: -35px;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 2px 6px #424242;
+}
+.dropdown-menu a {
+    color:white;
+}
+.menu-btn{
+    display:none;
+}
+.navmenu  li {
+    float:right;
+    padding: 14px 12px;
+}
+.navmenu  li  a:hover {
+    color:#006FD7;
+}
+.loginpanel {
+    background:rgba(0,0,0,0.9);
+    z-index:100;
+    position:fixed;
+    width:60%;
+    height:400px;
+    display:none;
+    margin:5% 20%;
+}
+.loginpanel ul {
+    width:274px;
+    margin:10% auto;
+}
+.loginpanel ul li{
+    margin:10px auto;
+}
+.signuppanel {
+    background:rgba(0,0,0,0.9);
+    z-index:100;
+    position:fixed;
+    width:60%;
+    height:500px;
+    display:none;
+    margin:3% 20%;
+}
+.signuppanel ul {
+    width:274px;
+    margin:5% auto;
+}
+.signuppanel ul li{
+    margin:10px auto;
+}
+.steps {
+    width: 30px;
+    text-align: -webkit-center;
+    background: url('../images/next.png') no-repeat;
+    background-size: cover;
+    font-size: 16px;
+    float: left;
+    height: 30px;
+    margin-left: 46px;
+    line-height: 28px;
+    margin-bottom: 30px;
+}
+.step2, .step3 {
+    display:none;
+}
+.closediv {
+    float:right;
+    position:absolute;
+    top:0;
+    right:0;
+    margin-right: 11px;
+    color: white;
+    margin-top: 7px;
+}
+.container {
+    width:1300px;
+    height:600px;
+    margin:0 auto;
+}
 
-    .slide-frame {
-        position: relative;
-        height: 200px;
-        overflow: hidden;
-    }
 
-    .wave-enter-setup, .wave-leave-setup {
-        -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
-        -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-        -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-        transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
-        position:relative;
-        display:table;
-        float:left;
-    }
+/* Home page Styles */
 
-    .wave-enter-setup {
-        left:100%;
-    }
 
-    .wave-enter-start {
-        left:0;
-    }
+.loaddetails, .truckdetails {
+    width: 400px;
+    height: 400px;
+    background:rgba(0,0,0,.8);
+    float:left;
+    margin:3% 3%;
+}
+.slider {
+    width:100%;
+    height:325px;
+}
+.loaddetailpane, .truckdetailpane {
+    padding:2% 5%;
+    display:block;
+}
+.first-slide {
+    display:block;
+}
+.loaddetailpane li, .truckdetailpane li {
+    padding-bottom:3%;
+    height:20px;
+}
+#profilepic {
+    height:60px;
+    vertical-align:middle;
+    background:url('../images/proholder.png') no-repeat;
+    background-size:cover;
+    margin-right: 11px;
+}
+.nameplace {
+    height:60px;
+    padding:30px 20px;
+}
+.nameplace a:hover {
+    color:#C24C0F;
+}
+.nameplace a {
+    color:white;
+    font-size: 17px;
+    font-weight: 700;
+}
+.infos {
+    padding:4px 10px;
+    color:white;
+    font-size: 17px;
+    font-weight: 700;
+}
+.button-opt {
+    margin-top:0;
+}
+.button-opt li {
+    float:left;
+    padding:0 25px;
+}
+.button-option {
+    padding:4px 15px;
+    font-size:13px;
+    font-weight:700;
+    background:transparent;
+    outline:none;
+    border:2px solid white;
+    color:white;
+}
+.button-option:hover {
+    background:#ffffff;
+    color:#242424;
+    cursor:pointer;
+}
 
-    .wave-leave-setup {
-        left:0%;
-    }
 
-    .wave-leave-setup.wave-leave-start {
-        left:-100%;
-    }
+/* My trucks page Style */
 
-    .floatNone{ clear:both; position:relative;}
+.pagepane{
+    height:500px;
+    width:400px;
+    margin-top:20px;
+    box-shadow:0 0 12px #848484;
+}
+.mytruckpane {
+    background:rgba(152, 178, 202, 0.94);
+    float:left;
+}
+.mypostpane{
+    background:rgba(152, 178, 202, 0.94);
+    float:right;
+}
+.div-header {
+    width:100%;
+    height:75px;
+}
+.pane-icon {
+    height:50px;
+    padding:10px;
+    float:left;
+}
+.div-header h4 {
+    padding: 23px 4px;
+    float:left;
+    color:black;
+}
 
-    .my-special-animation.ng-enter {
-        opacity : 0;
-    }
-    .my-special-animation.ng-leave {
-        opacity : 0;
-    }
-    .my-special-animation.ng-enter.ng-enter-active {
-        opacity : 1;
-        width: 100px;
-        height: 100px;
-        background: red;
-        position: relative;
-        -webkit-animation: myfirst 5s infinite; /* Chrome, Safari, Opera */
-        -webkit-animation-direction: alternate; /* Chrome, Safari, Opera */
-        animation: myfirst 5s;
-        animation-direction: alternate;
-    }
+.searchbox {
+    outline:none;
+    border:none;
+    background:transparent;
+    width:150px;
+    padding:7px;
+}
+.div-header .searchbox {
+    margin:20px 0px 0 15px;
+    float:left;
+    border-bottom:2px solid #000000;
+    color:white;
+}
+.div-header button {
+    outline: none;
+    background-color: transparent;
+    border: none;
+    height: 50px;
+    float: left;
+    border-bottom: 2px solid #000000;
+    margin-top:1px;
+}
+.div-header button img {
+    height: 36%;
+    margin-top: 20px;
+}
+.posts {
+    height:400px;
+    width:380px;
+    padding:10px;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+.runtime-div {
+    width:380px;
+    height:75px;
+    margin-bottom: 10px;
+}
+.runtime-details{
+    font-size:14px;
+    padding:2px;
+    width: 245px;
+    color:black;
+}
+.runtime-icon {
+    height:55px;
+    padding:10px;
+    float:left;
+}
+.runtime-options {
+    float:right;
+    width: 125px;
+    height: 75px;
+    margin-top: -63px;
+}
+.runtime-options button {
+    outline: none;
+    background-color: transparent;
+    border: none;
+    float: left;
+    height: 45px;
+    margin: 17px 3px;
+    font-size: 11px;
+    width: 32px;
+    color: #000000;
+}
+.runtime-options button img {
+    padding-bottom:3px;;
+}
+::-webkit-scrollbar {
+    width: 5px;
+    border-radius:1px;
+}
+::-webkit-scrollbar-track {
+    background-color: #D4DEE8;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-button {
+    background-color: #7D92A6;
+    height: 10px;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-corner {
+    background-color: white;
+}
 
-    /* Chrome, Safari, Opera */
-    @-webkit-keyframes myfirst {
-        0%   {background: red; left: 0px; top: 0px;}
-        25%  {background: yellow; left: 200px; top: 0px;}
-        50%  {background: blue; left: 200px; top: 200px;}
-        75%  {background: green; left: 0px; top: 200px;}
-        100% {background: red; left: 0px; top: 0px;}
-    }
 
-    @keyframes myfirst {
-        0%   {background: red; left: 0px; top: 0px;}
-        25%  {background: yellow; left: 200px; top: 0px;}
-        50%  {background: blue; left: 200px; top: 200px;}
-        75%  {background: green; left: 0px; top: 200px;}
-        100% {background: red; left: 0px; top: 0px;}
-    }
+/* Slider Css */
 
-    .switch {
-        position: relative;
-    }
+.slide-frame {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
 
-    .switch > div {
-        width: 655px;
-        display: inline-block;
-        position: absolute;
-    }
-    .animate-enter,
-    .animate-leave
-    {
-        -webkit-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-        -moz-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-        -ms-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-        -o-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-        transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    }
+.wave-enter-setup, .wave-leave-setup {
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
+    -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) .5s;
+    position:relative;
+    display:table;
+    float:left;
+}
 
-    .animate-enter {
-        left: 100%;
-    }
-    .animate-enter.animate-enter-active {
-        left: 0;
-    }
+.wave-enter-setup {
+    left:100%;
+}
 
-    .animate-leave {
-        left: 0;
-    }
-    .animate-leave.animate-leave-active{
-        left: -100%;
-    }
+.wave-enter-start {
+    left:0;
+}
 
-    #profilepic {
-        height:60px;
-        vertical-align:middle;
-        background:url('/TransEarth/images/proholder.png') no-repeat;
-        background-size:cover;
-        margin-right: 11px;
-    }
-    .nameplace a:hover {
-        color:#C24C0F;
-    }
-    .nameplace a {
-        color:white;
-        font-size: 17px;
-        font-weight: 700;
-    }
-    .infos {
-        padding:4px 10px;
-        color:white;
-        font-size: 17px;
-        font-weight: 700;
-    }
-    .insert-enter {
-        background-color: red;
-        animation-name: example;
-        animation-duration: 4s;
-    }
-    .insert-enter.insert-enter-active {
-        -webkit-transform:scale(1);
-        transform:scale(1);
-        transition-delay:500ms;
-    }
-    .insert-transition-delay-1 {
-        -webkit-transition-delay:1000ms;
-        transition-delay:1000ms;
-    }
-    .insert-transition-delay-2 {
-        -webkit-transition-delay:2000ms;
-        transition-delay:2000ms;
-    }
-    .insert-transition-delay-3 {
-        -webkit-transition-delay:3000ms;
-        transition-delay:3000ms;
-    }
-    .insert-transition-delay-4 {
-        -webkit-transition-delay:4000ms;
-        transition-delay:4000ms;
-    }
+.wave-leave-setup {
+    left:0%;
+}
 
-    @keyframes example {
-        from {background-color: red;}
-        to {background-color: yellow;}
-    }
-    .button-opt {
-        margin-top:0;
-    }
-    .button-opt li {
-        float:left;
-        padding:0 25px;
-    }
-    .button-option {
-        padding:4px 15px;
-        font-size:13px;
-        font-weight:700;
-        background:transparent;
-        outline:none;
-        border:2px solid white;
-        color:white;
-    }
-    .button-option:hover {
-        background:#ffffff;
-        color:#242424;
-        cursor:pointer;
-    }
+.wave-leave-setup.wave-leave-start {
+    left:-100%;
+}
+
+.floatNone{ clear:both; position:relative;}
+
+.my-special-animation.ng-enter {
+    opacity : 0;
+}
+.my-special-animation.ng-leave {
+    opacity : 0;
+}
+.my-special-animation.ng-enter.ng-enter-active {
+    opacity : 1;
+    width: 100px;
+    height: 100px;
+    background: red;
+    position: relative;
+    -webkit-animation: myfirst 5s infinite; /* Chrome, Safari, Opera */
+    -webkit-animation-direction: alternate; /* Chrome, Safari, Opera */
+    animation: myfirst 5s;
+    animation-direction: alternate;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes myfirst {
+    0%   {background: red; left: 0px; top: 0px;}
+    25%  {background: yellow; left: 200px; top: 0px;}
+    50%  {background: blue; left: 200px; top: 200px;}
+    75%  {background: green; left: 0px; top: 200px;}
+    100% {background: red; left: 0px; top: 0px;}
+}
+
+@keyframes myfirst {
+    0%   {background: red; left: 0px; top: 0px;}
+    25%  {background: yellow; left: 200px; top: 0px;}
+    50%  {background: blue; left: 200px; top: 200px;}
+    75%  {background: green; left: 0px; top: 200px;}
+    100% {background: red; left: 0px; top: 0px;}
+}
+
+.switch {
+    position: relative;
+}
+
+.switch > div {
+    width: 655px;
+    display: inline-block;
+    position: absolute;
+}
+.animate-enter,
+.animate-leave
+{
+    -webkit-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 300ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+}
+
+.animate-enter {
+    left: 100%;
+}
+.animate-enter.animate-enter-active {
+    left: 0;
+}
+
+.animate-leave {
+    left: 0;
+}
+.animate-leave.animate-leave-active{
+    left: -100%;
+}
+
+
+.infos {
+    padding:4px 10px;
+    color:white;
+    font-size: 17px;
+    font-weight: 700;
+}
+.insert-enter {
+    background-color: red;
+    animation-name: example;
+    animation-duration: 4s;
+}
+.insert-enter.insert-enter-active {
+    -webkit-transform:scale(1);
+    transform:scale(1);
+    transition-delay:500ms;
+}
+.insert-transition-delay-1 {
+    -webkit-transition-delay:1000ms;
+    transition-delay:1000ms;
+}
+.insert-transition-delay-2 {
+    -webkit-transition-delay:2000ms;
+    transition-delay:2000ms;
+}
+.insert-transition-delay-3 {
+    -webkit-transition-delay:3000ms;
+    transition-delay:3000ms;
+}
+.insert-transition-delay-4 {
+    -webkit-transition-delay:4000ms;
+    transition-delay:4000ms;
+}
+
+@keyframes example {
+    from {background-color: red;}
+    to {background-color: yellow;}
 }
