@@ -1,15 +1,44 @@
-<div class="col-md-12" ng-controller="truckOwnerTrucksCtrl">
-	<div class="bs-component">
-		<div class="panel panel-success">
-			<div class="panel-heading">
-				<h3 class="panel-title">My Trucks</h3>
-			</div>
-			<div class="panel-body">
-				<div id="myTruckListMessage" ng-show="!myTruckList.listShow">
-					<div id="myTrucklist_alert" ></div>
-				</div>
-				<div ng-show="myTruckList.listShow" class="gridMaxStyle" ng-grid="myTruckList.gridOptions"></div>
-			</div>
+<div ng-controller="truckOwnerTrucksCtrl">
+	<div class="mytruckpane pagepane">
+		<div class="div-header">
+			<img class="pane-icon" src="images/mytruck.png" alt="" />
+			<h4>My Trucks <span>(12)</span></h4>
+			<input type="textbox" class="searchbox" name="mytrucksearch" Value="" placeholder="Search" />
+			<button><img src="images/search-btn.png" alt="Search" /></button>
+		</div>
+		<div class="posts">
+			<ul ng-repeat="truck in myTruckList.list" class="runtime-div">
+				<img class="runtime-icon" src="images/mytruck.png" alt="" />
+				<li class="runtime-details"><b>{{truck.regNo}}</b></li>
+				<li class="runtime-details">{{truck.make}} - {{truck.model}}</li>
+				<li class="runtime-details">{{truck.capacity}}</li>
+				<li class="runtime-options">
+					<button><img class="edit-icon" src="images/add.png" alt="" />Add</button>
+					<button><img class="edit-icon" src="images/edit.png" alt="" />Edit</button>
+					<button><img class="edit-icon" src="images/delete.png" alt="" />Delete</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="mypostpane pagepane">
+		<div class="div-header">
+			<img class="pane-icon" src="images/posts.png" alt="" />
+			<h4>My Posts <span>(22)</span></h4>
+			<input type="textbox" class="searchbox" name="mytrucksearch" Value="" placeholder="Search" />
+			<button><img src="images/search-btn.png" alt="Search" /></button>
+		</div>
+		<div class="posts">
+			<ul ng-repeat="post in myTruckPostList.list" class="runtime-div">
+				<img class="runtime-icon" src="images/mytruck.png" alt="" />
+				<li class="runtime-details"><b>{{post.regNo}}</b></li>
+				<li class="runtime-details">{{post.source}} - {{post.destination}}</li>
+				<li class="runtime-details">{{post.availableDateDisplay}}</li>
+				<li class="runtime-options">
+					<button><img class="edit-icon" src="images/add.png" alt="" />Add</button>
+					<button><img class="edit-icon" src="images/edit.png" alt="" />Edit</button>
+					<button><img class="edit-icon" src="images/delete.png" alt="" />Delete</button>
+				</li>
+			</ul>
 		</div>
 	</div>
 </div>
