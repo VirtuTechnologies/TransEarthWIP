@@ -20,7 +20,7 @@ function indexCtrl($scope, $http, $location, $timeout, $route, UserRequest) {
     $scope.truckPosting.timeOut = function(index){
         $timeout(function(){
             $scope.truckPosts.pop();
-            console.log("Current truck post displayed:"+JSON.stringify($scope.index.truckPostList[$scope.truckPosting.nextItem]));
+            //console.log("Current truck post displayed:"+JSON.stringify($scope.index.truckPostList[$scope.truckPosting.nextItem]));
             if(index>$scope.index.truckPostList.length - 2){
                 $scope.truckPosting.nextItem = 0;
             }else{
@@ -29,7 +29,7 @@ function indexCtrl($scope, $http, $location, $timeout, $route, UserRequest) {
             var truck_post = $scope.index.truckPostList[$scope.truckPosting.nextItem];
             $timeout(function(){
                 $scope.truckPosts.push(truck_post);
-                console.log("Next truck post to display:"+JSON.stringify($scope.index.truckPostList[$scope.truckPosting.nextItem]));
+                //console.log("Next truck post to display:"+JSON.stringify($scope.index.truckPostList[$scope.truckPosting.nextItem]));
                 $scope.truckPosting.timeOut($scope.truckPosting.nextItem);
             }, $scope.itemLeaveDelay);
 
@@ -65,7 +65,7 @@ function indexCtrl($scope, $http, $location, $timeout, $route, UserRequest) {
     $scope.loadPosting.timeOut = function(index){
         $timeout(function(){
             $scope.loadPosts.pop();
-            console.log("Current load post displayed:"+JSON.stringify($scope.index.loadPostList[$scope.loadPosting.nextItem]));
+            //console.log("Current load post displayed:"+JSON.stringify($scope.index.loadPostList[$scope.loadPosting.nextItem]));
             if(index>$scope.index.loadPostList.length - 2){
                 $scope.loadPosting.nextItem = 0;
             }else{
@@ -74,7 +74,7 @@ function indexCtrl($scope, $http, $location, $timeout, $route, UserRequest) {
             var load_post = $scope.index.loadPostList[$scope.loadPosting.nextItem];
             $timeout(function(){
                 $scope.loadPosts.push(load_post);
-                console.log("Next load post to display:"+JSON.stringify($scope.index.loadPostList[$scope.loadPosting.nextItem]));
+                //console.log("Next load post to display:"+JSON.stringify($scope.index.loadPostList[$scope.loadPosting.nextItem]));
                 $scope.loadPosting.timeOut($scope.loadPosting.nextItem);
             }, $scope.itemLeaveDelay);
 

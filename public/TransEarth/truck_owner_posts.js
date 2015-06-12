@@ -58,6 +58,7 @@ function truckOwnerPostsCtrl($scope, $http, $location, $modal, UserRequest, Truc
                             && data.myTruckPostList.details.length > 0){
                             //console.log(JSON.stringify(data.myTruckList.details));
                             $scope.myTruckPostList.totalServerItems = data.length;
+                            $scope.myTruckPostList.list = data.myTruckPostList.details;
                             var filteredData = data.myTruckPostList.details.filter(function(item) {
                                 return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
                             });
@@ -96,6 +97,7 @@ function truckOwnerPostsCtrl($scope, $http, $location, $modal, UserRequest, Truc
                             //console.log(JSON.stringify(data.myTruckPostList.details));
                             $scope.myTruckPostList.totalServerItems = data.length;
                             var filteredData = data.myTruckPostList.details;
+                            $scope.myTruckPostList.list = data.myTruckPostList.details;
                             $scope.myTruckPostList.columnDefs = data.myTruckPostList.headers;
                             $scope.myTruckPostList.setPagingData(filteredData,page,pageSize);
                             $scope.myTruckPostList.listShow = true;
@@ -122,7 +124,7 @@ function truckOwnerPostsCtrl($scope, $http, $location, $modal, UserRequest, Truc
     };
     //$scope.getPagedDataAsync($scope.truckPostList.pagingOptions.pageSize, $scope.truckPostList.pagingOptions.currentPage);
 
-    $scope.$watch('myTruckPostList.pagingOptions', function (newVal, oldVal) {
+    /*$scope.$watch('myTruckPostList.pagingOptions', function (newVal, oldVal) {
         if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
             $scope.myTruckPostList.getPagedDataAsync($scope.myTruckPostList.pagingOptions.pageSize, $scope.myTruckPostList.pagingOptions.currentPage, $scope.myTruckPostList.filterOptions.filterText);
         }
@@ -131,7 +133,7 @@ function truckOwnerPostsCtrl($scope, $http, $location, $modal, UserRequest, Truc
         if (newVal !== oldVal) {
             $scope.myTruckPostList.getPagedDataAsync($scope.myTruckPostList.pagingOptions.pageSize, $scope.myTruckPostList.pagingOptions.currentPage, $scope.myTruckPostList.filterOptions.filterText);
         }
-    }, true);
+    }, true);*/
 
     $scope.myTruckPostList.columnDefs = [];
     $scope.myTruckPostList.gridOptions = {

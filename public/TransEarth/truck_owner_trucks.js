@@ -104,7 +104,9 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
                             && typeof data.myTruckList.details != "undefined" && data.myTruckList.details != null
                             && data.myTruckList.details.length > 0){
                             //console.log(JSON.stringify(data.myTruckList.details));
+                            $scope.myTruckList.list = data.myTruckList.details
                             $scope.myTruckList.totalServerItems = data.myTruckList.details.length;
+                            console.log(JSON.stringify($scope.myTruckList.totalServerItems));
                             var filteredData = data.myTruckList.details;
                             $scope.myTruckList.columnDefs = data.myTruckList.headers;
                             $scope.setPagingData(filteredData,page,pageSize);
@@ -134,7 +136,7 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
     };
     //$scope.getPagedDataAsync($scope.truckPostList.pagingOptions.pageSize, $scope.truckPostList.pagingOptions.currentPage);
 
-    $scope.$watch('myTruckList.pagingOptions', function (newVal, oldVal) {
+    /*$scope.$watch('myTruckList.pagingOptions', function (newVal, oldVal) {
         if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
             $scope.getPagedDataAsync($scope.myTruckList.pagingOptions.pageSize, $scope.myTruckList.pagingOptions.currentPage, $scope.myTruckList.filterOptions.filterText);
         }
@@ -143,7 +145,7 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
         if (newVal !== oldVal) {
             $scope.getPagedDataAsync($scope.myTruckList.pagingOptions.pageSize, $scope.myTruckList.pagingOptions.currentPage, $scope.myTruckList.filterOptions.filterText);
         }
-    }, true);
+    }, true);*/
 
     $scope.myTruckList.columnDefs = [];
     $scope.myTruckList.gridOptions = {
