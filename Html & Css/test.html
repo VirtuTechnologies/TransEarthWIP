@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<link href="test.css" rel="stylesheet" type="text/css" />
+
+<!-- <script>
+$(document).ready(function(){
+
+	$(function loop(){
+
+		$("div:visible p:first-child").delay(2500).animate({ marginLeft: "-100px", opacity: 0 }, 170, function nextitem(){ 
+
+			$(this).next().animate({ marginLeft: "-100px", opacity: 0 }, 170, nextitem);
+		if($("div:visible p:last-child").css("opacity") == "0") {
+		$(this).parent().css("display","none");
+		$(this).parent().next().fadeIn(function() {
+		loop();
+		});
+		}
+		});
+    });
+	
+	
+});
+</script> -->
+</head>
+<body>
+<div>
+  <p class="flipInX">The first paragraph in div.</p>
+  <p>The last paragraph in div.</p>
+<p>The first paragraph in div.</p>
+  <p>The last paragraph in div.</p>
+<p>The first paragraph in div.</p>
+  <p>The last paragraph in div.</p>
+</div>
+
+<div style="display:none;">
+  <p>The first pgraph in div.</p>
+  <p>The last pgraph in div.</p>
+<p>The first paragraph in div.</p>
+  <p>The last paragraph in div.</p>
+<p>The first paragraph in div.</p>
+  <p>The last paragraph in div.</p>
+</div>
+</body>
+</html>

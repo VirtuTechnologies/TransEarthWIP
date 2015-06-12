@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<script src="jquery-1.11.3.min.js"></script>
+		<link href="style.css" rel="stylesheet" type="text/css" />
+		<link href="pace.css" rel="stylesheet" type="text/css" />
+		<script src="mobile.js"></script>
+		<script src="pace.js"></script>
+		<link href='http://fonts.googleapis.com/css?family=Maven+Pro' rel='stylesheet' type='text/css'>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+		<script>
+		$(document).ready(function(){
+		
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Uc Browser/i.test(navigator.userAgent) ) {
+  // tasks to do if it is a Mobile Device
+  $('link[rel=stylesheet][href~="style.css"]').remove();
+  $('head').append('<link rel="stylesheet" type="text/css" href="mobile.css">');
+ 
+}
+		
+		});
+		</script>
+	</head>
+	<body>
+	<header>
+			<img id="logo" 	src="logo.png" alt="" />
+			<button class="menu-btn">
+			<p class="menu-icon">Menu<img src="menu-icon.png" alt="" /></p>
+			</button>
+			<ul class="navmenu">
+				
+				<li><a class="logindiv" href="#">Login</a></li>
+				<li><a href="loads.html">Signup</a></li>
+				<li><a href="trucks.html">Search Trucks</a></li>
+				<li><a href="loads.html">Search Loads</a></li>
+				<li class="menu-align"><a href="trucks.html">Home</a></li>
+			</ul>			
+		</header>
+		<div class="container">
+		<div class="search-bar">
+		<div class="location"><img src="location.png" ><input class="search-bar-input" type="text" placeholder="From Location" name="from"/></div>
+		<div class="location"><img src="location.png" ><input class="search-bar-input" type="text" placeholder="To Location" name="to"/></div>
+		<div class="location"><img src="mytruck.png" ><select class="search-bar-input"><option>Truck Type</option></select></div>
+		<div class="location"><img src="location.png" ><input style="margin:0;" class="search-bar-input" type="date" placeholder="From Location" name="from"/></div>
+		<div class="radio-group"><input type="radio" name="date-option"><label for="date-option"><span>ON</span></label></br> <input type="radio" name="date-option"><label for="date-option"><span>AFTER</span></label></div>
+		<button class="submit-search"><img src="search-btn-white.png" alt="" /></button>
+		</div>
+		<img class="shadow1" src="shadow1.png" alt="" />
+		<div class="results">
+		<table class="results-table">
+		<thead>
+		<tr>
+			<td>
+			From
+			</td>
+			<td>
+			To
+			</td>
+			<td>
+			Capacity
+			</td>
+			<td>
+			Available From
+			</td>
+			<td>
+			Action
+			</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td>
+			From
+			</td>
+			<td>
+			To
+			</td>
+			<td>
+			Capacity
+			</td>
+			<td>
+			Available From
+			</td>
+			<td>
+			<img src="view.png" class="view-action" alt="" />View
+			</td>
+		</tr>
+		<tr>
+			<td>
+			From
+			</td>
+			<td>
+			To
+			</td>
+			<td>
+			Capacity
+			</td>
+			<td>
+			Available From
+			</td>
+			<td>
+			<img src="view.png" class="view-action" alt="" />View
+			</td>
+		</tr>
+		<tr>
+			<td>
+			From
+			</td>
+			<td>
+			To
+			</td>
+			<td>
+			Capacity
+			</td>
+			<td>
+			Available From
+			</td>
+			<td>
+			<img src="view.png" class="view-action" alt="" />View
+			</td>
+		</tr>
+		<tr>
+			<td>
+			From
+			</td>
+			<td>
+			To
+			</td>
+			<td>
+			Capacity
+			</td>
+			<td>
+			Available From
+			</td>
+			<td>
+			<img src="view.png" class="view-action" alt="" />View
+			</td>
+		</tr>
+		<tr>
+			<td>
+			From
+			</td>
+			<td>
+			To
+			</td>
+			<td>
+			Capacity
+			</td>
+			<td>
+			Available From
+			</td>
+			<td>
+			<img src="view.png" class="view-action" alt="" />View
+			</td>
+		</tr>
+		<tr>
+			<td>
+			From
+			</td>
+			<td>
+			To
+			</td>
+			<td>
+			Capacity
+			</td>
+			<td>
+			Available From
+			</td>
+			<td>
+			<img src="view.png" class="view-action" alt="" />View
+			</td>
+		</tr>
+		<tr>
+			<td>
+			From
+			</td>
+			<td>
+			To
+			</td>
+			<td>
+			Capacity
+			</td>
+			<td>
+			Available From
+			</td>
+			<td>
+			<img src="view.png" class="view-action" alt="" />View
+			</td>
+		</tr>
+		<tr>
+			<td>
+			From
+			</td>
+			<td>
+			To
+			</td>
+			<td>
+			Capacity
+			</td>
+			<td>
+			Available From
+			</td>
+			<td>
+			<img src="view.png" class="view-action" alt="" />View
+			</td>
+		</tr>
+		<tr>
+			<td>
+			From
+			</td>
+			<td>
+			To
+			</td>
+			<td>
+			Capacity
+			</td>
+			<td>
+			Available From
+			</td>
+			<td>
+			<img src="view.png" class="view-action" alt="" />View
+			</td>
+		</tr>
+		</tbody>
+		<tfoot>
+		<tr>
+			<td>
+			</td>
+			<td>
+			</td>
+			<td>
+			</td>
+			<td colspan="2">
+			<a href="#">First Page<img src="first.png" alt="" /></a>
+			<a href="#">Previous<img src="back.png" alt="" /></a>5<a href="#"><img src="nextp.png" alt="" />Next</a>
+			<a href="#"><img src="last.png" alt="" />Last Page</a>
+			</td>
+		</tr>
+		</tfoot>
+		</table>
+		</div>
+		<img class="shadow2" src="shadow2.png" alt="" />
+		</div>
+	</body>
+</html>
