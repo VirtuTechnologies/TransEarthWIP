@@ -4,6 +4,7 @@ var TransEarthApp = angular.module('TransEarthApp',
         'ngRoute',
         'ngAnimate',
         'ui.bootstrap',
+        'ui.date',
         'ngGrid',
         "daterangepicker",
         //'angular-bootstrap-select',
@@ -311,7 +312,7 @@ TransEarthApp.directive('formattedAddress', function(){
     }
 });
 
-TransEarthApp.directive('googlePlaces', ["$compile", function($compile){
+TransEarthApp.directive('googlePlacesBootStrap', ["$compile", function($compile){
     return {
         restrict:'AE',
         //replace:true,
@@ -393,6 +394,139 @@ TransEarthApp.directive('googlePlaces', ["$compile", function($compile){
                                 'for="city">Location is mandatory'+
                     '</div> '
                     //+ '<pre>{{form.'+tagName+'.$error | json}} {{location.isSelected}}</pre> '
+                ;
+            //console.log("Template set on initialize: "+template);
+            //console.log("Scope set on initialize: "+$scope);
+            //console.log("Attr set on initialize: "+attrs.required);
+            $scope.resetPlace = function(){
+                if(typeof $scope.location != "undefined" && $scope.location!= null){
+                    //console.log("Resetting place as it is changed: "+JSON.stringify($scope.location));
+                    //$scope.location.place = "";
+                    //$scope.location.state = "";
+                    if(requiredAttr){
+                        $scope.location.isSelected = false;
+                        $scope.location.disable = false;
+                    }else if($scope.location.display == ""){
+                        $scope.location.place = "";
+                        $scope.location.isSelected = true;
+                        $scope.location.disable = false;
+                    }else{
+                        $scope.location.isSelected = false;
+                        $scope.location.disable = false;
+                    }
+                }
+            };
+            elm.html(template);
+            $compile(elm.contents())($scope);
+            if(typeof $scope.location != "undefined" && $scope.location != null){
+                //console.log("Location set on initialize for "+"#"+tagId+" : "+JSON.stringify($scope.location));
+                $("#"+tagId).val($scope.location.place);
+                //$("#ownr_city").val($scope.city.place);
+            }
+
+            var autocomplete = new google.maps.places.Autocomplete($("#"+tagId)[0], {types: ['(cities)'],componentRestrictions: {country: 'in'}});
+            //var autocomplete = new google.maps.places.Autocomplete($("#hash")[0], {});
+            google.maps.event.addListener(autocomplete, 'place_changed', function() {
+                var place = autocomplete.getPlace();
+                //$scope.city = {};
+                if(typeof place != "undefined" && place != null && typeof place.address_components != "undefined" && place.address_components != null){
+                    console.log("place: "+JSON.stringify(place));
+                    var result = getObjects(place.address_components, 'types', 'locality', null, null);
+                    //console.log("result: "+JSON.stringify(result));
+                    //$scope.city.place = place.address_components;
+                    if(Array.isArray(result) && result.length > 0){
+                        $scope.location.place = result[0].long_name;
+                        $scope.location.isSelected = true;
+                        $scope.location["formatted-address"] = result[0]["formatted-address"];
+                    }
+                    result = getObjects(place.address_components, 'types', 'administrative_area_level_1', null, null);
+                    if(Array.isArray(result) && result.length > 0){
+                        $scope.location.state = result[0].long_name;
+                        //$scope.city.isSelected = true;
+                    }
+                    result = getObjects(place.address_components, 'types', 'country', null, null);
+                    if(Array.isArray(result) && result.length > 0){
+                        $scope.location.country = result[0].long_name;
+                        //$scope.city.isSelected = true;
+                    }
+                }else{
+                    console.log("place not defined");
+                    if(requiredAttr){
+                        $scope.location.isSelected = false;
+                    }else{
+                        $scope.location.isSelected = true;
+                    }
+                }
+                //console.log(JSON.stringify(place));
+                console.log(JSON.stringify($scope.location));
+                $scope.$apply();
+            });
+        }
+    }
+}]);
+
+TransEarthApp.directive('googlePlaces', ["$compile", function($compile){
+    return {
+        restrict:'AE',
+        //replace:true,
+        replace:false,
+        require: ['^form'],
+        controller: 'CityCtrl',
+        // transclude:true,
+        scope: {
+            location : '=',
+            tagId : "@",
+            tagName : "@"
+        },
+        //template: '<input id="{{tagId}}" name="{{tagName}}" type="text" class="input-block-level"/>',
+        //template: '<input id="hash" name="hash" type="text" class="input-block-level"/>',
+        //template: '<div><input id="hash" name="hash" type="text" class="input-block-level"/>{{tagId}}</div>',
+        link: function($scope, elm, attrs, ctrls){
+            var tagId = attrs.tagid;
+            var tagName = attrs.tagname;
+            var requiredAttr = attrs.required;
+            var placeHolder = attrs.holder;
+            var glyph = attrs.glyph;
+            var glyphDisplay = false;
+            var disable;
+            $scope.form = ctrls[0];
+            if (typeof placeHolder == "undefined" || placeHolder == null) {
+                placeHolder = "Enter Location";
+            }
+            if (typeof requiredAttr != "undefined" && requiredAttr != null) {
+                // If attribute required exists
+                // ng-required takes a boolean
+                $scope.required = true;
+            }else{
+                $scope.required = false;
+                if(typeof $scope.location != "undefined" && $scope.location != null){
+                    $scope.location.isSelected = true;
+                }
+            }
+            //console.log("Required set on initialize: "+$scope.required);
+            if(typeof $scope.location == "undefined" || $scope.location == null){
+                //$scope.city = {};
+                disable = false;
+            }else{
+                disable = $scope.location.disable;
+            }
+            if (typeof glyph == "undefined" || glyph == null) {
+                glyphDisplay = true;
+            }else{
+                glyphDisplay = false;
+            }
+
+            var template =
+                    '<input class="textbox" id="'+tagId+'" name="'+tagName + '" ' +
+                        'ng-class="{\'has-error\': form.'+tagName+'.$error.required && !location.isSelected, ' +
+                        '\'has-success\' : !(form.'+tagName+'.$error.required) && location.isSelected, '+
+                        '\'has-feedback\' : form.'+tagName+'.$error.required && !location.isSelected}" ' +
+                        'ng-disabled="location.disable" type="text" '+
+                        'ng-change="resetPlace()" ' +
+                        'placeholder="'+placeHolder+'" ' +
+                        'ng-model="location.display" ng-required="'+$scope.required+'"'+
+                    '/> '
+            //+ '<pre>{{form.'+tagName+'.$error | json}} {{location.isSelected}}</pre> '
                 ;
             //console.log("Template set on initialize: "+template);
             //console.log("Scope set on initialize: "+$scope);

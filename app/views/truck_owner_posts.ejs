@@ -1,15 +1,23 @@
-<div class="col-md-12" ng-controller="truckOwnerPostsCtrl">
-	<div class="bs-component">
-		<div class="panel panel-success">
-			<div class="panel-heading">
-				<h3 class="panel-title">My Posts</h3>
-			</div>
-			<div class="panel-body">
-				<div id="myTruckPostListMessage" ng-show="!myTruckPostList.listShow||myTruckPostList.messageAvailable">
-					<div id="myTruckPostlist_alert" ></div>
-				</div>
-				<div ng-show="myTruckPostList.listShow" class="gridMaxStyle" ng-grid="myTruckPostList.gridOptions"></div>
-			</div>
+<div ng-controller="truckOwnerPostsCtrl">
+	<div class="mypostpane pagepane">
+		<div class="div-header">
+			<img class="pane-icon" src="images/posts.png" alt="" />
+			<h4>My Posts <span>(22)</span></h4>
+			<input type="textbox" class="searchbox" name="mytrucksearch" Value="" placeholder="Search" />
+			<button><img src="images/search-btn.png" alt="Search" /></button>
+		</div>
+		<div class="posts">
+			<ul ng-repeat="post in myTruckPostList.list" class="runtime-div">
+				<img class="runtime-icon" src="images/mytruck.png" alt="" />
+				<li class="runtime-details"><b>{{post.regNo}}</b></li>
+				<li class="runtime-details">{{post.source}} - {{post.destination}}</li>
+				<li class="runtime-details">{{post.availableDateDisplay}}</li>
+				<li class="runtime-options">
+					<button><img class="edit-icon" src="images/add.png" alt="" />Add</button>
+					<button><img class="edit-icon" src="images/edit.png" alt="" />Edit</button>
+					<button><img class="edit-icon" src="images/delete.png" alt="" />Delete</button>
+				</li>
+			</ul>
 		</div>
 	</div>
 </div>

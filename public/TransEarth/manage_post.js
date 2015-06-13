@@ -112,7 +112,8 @@ function truckPostManageCtrl($scope, $http, $location, $anchorScroll, $filter, U
     $scope.truckToPost.details.reg_no = tempTruck.truck_details.reg_no;
     $scope.truckToPost.details.load = tempTruck.truck_details.maximum_load.quantity + " " + tempTruck.truck_details.maximum_load.unit;
 
-    console.log("Refreshing Date picker start");
+    //console.log("Refreshing Date picker start");
+    $scope.frequency = ["One Time", "Daily", "Weekly", "Monthly"];
     var frequency = ["One Time", "Daily", "Weekly", "Monthly"];
     var options = '';
     options += '<option value="">Choose one</option>';
@@ -126,10 +127,10 @@ function truckPostManageCtrl($scope, $http, $location, $anchorScroll, $filter, U
             options += '<option>' + row + '</option>';
         }
     });
-    applyHtml("post_frequency", options);
-    applySelect("post_frequency");
+    //applyHtml("post_frequency", options);
+    //applySelect("post_frequency");
     //$('#post_frequency').selectpicker('refresh');
-    console.log("Refreshing Date picker start");
+    //console.log("Refreshing Date picker start");
 
     $scope.showLocations = false;
     $scope.showDateRange = false;
@@ -189,8 +190,8 @@ function truckPostManageCtrl($scope, $http, $location, $anchorScroll, $filter, U
         $scope.truckToPost.post.pickup.startDate = tempPost.truck_post.availability.start_date;
         $scope.truckToPost.post.pickup.endDate = tempPost.truck_post.availability.end_date;
         $scope.truckToPost.post.schedule.frequency = tempPost.truck_post.availability.schedule;
-        $("#post_frequency").val(tempPost.truck_post.availability.schedule);
-        $("#post_frequency").selectpicker('refresh');
+        //$("#post_frequency").val(tempPost.truck_post.availability.schedule);
+        //$("#post_frequency").selectpicker('refresh');
         $scope.showLocations = true;
     }
     $scope.truckPostForm = {};

@@ -52,9 +52,12 @@ button {
 
 header {
     height:45px;
-    width:1366px;
+    width:1280px;
     background:linear-gradient(white,lightgray);
     box-shadow: 0 0 8px #424242;
+}
+.username-place:hover .dropdown-menu{
+    display: block;
 }
 #logo {
     height:40px;
@@ -78,7 +81,7 @@ header {
 }
 
 .dropdown-menu {
-    display:block;
+    display:none;
     background-color: rgb(9, 70, 133);
     width: 125px;
     height: 70px;
@@ -499,4 +502,28 @@ header {
 @keyframes example {
     from {background-color: red;}
     to {background-color: yellow;}
+}
+/* Trucks */
+.add-post {
+    float: left;
+    background: rgba(152, 178, 202, 0.94);
+    margin-left: 7px;
+    height: 500px;
+    width: 350px;
+    margin-top: 20px;
+    color:black;
+}
+.add-post  h3 {
+    padding:15px;
+}
+.add-post  ul {
+    padding:15px;
+    font-weight:bold;
+}
+.add-post  ul li {
+    padding:5px 10px;
+}
+.close-label {
+    float:right;
+    padding: 5px;
 }

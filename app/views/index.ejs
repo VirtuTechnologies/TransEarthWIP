@@ -38,8 +38,8 @@
 				<p class="menu-icon">Menu<img src="images/menu-icon.png" alt=""></p>
 			</button>
 			<ul class="navmenu">
-                <li ng-if="core.loggedIn">
-                    <a href="#" class="username-place"> {{user.display_name}}</a>
+                <li ng-if="core.loggedIn" class="username-place">
+                    <a href="#"> {{user.display_name}}</a>
                     <ul class="dropdown-menu">
                         <li><a href="/TransEarth/logout">Logout</a></li>
                     </ul>
@@ -79,6 +79,7 @@
 		<script src="angular/angular.min.js"></script>
 		<script src="angular/angular-route.min.js"></script>
 		<script src="angular/angular-animate.min.js"></script>
+		<script src="angular/angular-ui-date.js"></script>
 		<!-- BOOTSTRAP SCRIPTS  -->
 		<!-- Angular Addon -->
 		<script src="angular/ui-bootstrap-tpls-0.10.0.js"></script>

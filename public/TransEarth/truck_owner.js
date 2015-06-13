@@ -11,7 +11,10 @@ function truckOwnerCtrl($scope, $http, $location, UserRequest, TruckRequest) {
     }
     $scope.truckOwnerPage = {};
     $scope.truckOwnerPage.showTruckList = true;
+    $scope.truckOwnerPage.showManageTruck = false;
     $scope.truckOwnerPage.showPostList = true;
+    $scope.truckOwnerPage.showManagePost = false;
+
     $scope.truckOwnerPage.showAlert = false;
 
     /*$scope.$watch('truckOwnerPage.showAlert', function (newVal, oldVal) {
