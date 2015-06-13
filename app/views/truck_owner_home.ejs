@@ -1,21 +1,15 @@
-<div class="page-header" id="truck_owner" ng-controller="truckOwnerCtrl">
-	<div class="bs-docs-section">
-		<!-- div id="truck_home_alert" ng-show="truckOwnerPage.showAlert"></div -->
-		<div id="truck_home_alert"></div>
-		<div class="row">
-			<div class="col-lg-6" ng-if="!truckOwnerPage.showTruckList">
-				<div ng-include src="template.editTruck"></div>
-			</div>
-			<div class="col-lg-6" ng-if="truckOwnerPage.showTruckList">
-				<div ng-include src="template.myTrucks"></div>
-			</div>
-			<div class="col-lg-6" ng-if="truckOwnerPage.showPostList">
-				<div ng-include src="template.truckPosts"></div>
-			</div>
-			<div class="col-lg-6" ng-if="!truckOwnerPage.showPostList">
-				<div ng-include src="template.managePost"></div>
-			</div>
-		</div>
+<div id="truck_owner" ng-controller="truckOwnerCtrl">
+	<div ng-if="truckOwnerPage.showManageTruck">
+		<div ng-include src="template.editTruck"></div>
+	</div>
+	<div ng-if="truckOwnerPage.showTruckList">
+		<div ng-include src="template.myTrucks"></div>
+	</div>
+	<div ng-if="truckOwnerPage.showPostList">
+		<div ng-include src="template.truckPosts"></div>
+	</div>
+	<div ng-if="truckOwnerPage.showManagePost">
+		<div ng-include src="template.managePost"></div>
 	</div>
 </div>
 <script src="truck_owner.js"></script>

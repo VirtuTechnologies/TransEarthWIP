@@ -2,41 +2,23 @@
 	<div class="mytruckpane pagepane">
 		<div class="div-header">
 			<img class="pane-icon" src="images/mytruck.png" alt="" />
-			<h4>My Trucks <span>(12)</span></h4>
+			<h4>My Trucks <span>({{myTruckList.totalServerItems}})</span></h4>
 			<input type="textbox" class="searchbox" name="mytrucksearch" Value="" placeholder="Search" />
 			<button><img src="images/search-btn.png" alt="Search" /></button>
 		</div>
 		<div class="posts">
-			<ul ng-repeat="truck in myTruckList.list" class="runtime-div">
+			<div id="myTruckListMessage" ng-show="myTruckList.messageAvailable && !myTruckList.listShow">
+				<div id="myTrucklist_alert" ></div>
+			</div>
+			<ul ng-show="myTruckList.listShow" ng-repeat="truck in myTruckList.list" class="runtime-div">
 				<img class="runtime-icon" src="images/mytruck.png" alt="" />
-				<li class="runtime-details"><b>{{truck.regNo}}</b></li>
+				<li class="runtime-details"><b><a href="#" ng-click="getTruckDetails(truck.truck_id)">{{truck.regNo}}</a></b></li>
 				<li class="runtime-details">{{truck.make}} - {{truck.model}}</li>
 				<li class="runtime-details">{{truck.capacity}}</li>
 				<li class="runtime-options">
-					<button><img class="edit-icon" src="images/add.png" alt="" />Add</button>
-					<button><img class="edit-icon" src="images/edit.png" alt="" />Edit</button>
-					<button><img class="edit-icon" src="images/delete.png" alt="" />Delete</button>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div class="mypostpane pagepane">
-		<div class="div-header">
-			<img class="pane-icon" src="images/posts.png" alt="" />
-			<h4>My Posts <span>(22)</span></h4>
-			<input type="textbox" class="searchbox" name="mytrucksearch" Value="" placeholder="Search" />
-			<button><img src="images/search-btn.png" alt="Search" /></button>
-		</div>
-		<div class="posts">
-			<ul ng-repeat="post in myTruckPostList.list" class="runtime-div">
-				<img class="runtime-icon" src="images/mytruck.png" alt="" />
-				<li class="runtime-details"><b>{{post.regNo}}</b></li>
-				<li class="runtime-details">{{post.source}} - {{post.destination}}</li>
-				<li class="runtime-details">{{post.availableDateDisplay}}</li>
-				<li class="runtime-options">
-					<button><img class="edit-icon" src="images/add.png" alt="" />Add</button>
-					<button><img class="edit-icon" src="images/edit.png" alt="" />Edit</button>
-					<button><img class="edit-icon" src="images/delete.png" alt="" />Delete</button>
+					<button ng-click="addTruckPost(truck.truck_id)"><img class="edit-icon" src="images/add.png" alt="" />Post</button>
+					<button ng-click="editTruck(truck.truck_id)"><img class="edit-icon" src="images/edit.png" alt="" />Edit</button>
+					<button ng-click="removeTruck(truck.truck_id, truck.regNo)"><img class="edit-icon" src="images/delete.png" alt="" />Delete</button>
 				</li>
 			</ul>
 		</div>
@@ -80,54 +62,6 @@
 	<div class="modal-body">
 		<div id="truck_detail_alert"></div>
 		<div class="row">
-			<!--div class="col-sm-4">
-				<div class="col-xs-5 col-sm-12">
-					<h4>Owner Details</h4>
-					<ul class="profile-details">
-						<li>
-							<div><i class="fa fa-user"></i> Name</div>
-							{{truckModal.owner.name}}
-						</li>
-						<li>
-							<div><i class="fa fa-map-marker"></i> Address</div>
-							<p class="nopadding">{{truckModal.owner.address.line1}}</p>
-							<p  class="nopadding" ng-if="showText(truckModal.owner.address.line2)">{{truckModal.owner.address.line2}}</p>
-							<p class="nopadding">{{truckModal.owner.address.city}}</p>
-							<p class="nopadding">{{truckModal.owner.address.state}}</p>
-							<p class="nopadding">{{truckModal.owner.address.country}}</p>
-							<p class="nopadding">{{truckModal.owner.address.pincode}}</p>
-						</li>
-						<li>
-							<div><i class="fa fa-phone"></i> Contact</div>
-							{{truckModal.owner.contact}}
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="col-sm-4">
-				<div class="col-xs-5 col-sm-12">
-					<h4>Company Details</h4>
-					<ul class="profile-details">
-						<li>
-							<div><i class="fa fa-user"></i> Name</div>
-							{{truckModal.company.name}}
-						</li>
-						<li>
-							<div><i class="fa fa-map-marker"></i> Address</div>
-							<p class="nopadding">{{truckModal.company.address.line1}}</p>
-							<p  class="nopadding" ng-if="showText(truckModal.company.address.line2)">{{truckModal.company.address.line2}}</p>
-							<p class="nopadding">{{truckModal.company.address.city}}</p>
-							<p class="nopadding">{{truckModal.company.address.state}}</p>
-							<p class="nopadding">{{truckModal.company.address.country}}</p>
-							<p class="nopadding">{{truckModal.company.address.pincode}}</p>
-						</li>
-						<li>
-							<div><i class="fa fa-phone"></i> Contact</div>
-							{{truckModal.company.contact}}
-						</li>
-					</ul>
-				</div>
-			</div -->
 			<div class="col-sm-12">
 				<div class="col-xs-4 col-sm-4">
 					<!-- h4>Truck Details</h4 -->

@@ -10,12 +10,6 @@ footer{
 
 footer .row {line-height: 28px;vertical-align: middle;}
 
-input[type="text"],input[type="password"]{
-	border-radius: 5px;
-	border: 1px solid#ccc;
-	padding: 6px 12px;
-	width: 90%;
-}
 /* ng Grid custom style starts */
 .gridStyle {
     border: 1px solid rgb(212, 212, 212);
