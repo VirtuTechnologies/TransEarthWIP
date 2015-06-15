@@ -3,7 +3,6 @@ body {
     font-family:'Maven Pro';
     color:white;
     background:url('../images/pattern.png');
-    overflow:hidden;
 }
 li {
     list-style:none;
@@ -27,6 +26,25 @@ a {
 :-ms-input-placeholder {
     color: black;
 }
+::-webkit-scrollbar {
+    width: 5px;
+    border-radius:1px;
+}
+::-webkit-scrollbar-track {
+    background-color: #D4DEE8;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-button {
+    background-color: #7D92A6;
+    height: 10px;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-corner {
+    background-color: white;
+}
 button {
     outline: none;
     background-color: transparent;
@@ -34,6 +52,15 @@ button {
 }
 .textbox {
     width:250px;
+    background:white;
+    outline:none;
+    padding:10px;
+    border:none;
+    box-shadow:0 0 2px #424242;
+    margin:2px;
+}
+.dropdown {
+    width:270px;
     background:white;
     outline:none;
     padding:10px;
@@ -49,10 +76,61 @@ button {
     border:none;
     color:white;
 }
+.has-error {
+    border:1px solid red;
+}
+.has-success {
+    border:1px solid green;
+}
+.help-block {
+    font-size: 12px;
+}
+.steps-list li label{
+    float:left;
+    padding:4px 0;
+}
+.step3{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height:300px;
 
+}
+.step3::-webkit-scrollbar {
+    width: 3px;
+    border-radius:1px;
+}
+.step3::-webkit-scrollbar-track {
+    background:rgba(255,255,255,.5);
+}
+.step3::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+    border-radius: 4px;
+}
+.step3::-webkit-scrollbar-button {
+   display:none;
+}
+.step3::-webkit-scrollbar-corner {
+    background-color: white;
+}
+.alert-success {
+    width: 400px;
+    margin: 0 auto;
+    background-color: rgb(0, 189, 0);
+    height: 20px;
+    text-align: center;
+    padding: 20px 0;
+}
+.alert-danger {
+    width: 400px;
+    margin: 0 auto;
+    background-color: #ff0000;
+    height: 20px;
+    text-align: center;
+    padding: 20px 0;
+}
 header {
     height:45px;
-    width:1280px;
+    width:100%;
     background:linear-gradient(white,lightgray);
     box-shadow: 0 0 8px #424242;
 }
@@ -105,13 +183,11 @@ header {
     color:#006FD7;
 }
 .loginpanel {
-    background:rgba(0,0,0,0.9);
+    background:rgb(0,0,0);
     z-index:100;
-    position:fixed;
-    width:60%;
+    width:400px;
     height:400px;
-    display:none;
-    margin:5% 20%;
+    margin:5% auto;
 }
 .loginpanel ul {
     width:274px;
@@ -121,16 +197,14 @@ header {
     margin:10px auto;
 }
 .signuppanel {
-    background:rgba(0,0,0,0.9);
+    background:rgb(0,0,0);
     z-index:100;
-    position:fixed;
-    width:60%;
-    height:500px;
-    display:none;
-    margin:3% 20%;
+    width:400px;
+    height:500px;;
+    margin:3% auto;
 }
 .signuppanel ul {
-    width:274px;
+    width:280px;
     margin:5% auto;
 }
 .signuppanel ul li{
@@ -161,7 +235,7 @@ header {
     margin-top: 7px;
 }
 .container {
-    width:1300px;
+    width:100%;
     height:600px;
     margin:0 auto;
 }
@@ -340,25 +414,6 @@ header {
 .runtime-options button img {
     padding-bottom:3px;;
 }
-::-webkit-scrollbar {
-    width: 5px;
-    border-radius:1px;
-}
-::-webkit-scrollbar-track {
-    background-color: #D4DEE8;
-}
-::-webkit-scrollbar-thumb {
-    background-color: #ffffff;
-    border-radius: 4px;
-}
-::-webkit-scrollbar-button {
-    background-color: #7D92A6;
-    height: 10px;
-    border-radius: 4px;
-}
-::-webkit-scrollbar-corner {
-    background-color: white;
-}
 
 
 /* Slider Css */
@@ -518,7 +573,6 @@ header {
 }
 .add-post  ul {
     padding:15px;
-    font-weight:bold;
 }
 .add-post  ul li {
     padding:5px 10px;
@@ -526,4 +580,13 @@ header {
 .close-label {
     float:right;
     padding: 5px;
+}
+.proxied-field-wrap input {
+    width:250px;
+    background:white;
+    outline:none;
+    padding:10px;
+    border:none;
+    box-shadow:0 0 2px #424242;
+    margin:2px;
 }
