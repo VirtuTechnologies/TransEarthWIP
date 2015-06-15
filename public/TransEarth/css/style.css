@@ -84,6 +84,7 @@ button {
 }
 .help-block {
     font-size: 12px;
+    color:red;
 }
 .steps-list li label{
     float:left;
