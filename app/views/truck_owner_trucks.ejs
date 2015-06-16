@@ -1,24 +1,24 @@
 <div ng-controller="truckOwnerTrucksCtrl">
 	<div class="mytruckpane pagepane">
 		<div class="div-header">
-			<img class="pane-icon" src="images/mytruck.png" alt="" />
+			<img class="pane-icon" src="images/truck.png" alt="" />
 			<h4>My Trucks <span>({{myTruckList.totalServerItems}})</span></h4>
 			<input type="textbox" class="searchbox" name="mytrucksearch" Value="" placeholder="Search" />
-			<button><img src="images/search-btn.png" alt="Search" /></button>
+			<button><img src="images/search-btn-white.png" alt="Search" /></button>
 		</div>
 		<div class="posts">
 			<div id="myTruckListMessage" ng-show="myTruckList.messageAvailable && !myTruckList.listShow">
 				<div id="myTrucklist_alert" ></div>
 			</div>
 			<ul ng-show="myTruckList.listShow" ng-repeat="truck in myTruckList.list" class="runtime-div">
-				<img class="runtime-icon" src="images/mytruck.png" alt="" />
+				<img class="runtime-icon" src="images/truck.png" alt="" />
 				<li class="runtime-details"><b><a href="#" ng-click="getTruckDetails(truck.truck_id)">{{truck.regNo}}</a></b></li>
 				<li class="runtime-details">{{truck.make}} - {{truck.model}}</li>
 				<li class="runtime-details">{{truck.capacity}}</li>
 				<li class="runtime-options">
-					<button ng-click="addTruckPost(truck.truck_id)"><img class="edit-icon" src="images/add.png" alt="" />Post</button>
-					<button ng-click="editTruck(truck.truck_id)"><img class="edit-icon" src="images/edit.png" alt="" />Edit</button>
-					<button ng-click="removeTruck(truck.truck_id, truck.regNo)"><img class="edit-icon" src="images/delete.png" alt="" />Delete</button>
+					<button ng-click="addTruckPost(truck.truck_id)"><img class="edit-icon" src="images/add-w.png" alt="" />Post</button>
+					<button ng-click="editTruck(truck.truck_id)"><img class="edit-icon" src="images/edit-w.png" alt="" />Edit</button>
+					<button ng-click="removeTruck(truck.truck_id, truck.regNo)"><img class="edit-icon" src="images/delete-w.png" alt="" />Delete</button>
 				</li>
 			</ul>
 		</div>
