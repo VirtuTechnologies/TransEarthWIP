@@ -221,7 +221,6 @@ function truckPostManageCtrl($scope, $http, $location, $anchorScroll, $filter, U
             disable : false
         };
     };
-
     $scope.submitForm = function () {
 
         // Set the 'submitted' flag to true
