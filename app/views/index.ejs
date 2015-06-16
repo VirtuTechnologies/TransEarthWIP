@@ -28,10 +28,10 @@
 
 		<![endif]-->
 		<!-- Google Places API -->
-		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+		<!-- script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
         <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
         <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-		<script src="maps.js"></script>
+		<script src="maps.js"></script -->
 
 	</head>
 	<body ng-controller="coreController" ng-init="local='<%= JSON.stringify(session)%>'" class=" pace-done">
@@ -78,6 +78,8 @@
 		<!-- script src="assets/js/jquery-1.11.1.js"></script -->
 		<script src="scripts/jquery-1.9.1.min.js"></script>
 		<script src="scripts/jquery-ui-1.10.1.custom.min.js"></script>
+		<!-- script src="scripts/jquery-1.10.2.js"></script>
+        <script src="scripts/jquery-ui.js"></script -->
 		<!-- Angular -->
 		<script src="angular/angular.min.js"></script>
 		<script src="angular/angular-route.min.js"></script>
@@ -88,7 +90,7 @@
 		<script src="angular/ui-bootstrap-tpls-0.10.0.js"></script>
 		<script src="angular/nya-bootstrap-select.js"></script>
         <!-- Load Date & Time picker plugins -->
-        <script src="angular/angular-daterangepicker.js"></script>
+        <!-- script src="angular/angular-daterangepicker.js"></script -->
 		<!-- Load Angular ng-grid -->
 		<script src="angular/ng-grid.debug.js"></script>
 		<!-- Load Angular ng-table -->
@@ -101,15 +103,8 @@
 		<script src="core.js"></script>
 		<script src="master.js"></script>
         <script type="text/ng-template" id="custom-datepicker.html">
-            <div class="enhanced-datepicker">
-                <div class="proxied-field-wrap">
-                    <input type="text" ui-date-format="yy-mm-dd" ng-model="ngModel" ui-date="dateOptions"/>
-                </div>
-                <label>
-                    <button class="btn" type="button"><i class="icon-calendar"></i></button>
-                    <span class="datepicker-date">{{ngModel | date:'d MMM yyyy'}}</span>
-                </label>
-            </div>
+			<div class="textbox"><input type="text" ui-date-format="yy-mm-dd" ng-model="ngModel" ui-date="dateOptions"/></div>
+
         </script>
 	</body>
 </html>

@@ -51,9 +51,17 @@
                     </li>
                     <li ng-if="truckToPost.post.schedule.frequency!=undefined&&truckToPost.post.schedule.frequency!=null&&truckToPost.post.schedule.frequency=='One Time'">
                         <label for="pickup_date">Pickup Date</label>
-                    <input type="text" custom-datepicker  placeholder="Available Pickup Date" name="pickup_date"
+                    <!-- input type="text" custom-datepicker  placeholder="Available Pickup Date" name="pickup_date"
                                ng-model="truckToPost.post.pickup.date"
-                               ng-required="true" date-options="dateOptions" required>
+                               ng-required="true" date-options="dateOptions" required
+                                ng-class="{ 'has-error' : truckPostForm.pickup_date.$invalid,
+										'has-success' : !(truckPostForm.pickup_date.$invalid),
+										'has-feedback' : truckPostForm.pickup_date.$invalid}" -->
+                        <input class="textbox" type="text" ng-required="true" laceholder="Available Pickup Date" name="pickup_date"
+                               ui-date-format="yy-mm-dd" ng-model="ngModel" ui-date="dateOptions"
+                               ng-class="{ 'has-error' : truckPostForm.pickup_date.$invalid,
+										'has-success' : !(truckPostForm.pickup_date.$invalid),
+										'has-feedback' : truckPostForm.pickup_date.$invalid}"/>
                     </li>
                     <li ng-if="truckToPost.post.schedule.frequency!=undefined&&truckToPost.post.schedule.frequency!=null&&truckToPost.post.schedule.frequency!='One Time'">
                         <label for="pickup_start_date">Start date</label>
@@ -86,5 +94,5 @@
     </div>
 </div>
 <script src="manage_post.js"></script>
-<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<!-- script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script -->
