@@ -1,117 +1,120 @@
 <div id="truckManagePage" ng-controller="truckManageCtrl" ng-init="init()">
     <div id="manage_truck_alert" ng-show="truckProcess.indicator.showAlert"></div>
-<div id="truckManagePanel" class="edit-truck-details">
-    <label class="close-label">Close</label><h3>Add Post</h3>
-    <form id="truckForm" name="truckForm" ng-submit="submitForm()" novalidate>
-        <div id="truck_alert"></div>
-        <ul>
-            <li><select selectpicker id="truck_type" name="truck_type"
-                        ng-model="truck.details.type"  ng-required="true"
-                        class="dropdown" data-dropup-auto="false"
-                        ng-class="{ 'has-error' : truckForm.truck_type.$invalid,
-							 				'has-success' : !(truckForm.truck_type.$invalid),
-					 						'has-feedback' : truckForm.truck_type.$invalid,
-					 						'error' : truckForm.truck_type.$invalid,
-					 						'success' : !truckForm.truck_type.$invalid}">
-                </select>
-                <div ng-if="truckForm.truck_type.$invalid"
-                     class="help-block pull-right"
-                     ng-class="{ 'has-error' : truckForm.truck_type.$invalid,
-							 				'has-success' : !(truckForm.truck_type.$invalid),
-					 						'has-feedback' : truckForm.truck_type.$invalid}"
-                     for="truck_type">Truck Type is mandatory <!--Luck favors - Add Truck Name if you have -->
-                </div></li>
-            <li>
-                    <div class="col-lg-offset-3" ng-if="truck.details.type=='Others'">
-                        <div class="input-group col-lg-12">
-                            <input type="text" class="textbox" name="truckTypeDesc" id="truckTypeDesc"
-                                   ng-model="truck.details.typeDescription"
-                                   ng-minlength="1" ng-class="{ 'has-error' : truckForm.truckTypeDesc.$invalid,
-							 				'has-success' : !(truckForm.truckTypeDesc.$invalid),
-					 						'has-feedback' : truckForm.truckTypeDesc.$invalid}"
-                                   ng-required="true" placeholder="Enter Other Truck Type">
+    <div id="truckManagePanel" class="edit-truck-details">
+        <label class="close-label">Close</label><h3>Add Post</h3>
+        <form id="truckForm" name="truckForm" ng-submit="submitForm()" novalidate>
+            <div id="truck_alert"></div>
+            <ul>
+                <li><select selectpicker id="truck_type" name="truck_type"
+                            ng-model="truck.details.type"  ng-required="true"
+                            ng-options="type as type for type in truckTypeList"
+                            class="dropdown" data-dropup-auto="false"
+                            ng-class="{ 'has-error' : truckForm.truck_type.$invalid,
+                                                'has-success' : !(truckForm.truck_type.$invalid),
+                                                'has-feedback' : truckForm.truck_type.$invalid,
+                                                'error' : truckForm.truck_type.$invalid,
+                                                'success' : !truckForm.truck_type.$invalid}">
+                    </select>
+                    <div ng-if="truckForm.truck_type.$invalid"
+                         class="help-block pull-right"
+                         ng-class="{ 'has-error' : truckForm.truck_type.$invalid,
+                                                'has-success' : !(truckForm.truck_type.$invalid),
+                                                'has-feedback' : truckForm.truck_type.$invalid}"
+                         for="truck_type">Truck Type is mandatory <!--Luck favors - Add Truck Name if you have -->
+                    </div></li>
+                <li>
+                        <div class="col-lg-offset-3" ng-if="truck.details.type=='Others'">
+                            <div class="input-group col-lg-12">
+                                <input type="text" class="textbox" name="truckTypeDesc" id="truckTypeDesc"
+                                       ng-model="truck.details.typeDescription"
+                                       ng-minlength="1" ng-class="{ 'has-error' : truckForm.truckTypeDesc.$invalid,
+                                                'has-success' : !(truckForm.truckTypeDesc.$invalid),
+                                                'has-feedback' : truckForm.truckTypeDesc.$invalid}"
+                                       ng-required="true" placeholder="Enter Other Truck Type">
+                            </div>
+                            <div ng-if="truckForm.truckTypeDesc.$invalid"
+                                 class="help-block pull-right"
+                                 ng-class="{ 'has-error' : truckForm.truckTypeDesc.$invalid,
+                                                'has-success' : !(truckForm.truckTypeDesc.$invalid),
+                                                'has-feedback' : truckForm.truckTypeDesc.$invalid}"
+                                 for="truckTypeDesc">Truck Type is mandatory
+                            </div>
                         </div>
-                        <div ng-if="truckForm.truckTypeDesc.$invalid"
-                             class="help-block pull-right"
-                             ng-class="{ 'has-error' : truckForm.truckTypeDesc.$invalid,
-							 				'has-success' : !(truckForm.truckTypeDesc.$invalid),
-					 						'has-feedback' : truckForm.truckTypeDesc.$invalid}"
-                             for="truckTypeDesc">Truck Type is mandatory
-                        </div>
-                    </div>
-            </li>
-            <li>
-                    <label class="col-lg-3 control-label">Make</label>
-                            <select selectpicker id="make" name="make"
-                                    ng-model="truck.details.make"  ng-required="true"
-                                    class="dropdown" data-dropup-auto="false"
-                                    ng-class="{ 'has-error' : truckForm.make.$invalid,
-							 				'has-success' : !(truckForm.make.$invalid),
-					 						'has-feedback' : truckForm.make.$invalid,
-					 						'error' : truckForm.make.$invalid,
-					 						'success' : !truckForm.make.$invalid}">
-                                <option value="">Choose one</option>
-                            </select>
+                </li>
+                <li>
+                        <label class="col-lg-3 control-label">Make</label>
+                                <select selectpicker id="make" name="make"
+                                        ng-model="truck.details.make"  ng-required="true"
+                                        ng-options="make as make for make in makeList"
+                                        class="dropdown" data-dropup-auto="false"
+                                        ng-class="{ 'has-error' : truckForm.make.$invalid,
+                                                'has-success' : !(truckForm.make.$invalid),
+                                                'has-feedback' : truckForm.make.$invalid,
+                                                'error' : truckForm.make.$invalid,
+                                                'success' : !truckForm.make.$invalid}">
+                                    <option value="">Choose one</option>
+                                </select>
 
-                        <div ng-if="truckForm.make.$invalid"
-                             class="help-block pull-right"
-                             ng-class="{ 'has-error' : truckForm.make.$invalid,
-							 				'has-success' : !(truckForm.make.$invalid),
-					 						'has-feedback' : truckForm.make.$invalid}"
-                             for="make">Make is mandatory
-                </div>
-            </li>
-            <li>
-                    <label class="col-lg-3 control-label">Model</label>
-                            <input type="text" class="textbox" name="model" id="model"
-                                   ng-class="{ 'has-error' : truckForm.model.$invalid,
-							 				'has-success' : !(truckForm.model.$invalid),
-					 						'has-feedback' : truckForm.model.$invalid}"
-                                   ng-model="truck.details.model" placeholder="Enter Model"
-                                   ng-minlength="1" maxlength="35" ng-required="true">
-                        <div ng-if="truckForm.model.$invalid"
-                             class="help-block pull-right"
-                             ng-class="{ 'has-error' : truckForm.model.$invalid,
-							 				'has-success' : !(truckForm.model.$invalid),
-					 						'has-feedback' : truckForm.model.$invalid}"
-                             for="model">Model is mandatory
-                        </div>
-            </li>
-            <li>
-                    <label class="col-lg-3 control-label">Registration Number</label>
-                            <input type="text" class="form-control" name="regno" id="regno"
-                                   ng-class="{ 'has-error' : truckForm.regno.$invalid || truck.details.regno.length < 7,
-							 				'has-success' : !(truckForm.regno.$invalid) && truck.details.regno.length >= 7,
-					 						'has-feedback' : truckForm.regno.$invalid  || truck.details.regno.length < 7}"
-                                   ng-model="truck.details.regno"
-                                   placeholder="Enter Reg No"
-                                   capitalize-no-blanks maxlength="10" ng-required="true">
-                        <div ng-if="truckForm.regno.$invalid"
-                             class="help-block pull-right"
-                             ng-class="{ 'has-error' : truckForm.regno.$invalid || truck.details.regno.length < 7,
-							 				'has-success' : !(truckForm.regno.$invalid || truck.details.regno.length < 7),
-					 						'has-feedback' : truckForm.regno.$invalid || truck.details.regno.length < 7}"
-                             for="regno">Registration Number is mandatory. Enter without spaces e.g. TN01XX0001
-                        </div>
-            </li>
-            <li>
-                    <label class="col-lg-3 control-label">Carrying Capacity (in tons)</label>
-                            <input type="text" numbers-only class="form-control" name="load" id="load" ng-model="truck.details.load"
-                                   maxlength="2"
-                                   ng-class="{ 'has-error' : truckForm.load.$invalid,
-							 				'has-success' : !(truckForm.load.$invalid),
-					 						'has-feedback' : truckForm.load.$invalid}"
-                                   placeholder="Enter Load in Tons" ng-minlength="1" ng-maxlength="2" ng-required="true">
-                        <div ng-if="truckForm.load.$invalid"
-                             class="help-block pull-right"
-                             ng-class="{ 'has-error' : truckForm.load.$invalid,
-							 				'has-success' : !(truckForm.load.$invalid),
-					 						'has-feedback' : truckForm.load.$invalid}"
-                             for="load">Carrying Capacity is mandatory. Enter it in numbers
-                        </div>
-            </li>
-            <li><input type="submit" style="background:#242424; color:white;" class="buttons" name="Post" /></li>
-        </ul>
-    </form>
+                            <div ng-if="truckForm.make.$invalid"
+                                 class="help-block pull-right"
+                                 ng-class="{ 'has-error' : truckForm.make.$invalid,
+                                                'has-success' : !(truckForm.make.$invalid),
+                                                'has-feedback' : truckForm.make.$invalid}"
+                                 for="make">Make is mandatory
+                    </div>
+                </li>
+                <li>
+                        <label class="col-lg-3 control-label">Model</label>
+                                <input type="text" class="textbox" name="model" id="model"
+                                       ng-class="{ 'has-error' : truckForm.model.$invalid,
+                                                'has-success' : !(truckForm.model.$invalid),
+                                                'has-feedback' : truckForm.model.$invalid}"
+                                       ng-model="truck.details.model" placeholder="Enter Model"
+                                       ng-minlength="1" maxlength="35" ng-required="true">
+                            <div ng-if="truckForm.model.$invalid"
+                                 class="help-block pull-right"
+                                 ng-class="{ 'has-error' : truckForm.model.$invalid,
+                                                'has-success' : !(truckForm.model.$invalid),
+                                                'has-feedback' : truckForm.model.$invalid}"
+                                 for="model">Model is mandatory
+                            </div>
+                </li>
+                <li>
+                        <label class="col-lg-3 control-label">Registration Number</label>
+                                <input type="text" class="form-control" name="regno" id="regno"
+                                       ng-class="{ 'has-error' : truckForm.regno.$invalid || truck.details.regno.length < 7,
+                                                'has-success' : !(truckForm.regno.$invalid) && truck.details.regno.length >= 7,
+                                                'has-feedback' : truckForm.regno.$invalid  || truck.details.regno.length < 7}"
+                                       ng-model="truck.details.regno"
+                                       placeholder="Enter Reg No"
+                                       capitalize-no-blanks maxlength="10" ng-required="true">
+                            <div ng-if="truckForm.regno.$invalid"
+                                 class="help-block pull-right"
+                                 ng-class="{ 'has-error' : truckForm.regno.$invalid || truck.details.regno.length < 7,
+                                                'has-success' : !(truckForm.regno.$invalid || truck.details.regno.length < 7),
+                                                'has-feedback' : truckForm.regno.$invalid || truck.details.regno.length < 7}"
+                                 for="regno">Registration Number is mandatory. Enter without spaces e.g. TN01XX0001
+                            </div>
+                </li>
+                <li>
+                        <label class="col-lg-3 control-label">Carrying Capacity (in tons)</label>
+                                <input type="text" numbers-only class="form-control" name="load" id="load" ng-model="truck.details.load"
+                                       maxlength="2"
+                                       ng-class="{ 'has-error' : truckForm.load.$invalid,
+                                                'has-success' : !(truckForm.load.$invalid),
+                                                'has-feedback' : truckForm.load.$invalid}"
+                                       placeholder="Enter Load in Tons" ng-minlength="1" ng-maxlength="2" ng-required="true">
+                            <div ng-if="truckForm.load.$invalid"
+                                 class="help-block pull-right"
+                                 ng-class="{ 'has-error' : truckForm.load.$invalid,
+                                                'has-success' : !(truckForm.load.$invalid),
+                                                'has-feedback' : truckForm.load.$invalid}"
+                                 for="load">Carrying Capacity is mandatory. Enter it in numbers
+                            </div>
+                </li>
+                <li><input type="submit" style="background:#242424; color:white;" class="buttons" name="Post" /></li>
+            </ul>
+        </form>
+    </div>
 </div>
-</div>
+<script src="manage_truck.js"></script>

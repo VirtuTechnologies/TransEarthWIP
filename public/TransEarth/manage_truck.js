@@ -37,7 +37,7 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
                 });
                 //alert(id+' - '+options);
                 //Apply html with option
-                applyHtml("truck_type", options);
+                /*applyHtml("truck_type", options);
                 applySelect("truck_type");
                 if(typeof $scope.truck.truck_details != "undefined"
                         && typeof $scope.truck.truck_details.type != "undefined" && $scope.truck.truck_details.type != null){
@@ -45,7 +45,7 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
                     //$('#truck_type').selectpicker('val', $scope.load.load.preferredTruck.type);
                     $('#truck_type').val($scope.truck.truck_details.type);
                     $('#truck_type').selectpicker('refresh');
-                }
+                }*/
                 if(typeof $scope.truck.truck_details != "undefined"
                         && typeof $scope.truck.truck_details.typeDescription != "undefined" && $scope.truck.truck_details.typeDescription != null){
                     $scope.truck.details.typeDescription = $scope.truck.truck_details.typeDescription;
@@ -75,7 +75,7 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
                 });
                 //alert(id+' - '+options);
                 //Apply html with option
-                applyHtml("make", options);
+                /*applyHtml("make", options);
                 applySelect("make");
                 if(typeof $scope.truck.truck_details != "undefined"
                         && typeof $scope.truck.truck_details.make != "undefined" && $scope.truck.truck_details.make != null){
@@ -83,7 +83,7 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
                     //$('#make').selectpicker('val', $scope.load.load.preferredTruck.make);
                     $('#make').val($scope.truck.truck_details.make);
                     $('#make').selectpicker('refresh');
-                }
+                }*/
             }).error(function(err) {
                 console.log("Make Lookup failed:"+JSON.stringify(err));
             });
