@@ -1,9 +1,9 @@
 <div id="truck_owner" ng-controller="truckOwnerCtrl">
-	<div ng-if="truckOwnerPage.showManageTruck">
-		<div ng-include src="template.editTruck"></div>
-	</div>
 	<div ng-if="truckOwnerPage.showTruckList">
 		<div ng-include src="template.myTrucks"></div>
+	</div>
+	<div ng-if="truckOwnerPage.showManageTruck">
+		<div ng-include src="template.editTruck"></div>
 	</div>
 	<div ng-if="truckOwnerPage.showPostList">
 		<div ng-include src="template.truckPosts"></div>
