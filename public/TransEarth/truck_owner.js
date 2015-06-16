@@ -25,6 +25,7 @@ function truckOwnerCtrl($scope, $http, $location, UserRequest, TruckRequest) {
     $scope.myTruckPostList = {};
     $scope.template = {
         myTrucks : "truck_owner_trucks",
+        editTruck : "manage_truck",
         truckPosts : "truck_owner_posts",
         managePost : "manage_post"
     };
