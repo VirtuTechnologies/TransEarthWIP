@@ -3,14 +3,18 @@
 		<div class="div-header">
 			<img class="pane-icon" src="images/truck.png" alt="" />
 			<h4>My Trucks <span>({{myTruckList.totalServerItems}})</span></h4>
-			<input type="textbox" class="searchbox" name="mytrucksearch" Value="" placeholder="Search" />
+			<input type="textbox" class="searchbox" name="mytrucksearch"
+				   ng-model="myTrucks_filter"
+				   value="" placeholder="Search" />
 			<button><img src="images/search-btn-white.png" alt="Search" /></button>
 		</div>
 		<div class="posts">
 			<div id="myTruckListMessage" ng-show="myTruckList.messageAvailable && !myTruckList.listShow">
 				<div id="myTrucklist_alert" ></div>
 			</div>
-			<ul ng-show="myTruckList.listShow" ng-repeat="truck in myTruckList.list" class="runtime-div">
+			<ul ng-show="myTruckList.listShow"
+				ng-repeat="truck in myTruckList.list | filter:myTrucks_filter"
+				class="runtime-div slide-right">
 				<img class="runtime-icon" src="images/truck.png" alt="" />
 				<li class="runtime-details"><b><a href="#" ng-click="getTruckDetails(truck.truck_id)">{{truck.regNo}}</a></b></li>
 				<li class="runtime-details">{{truck.make}} - {{truck.model}}</li>
