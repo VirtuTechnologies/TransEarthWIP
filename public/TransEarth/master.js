@@ -61,3 +61,14 @@
             $('.navmenu').toggle();
         });
     }
+    else {
+        var screensize = $(window).width();
+        if(screensize < "1024"){
+            $('link[rel=stylesheet][href~="style.css"]').remove();
+            $('head').append('<link rel="stylesheet" type="text/css" href="css/mobile.css">');
+            $('link[href="css/style.css"]').prop("disabled", true);
+            $('.menu-btn').click(function(){
+                $('.navmenu').toggle();
+            });
+        }
+            }

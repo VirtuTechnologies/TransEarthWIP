@@ -14,7 +14,8 @@
 		<!--- link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" / -->
 
 		<link href="css/style.css" rel="stylesheet" />
-		<link href="css/pace.css" rel="stylesheet" />
+		<link href="css/date.css" rel="stylesheet" />
+
 		<!-- FONT AWESOME ICONS  -->
 
 
@@ -24,10 +25,12 @@
 		<link href="angular/css/ng-animation.css" rel="stylesheet" />
 
 
-		<script src="scripts/pace.js"></script>
+
 		<![endif]-->
 		<!-- Google Places API -->
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 		<script src="maps.js"></script>
 
 	</head>
@@ -46,7 +49,7 @@
                 </li>
                 <li ng-if="!core.loggedIn">
                     <a class="logindiv" href="#" ng-click="loginClicked()">
-                        <button type="button" id="btn" class="btn btn-primary btn-sm">
+                        <button type="button" id="btn">
                             {{core.pageHeaders.login}}
                         </button>
                     </a>
@@ -97,5 +100,16 @@
 		<script src="scripts/alert.js"></script>
 		<script src="core.js"></script>
 		<script src="master.js"></script>
+        <script type="text/ng-template" id="custom-datepicker.html">
+            <div class="enhanced-datepicker">
+                <div class="proxied-field-wrap">
+                    <input type="text" ui-date-format="yy-mm-dd" ng-model="ngModel" ui-date="dateOptions"/>
+                </div>
+                <label>
+                    <button class="btn" type="button"><i class="icon-calendar"></i></button>
+                    <span class="datepicker-date">{{ngModel | date:'d MMM yyyy'}}</span>
+                </label>
+            </div>
+        </script>
 	</body>
 </html>

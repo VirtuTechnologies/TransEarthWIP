@@ -12,7 +12,27 @@ var TransEarthApp = angular.module('TransEarthApp',
         'ngTable'
     ]
 );
-
+TransEarthApp.directive('customDatepicker',function($compile){
+    return {
+        replace:true,
+        templateUrl:'custom-datepicker.html',
+        scope: {
+            ngModel: '=',
+            dateOptions: '='
+        },
+        link: function($scope, $element, $attrs, $controller){
+            var $button = $element.find('button');
+            var $input = $element.find('input');
+            $button.on('click',function(){
+                if($input.is(':focus')){
+                    $input.trigger('blur');
+                } else {
+                    $input.trigger('focus');
+                }
+            });
+        }
+    };
+})
 TransEarthApp.factory('httpInterceptor', function ($q, $rootScope, $log) {
 
     var numLoadings = 0;

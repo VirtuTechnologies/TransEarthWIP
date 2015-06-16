@@ -162,9 +162,9 @@ color: white;
 margin-top: 7px;
 }
 .container {
-width:1300px;
-height:600px;
+width:96%;
 margin:0 auto;
+margin-top: 75px;
 }
 
 
@@ -252,10 +252,12 @@ box-shadow:0 0 12px #848484;
 .mytruckpane {
 background:rgba(152, 178, 202, 0.94);
 float:left;
+    margin-left: 15px;
 }
 .mypostpane{
 background:rgba(152, 178, 202, 0.94);
 float:right;
+    margin-right: 15px;
 }
 .div-header {
 width:100%;
