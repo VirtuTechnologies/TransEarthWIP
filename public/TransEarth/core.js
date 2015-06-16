@@ -6,21 +6,27 @@ var TransEarthApp = angular.module('TransEarthApp',
         'ui.bootstrap',
         'ui.date',
         'ngGrid',
-        "daterangepicker",
+        //"daterangepicker",
         //'angular-bootstrap-select',
         //'nya.bootstrap.select',
         'ngTable'
     ]
 );
-TransEarthApp.directive('customDatepicker',function($compile){
+TransEarthApp.directive('customDatepicker',['$compile', function($compile){
     return {
         replace:true,
-        templateUrl:'custom-datepicker.html',
+        //templateUrl:'custom-datepicker.html',
+        //template : '<input type="text" ui-date-format="yy-mm-dd" ng-model="ngModel" ui-date="dateOptions"/>',
         scope: {
             ngModel: '=',
             dateOptions: '='
         },
         link: function($scope, $element, $attrs, $controller){
+            var html = [];
+            html.push('<input type="text" ui-date-format="yy-mm-dd" ng-model="ngModel" ui-date="dateOptions"/>');
+            $element.html(html.join(''));
+            $compile($element.contents())($scope);
+
             var $button = $element.find('button');
             var $input = $element.find('input');
             $button.on('click',function(){
@@ -32,7 +38,9 @@ TransEarthApp.directive('customDatepicker',function($compile){
             });
         }
     };
-})
+}
+]);
+
 TransEarthApp.factory('httpInterceptor', function ($q, $rootScope, $log) {
 
     var numLoadings = 0;
