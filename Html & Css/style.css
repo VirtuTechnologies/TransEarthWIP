@@ -676,10 +676,10 @@ width: 900px;
 background:rgb(0, 116, 210);
 }
 .add-truck-details thead td {
-padding: 7px 5px;
+padding: 7px 6px;
 }
 .add-truck-details tbody td {
-padding: 7px 8px;
+padding: 7px 6px;
 }
 .add-truck-details tfoot td {
 padding: 7px 5px;
@@ -693,10 +693,126 @@ margin-right:5px;
 color:#0074D2;
 }
 .add-truck-input {
-width:100px;
+width:140px;
 outline: none;
 border: none;
 background: none;
 border-bottom: 2px solid #0074D2;
 padding: 4px;
+}
+.remove-row img{
+vertical-align:middle;
+height:75%;
+padding:0 2px;
+text-align:center;
+}
+
+
+/* Search Pages*/
+.location {
+width: 220px;
+height: 35px;
+background-color: white;
+float: left;
+margin: 5px 10px;
+box-shadow: 0 0 2px #424242;
+}
+.radio-group {
+width: 75px;
+height: 35px;
+float: left;
+margin: 5px 10px;
+color: white;
+font-size: 12px;
+}
+.radio-group  input {
+margin:2px;
+}
+.location img {
+height: 53%;
+float: left;
+margin-top: 8px;
+}
+.search-bar-input {
+width: 185px;
+outline: none;
+padding: 7px;
+border: none;
+margin-top: 3px;
+}
+.search-bar {
+width: 1125px;
+background: rgba(0,0,0, 0.92);
+height: 46px;
+margin: 8px auto;
+padding: 15px;
+}
+.shadow1 {
+z-index: -1;
+position: absolute;
+margin-left: 390px;
+margin-top: -32px;
+}
+.shadow2 {
+z-index: -1;
+position: absolute;
+margin-left: 230px;
+margin-top: -20px;
+}
+.results {
+width: 1139px;
+height: 450px;
+margin: 0px auto;
+margin-top:25px;
+padding: 8px;
+}
+.submit-search {
+width: 35px;
+height: 35px;
+outline: none;
+border: none;
+margin-top: 4px;
+background: rgb(0, 119, 232);
+}
+.submit-search img{
+height: 19px;
+margin-top: 3px;
+}
+.results-table {
+border-collapse:collapse;
+box-shadow:0 0 5px #121212;
+}
+.view-action {
+height: 15px;
+vertical-align: middle;
+padding: 0 5px;
+}
+.results-table  thead{
+background:#0077E8;
+}
+.results-table tr td{
+width:208px;
+}
+.results-table thead td{
+padding:12px;
+}
+.results-table tbody td{
+padding:9px 12px;
+}
+.results-table tbody{
+background: rgba(0,0,0, 0.92);
+}
+.results-table tfoot{
+background: rgba(0, 119, 232, 0.85);
+bottom:0;
+}
+.results-table tfoot td{
+padding:10px 0;
+}
+.results-table tfoot td a{
+color:white;
+padding:0 10px;
+}
+.results-table tfoot td a img{
+padding:0 5px;
 }
