@@ -3,3 +3,5 @@
 .idea/.name
 *.ejs
 app/views/index.ejs
+*.db
+*.db

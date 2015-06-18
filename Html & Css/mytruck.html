@@ -13,7 +13,14 @@
   $('head').append('<link rel="stylesheet" type="text/css" href="mobile.css">');
  
 }
-
+    $(".add-row").click(function(){
+        $(".add-truck-details tbody").append('<tr><td><select class="add-truck-input"><option>1<option></select></td><td><select class="add-truck-input"><option>1<option></select></td><td><input class="add-truck-input" type="text" placeholder="Truck type" /></td><td><input class="add-truck-input" type="text" placeholder="Truck type" /></td><td><input class="add-truck-input" type="text" placeholder="Truck type" /></td><td><button class="add-row">Add</button></td><td><button class="remove-row">Remove</button></td></tr>');
+    });
+    $(".add-truck-details tbody").on('click','.remove-row',function(){
+        $(this).parent().parent().remove();
+    });
+			$('.add-row').click(function( event ) {
+		event.preventDefault();});
 $('.close-label').click(function(){
 $('.add-post').hide();
 });
@@ -74,6 +81,7 @@ function geolocate() {
 				<li><a href="loads.html">Signup</a></li>
 				<li><a href="trucks.html">Search Trucks</a></li>
 				<li><a href="loads.html">Search Loads</a></li>
+				<li><a href="#" class="add-truck-show">Add truck</a></li>
 				<li class="menu-align"><a href="trucks.html">Home</a></li>
 			</ul>			
 		</header>
@@ -99,8 +107,53 @@ function geolocate() {
 			</ul>
 		</div>
 		</div>
-		
-		<div class="edit-truck-details">
+		<div class="add-truck-bg">
+		<div class="add-truck-div">
+		<div class="add-truck-head">
+		<h4>ADD TRUCK</h4>
+		<label>Close</label>
+		</div>
+		<div class="add-truck-body">
+		<form>
+		<table class="add-truck-details">
+		<thead>
+		<tr>
+		<td>Truck Type</td>
+		<td>Truck Make</td>
+		<td>Truck Model</td>
+		<td>Reg No.</td>
+		<td>Capacity</td>
+		<td>Add</td>
+		<td>Remove</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td><select class="add-truck-input"><option>1<option></select></td>
+		<td><select class="add-truck-input"><option>1<option></select></td>
+		<td><input class="add-truck-input" type="text" placeholder="Truck type" /></td>
+		<td><input class="add-truck-input" type="text" placeholder="Truck type" /></td>
+		<td><input class="add-truck-input" type="text" placeholder="Truck type" /></td>
+		<td><button class="add-row">Add</button></td>
+		<td><button class="remove-row">Remove</button></td>
+		</tr>
+		</tbody>
+		<tfoot>
+		<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td colspan="2"><button type="submit">Submit</button></td>
+		</tr>
+		</tfoot>
+		</table>
+		</form>
+		</div>
+		</div>
+		</div>
+		<div class="edit-truck-details" style="display:none;">
 		<label class="close-label">Close</label><h3>Add Post</h3>
 		<form>
 		<ul>
@@ -112,7 +165,7 @@ function geolocate() {
 		</ul>
 		</form>
 		</div>
-            <div class="add-post">
+            <div class="add-post" style="display:none;">
                 <label class="close-label">Close</label><h3>Add Post</h3>
                 <form>
                     <ul>

@@ -81,7 +81,7 @@
                 </li>
                 <li>
                         <label class="col-lg-3 control-label">Registration Number</label>
-                                <input type="text" class="form-control" name="regno" id="regno"
+                                <input type="text" class="textbox" name="regno" id="regno"
                                        ng-class="{ 'has-error' : truckForm.regno.$invalid || truck.details.regno.length < 7,
                                                 'has-success' : !(truckForm.regno.$invalid) && truck.details.regno.length >= 7,
                                                 'has-feedback' : truckForm.regno.$invalid  || truck.details.regno.length < 7}"
@@ -98,7 +98,7 @@
                 </li>
                 <li>
                         <label class="col-lg-3 control-label">Carrying Capacity (in tons)</label>
-                                <input type="text" numbers-only class="form-control" name="load" id="load" ng-model="truck.details.load"
+                                <input type="text" numbers-only class="textbox" name="load" id="load" ng-model="truck.details.load"
                                        maxlength="2"
                                        ng-class="{ 'has-error' : truckForm.load.$invalid,
                                                 'has-success' : !(truckForm.load.$invalid),

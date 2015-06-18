@@ -635,3 +635,68 @@ header {
 .edit-truck-details  ul li {
     padding:5px 10px;
 }
+.add-truck-bg {
+position:absolute;
+z-index:9999;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+top:0;
+left:0;
+}
+.add-truck-div {
+background:#f5f5f5;
+width:900px;
+height:500px;
+margin:4% auto;
+}
+.add-truck-head {
+width:100%;
+height:40px;
+background:linear-gradient(#ffffff,#e2e2e2);
+box-shadow:0 0 4px #242424;
+}
+.add-truck-head h4 {
+color:black;
+float:left;
+padding:10px;
+}
+.add-truck-head label {
+color:black;
+float:right;
+padding:10px;
+font-size:12px;
+}
+.add-truck-details {
+margin:7px auto;
+border-collapse:collapse;
+width: 900px;
+}
+.add-truck-details thead{
+background:rgb(0, 116, 210);
+}
+.add-truck-details thead td {
+padding: 7px 5px;
+}
+.add-truck-details tbody td {
+padding: 7px 8px;
+}
+.add-truck-details tfoot td {
+padding: 7px 5px;
+background:#0074D2;
+}
+.add-truck-details tfoot button{
+background:white;
+padding:5px;
+float:right;
+margin-right:5px;
+color:#0074D2;
+}
+.add-truck-input {
+width:100px;
+outline: none;
+border: none;
+background: none;
+border-bottom: 2px solid #0074D2;
+padding: 4px;
+}
