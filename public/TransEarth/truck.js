@@ -22,8 +22,15 @@ function truckListCtrl($scope, $http, $location, $modal, $filter, UserRequest) {
 
     $scope.truckPostList.filter.dateRange = 2;
     $scope.truckPostList.filter.dt = new Date();
-    $scope.minDate = $scope.minDate ? null : new Date();
+    //$scope.minDate = $scope.minDate ? null : new Date();
 
+    $scope.minDate = new Date();
+
+    $scope.truckPostList.filter.dateRangeOptions ={
+        format: 'DD-MMM-YYYY',
+        popup : "dd-MMMM-yyyy",
+        minDate: $scope.minDate
+    };
     $scope.opened = false;
     $scope.open = function($event) {
         $event.preventDefault();

@@ -510,11 +510,17 @@ TransEarthApp.directive('googlePlaces', ["$compile", function($compile){
         //template: '<input id="hash" name="hash" type="text" class="input-block-level"/>',
         //template: '<div><input id="hash" name="hash" type="text" class="input-block-level"/>{{tagId}}</div>',
         link: function($scope, elm, attrs, ctrls){
+            console.log(attrs);
             var tagId = attrs.tagid;
             var tagName = attrs.tagname;
             var requiredAttr = attrs.required;
             var placeHolder = attrs.holder;
             var glyph = attrs.glyph;
+            var className = attrs.classname;
+            if(typeof className == "undefined" || className == null){
+                className = "textbox";
+            }
+
             var glyphDisplay = false;
             var disable;
             $scope.form = ctrls[0];
@@ -545,7 +551,7 @@ TransEarthApp.directive('googlePlaces', ["$compile", function($compile){
             }
 
             var template =
-                    '<input class="textbox" id="'+tagId+'" name="'+tagName + '" ' +
+                    '<input class="'+className+'" id="'+tagId+'" name="'+tagName + '" ' +
                         'ng-class="{\'has-error\': form.'+tagName+'.$error.required && !location.isSelected, ' +
                         '\'has-success\' : !(form.'+tagName+'.$error.required) && location.isSelected, '+
                         '\'has-feedback\' : form.'+tagName+'.$error.required && !location.isSelected}" ' +

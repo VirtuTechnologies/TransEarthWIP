@@ -126,7 +126,7 @@ exports.getTruckPostSummary = function(req,res){
             }
             returnData.truckPostList.details = truckPostList;
             //console.log('Truck data length=' + returnData.truckList.details.length);
-            //console.log('Truck Data Rendered - '+JSON.stringify(returnData));
+            console.log('Truck Data Rendered - '+JSON.stringify(returnData));
             res.json(200,returnData);
         }
         else{
@@ -1011,7 +1011,8 @@ exports.addTruckPost = function(req, res){
         truck_post : {
             availability : {
                 schedule : new_post.schedule.frequency,
-                date : (typeof new_post.pickup.date != "undefined" && new_post.pickup.date != null) ? new_post.pickup.date : new_post.pickup.endDate,
+                //date : (typeof new_post.pickup.date != "undefined" && new_post.pickup.date != null) ? new_post.pickup.date : new_post.pickup.endDate,
+                date : new_post.pickup.endDate,
                 start_date : new_post.pickup.startDate,
                 end_date : new_post.pickup.endDate,
                 pickup_location : new_post.source.place,

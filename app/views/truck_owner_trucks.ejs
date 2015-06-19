@@ -9,9 +9,6 @@
 			<button><img src="images/search-btn-white.png" alt="Search" /></button>
 		</div>
 		<div class="posts">
-			<div id="myTruckListMessage" ng-show="myTruckList.messageAvailable && !myTruckList.listShow">
-				<div id="myTrucklist_alert" ></div>
-			</div>
 			<ul ng-show="myTruckList.listShow"
 				ng-repeat="truck in myTruckList.list | filter:myTrucks_filter"
 				class="runtime-div slide-right">

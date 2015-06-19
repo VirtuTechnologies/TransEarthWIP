@@ -58,30 +58,28 @@
 										'has-success' : !(truckPostForm.pickup_date.$invalid),
 										'has-feedback' : truckPostForm.pickup_date.$invalid}" -->
                         <input class="textbox" type="text" ng-required="true" placeholder="Available Pickup Date" name="pickup_date"
-                               ui-date-format="yy-mm-dd" ng-model="ngModel" ui-date="dateOptions"
+                               ui-date-format="yy-mm-dd" ng-model="truckToPost.post.pickup.endDate" ui-date="pickup.dateRangeOptions"
                                ng-class="{ 'has-error' : truckPostForm.pickup_date.$invalid,
 										'has-success' : !(truckPostForm.pickup_date.$invalid),
 										'has-feedback' : truckPostForm.pickup_date.$invalid}"/>
                     </li>
                     <li ng-if="truckToPost.post.schedule.frequency!=undefined&&truckToPost.post.schedule.frequency!=null&&truckToPost.post.schedule.frequency!='One Time'">
                         <label for="pickup_start_date">Start date</label>
-                        <input class="textbox" type="date" placeholder="Start Date"
-                               id="pickup_start_date" name="pickup_start_date"
-                               ng-model="truckToPost.post.pickup.startDate"
-                               ng-required="true" required
+                        <input class="textbox" type="text" ng-required="true" placeholder="Pickup Start Date" name="pickup_start_date"
+                               ui-date-format="yy-mm-dd" ng-model="truckToPost.post.pickup.startDate" ui-date="pickup.startDateOptions"
+                               ng-change="clearEndDate()"
                                ng-class="{ 'has-error' : truckPostForm.pickup_start_date.$invalid,
 										'has-success' : !(truckPostForm.pickup_start_date.$invalid),
-										'has-feedback' : truckPostForm.pickup_start_date.$invalid}">
+										'has-feedback' : truckPostForm.pickup_start_date.$invalid}"/>
                     </li>
                     <li ng-if="truckToPost.post.schedule.frequency!=undefined&&truckToPost.post.schedule.frequency!=null&&truckToPost.post.schedule.frequency!='One Time'">
                         <label for="pickup_end_date">End Date</label>
-                        <input class="textbox" type="date" placeholder="Start Date"
-                               id="pickup_end_date" name="pickup_end_date"
-                               ng-model="truckToPost.post.pickup.endDate"
-                               ng-required="true" required
+                        <input class="textbox" type="text" ng-required="true" placeholder="Pickup End Date" name="pickup_end_date"
+                               ui-date-format="yy-mm-dd" ng-model="truckToPost.post.pickup.endDate" ui-date="pickup.endDateOptions"
+                               ng-if="truckToPost.post.pickup.startDate!=undefined&&truckToPost.post.pickup.startDate!=null"
                                ng-class="{ 'has-error' : truckPostForm.pickup_end_date.$invalid,
 										'has-success' : !(truckPostForm.pickup_end_date.$invalid),
-										'has-feedback' : truckPostForm.pickup_end_date.$invalid}">
+										'has-feedback' : truckPostForm.pickup_end_date.$invalid}"/>
                     </li>
                     <li>
                         <input type="submit" style="background:#242424; color:white;" class="buttons" name="Post" Value="Post" />
