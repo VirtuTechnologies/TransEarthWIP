@@ -1,296 +1,793 @@
 * {margin:0; padding:0;}
 body {
-font-family:'Maven Pro';
-color:white;
-background:url('pattern.png');
+    font-family:'Maven Pro';
+    color:white;
+    background:rgb(242, 242, 242);
 }
 li {
-list-style:none;
+    list-style:none;
 }
 a {
-text-decoration:none;
-color:black;
+    text-decoration:none;
+    color:black;
+}
+.has-error {
+    border:1px solid red;
+}
+.has-success {
+    border:1px solid green;
+}
+.line-error {
+    color: red;
+}
+.line-success {
+    color: green;
+}
+.help-block {
+    font-size: 12px;
+    color:red;
+}
+.dropdown {
+    width:270px;
+    background:white;
+    outline:none;
+    padding:10px;
+    border:none;
+    box-shadow:0 0 2px #424242;
+    margin:2px;
 }
 .textbox {
-width:250px;
-background:white;
-outline:none;
-padding:10px;
-border:none;
-box-shadow:0 0 2px #424242;
-margin:2px;
+    width:250px;
+    background:white;
+    outline:none;
+    padding:10px;
+    border:none;
+    box-shadow:0 0 2px #424242;
+    margin:2px;
 }
 .buttons {
-width:80px;
-padding:10px;
-margin:2px;
-outline:white;
-border:none;
-color:white;
+    width:80px;
+    padding:10px;
+    margin:2px;
+    outline:white;
+    border:none;
+    color:white;
 }
 header {
-height:50px;
-width:100%;
-background:linear-gradient(white,lightgray);
-box-shadow: 0 0 8px #424242;
+    height:50px;
+    width:100%;
+    background:linear-gradient(white,lightgray);
+    box-shadow: 0 0 8px #424242;
 }
 #logo {
-height:40px;
-float:left;
-padding:3px 0;
-margin-left:1%;
+    height:40px;
+    float:left;
+    padding:3px 0;
+    margin-left:1%;
 }
 .navmenu {
-display:none;
-width: 160px;
-position: absolute;
-font-size: 15px;
-right: 10px;
-font-weight: 500;
-top: 51px;
-height: 180px;
-background:#125e90;
+    display:none;
+    width: 160px;
+    position: absolute;
+    font-size: 15px;
+    right: 10px;
+    font-weight: 500;
+    top: 51px;
+    height: 180px;
+    background:#125e90;
 }
 .menu-align {
-margin-top:13px;
+    margin-top:13px;
 }
 .navmenu  li{
-padding: 4px 16px;
-font-size: 16px;
+    padding: 4px 16px;
+    font-size: 16px;
 }
 .navmenu  li a {
-color:#ffffff;
+    color:#ffffff;
 }
 .menu-btn{
-height:100%;
-outline:none;
-background:transparent;
-border:none;
-float:right;
+    height:100%;
+    outline:none;
+    background:transparent;
+    border:none;
+    float:right;
 }
 .menu-icon {
-display:block;
-width:90px;
-height:50%;
-font-size:15px;
+    display:block;
+    width:90px;
+    height:50%;
+    font-size:15px;
 }
 .menu-icon img{
-height:100%;
-vertical-align:middle;
+    height:100%;
+    vertical-align:middle;
 }
 .menu-icon:active .navmenu, .menu-icon:hover .navmenu{
-display:block;
+    display:block;
 }
-.loginpanel, .signuppanel {
-display:none;
+#panel-logo {
+    display:none;
+}
+.loginpanel {
+    z-index:100;
+    width:300px;
+    height:400px;
+    margin:50px auto;
+}
+.loginpanel ul {
+    width:274px;
+    margin:10% auto;
+}
+.loginpanel ul li{
+    margin:10px auto;
+}
+.loginpanel ul li a{
+    color:#006FD7;
+}
+.closediv {
+    display:none;
+}
+
+.signup-head{
+    padding-top: 10px;
+}
+.signuppanel {
+    z-index:100;
+    width:300px;
+    height:500px;;
+    margin:3% auto;
+}
+.signuppanel ul {
+    width:280px;
+    margin:5% auto;
+}
+.signuppanel ul li{
+    margin:10px auto;
+}
+.signuppanel label{
+    color:#006FD7;
+}
+.steps {
+    width: 30px;
+    text-align: -webkit-center;
+    background: url('../images/nextb.png') no-repeat;
+    background-size: cover;
+    font-size: 16px;
+    color:#222222;
+    float: left;
+    height: 30px;
+    margin-left: 46px;
+    line-height: 28px;
+    margin-bottom: 30px;
+}
+.step2, .step3 {
+    display:none;
+}
+.steps-list{
+    padding-top: 45px;
 }
 
 .container {
-width:100%;
+    width:100%;
 }
 .loaddetails, .truckdetails {
-width: 100%;
-height: 400px;
-background:rgba(0,0,0,.8);
-margin-top: 20px;
+    width: 100%;
+    height: 400px;
+    background:rgba(0,0,0,.8);
+    margin-top: 20px;
 }
 .slider {
-width:100%;
-height:325px;
+    width:100%;
+    height:325px;
 }
 .loaddetailpane, .truckdetailpane {
-padding:2% 5%;
-display:none;
+    padding:2% 5%;
 }
 .first-slide {
-display:block;
+    display:block;
 }
 .loaddetailpane li, .truckdetailpane li {
-padding-bottom:3%;
-height:20px;
+    padding-bottom:3%;
+    height:20px;
 }
 #profilepic {
-height:60px;
-vertical-align:middle;
-background:url('proholder.png') no-repeat;
-background-size:cover;
-margin-right: 11px;
+    height:60px;
+    vertical-align:middle;
+    background:url('proholder.png') no-repeat;
+    background-size:cover;
+    margin-right: 11px;
 }
 .nameplace a:hover {
-color:#C24C0F;
+    color:#C24C0F;
 }
 .nameplace a {
-color:white;
-font-size: 17px;
-font-weight: 700;
+    color:white;
+    font-size: 17px;
+    font-weight: 700;
 }
 .nameplace {
-height:60px;
-padding:30px 20px;
+    height:60px;
+    padding:30px 20px;
 }
 .infos {
-padding:4px 10px;
-color:white;
-font-size: 17px;
-font-weight: 700;
+    padding:4px 10px;
+    color:white;
+    font-size: 17px;
+    font-weight: 700;
 }
 .button-opt {
-margin-top:0;
+    margin-top:0;
 }
 .button-option {
-padding:4px 15px;
-font-size:13px;
-font-weight:700;
-background:transparent;
-outline:none;
-border:2px solid white;
-color:white;
+    padding:4px 15px;
+    font-size:13px;
+    font-weight:700;
+    background:transparent;
+    outline:none;
+    border:2px solid white;
+    color:white;
 }
 .view-more-btn {
-float:right;
-padding-right:25px;
+    float:right;
+    padding-right:25px;
 }
 .find-more-btn {
-float:left;
-padding-left:25px;
+    float:left;
+    padding-left:25px;
 }
 .button-option:hover {
-background:#ffffff;
-color:#242424;
-cursor:pointer;
+    background:#ffffff;
+    color:#242424;
+    cursor:pointer;
 }
+.pagepane-selection{
+    width:100%;
+    background:white;
+    outline:none;
+    padding:10px;
+    border:none;
+    margin:2px;
+}
+
+.pagepane{
+    height:100%;
+    width:100%;
+    margin-top:20px;
+    color:blue;
+}
+.mytruckpane {
+    display:block;
+}
+.mypostpane{
+    display:none;
+}
+.div-header {
+    width:100%;
+    height:75px;
+}
+.pane-icon {
+    height: 40%;
+    padding: 3%;
+    float:left;
+}
+.div-header h4 {
+    padding: 5% 0;
+    float:left;
+}
+
+.searchbox {
+    outline:none;
+    border:none;
+    background:transparent;
+    width: 35%;
+    padding: 2%;
+}
+.div-header .searchbox {
+    margin: 3% 0px 0 1%;
+    float:left;
+    border-bottom:2px solid #f5f5f5;
+}
+.div-header button {
+    outline: none;
+    background-color: transparent;
+    border: none;
+    height: 50px;
+    float: left;
+    border-bottom: 2px solid #f5f5f5;
+    margin-top: -11px;
+}
+.div-header button img {
+    height: 36%;
+    margin-top: 20px;
+}
+.posts {
+    height:400px;
+    width: 100%;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+.searchbox::-webkit-input-placeholder{
+    color:blue;
+}
+.searchbox:-ms-input-placeholder{
+    color:blue;
+}
+.searchbox:-moz-placeholder{
+    color:blue;
+}
+.searchbox::-moz-placeholder{
+    color:blue;
+}
+.runtime-div {
+    width:380px;
+    height:75px;
+    margin-bottom: 11%;
+}
+.runtime-details{
+    font-size: 15px;
+    padding:2px;
+    width: 100%;
+    color: rgb(0, 89, 178);
+}
+.runtime-details a{
+    color: rgb(0, 118, 236);
+}
+.runtime-icon {
+    height: 43%;
+    padding: 4%;
+    float:left;
+}
+.runtime-options {
+    width: 100%;
+    height: 40px;
+    background-color: rgb(0, 108, 216);
+}
+.runtime-options button {
+    outline: none;
+    background-color: transparent;
+    border: none;
+    float: left;
+    height: 100%;
+    font-size: 13px;
+    width: 28%;
+    color: white;
+    padding: 0 1%;
+}
+.runtime-options button img {
+    padding-right: 6px;;
+    vertical-align: middle;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media screen and (min-width:1000px){
 
-header {
-height:50px;
-width:100%;
-background:linear-gradient(white,lightgray);
-box-shadow: 0 0 8px #424242;
-}
-#logo {
-height:40px;
-float:left;
-padding:3px 0;
-margin-left:1%;
-}
-.navmenu {
-display:none;
-width: 160px;
-position: absolute;
-font-size: 15px;
-right: 10px;
-font-weight: 500;
-top: 51px;
-height: 180px;
-background:#125e90;
-}
-.menu-align {
-margin-top:13px;
-}
-.navmenu  li{
-padding: 4px 16px;
-font-size: 16px;
-}
-.navmenu  li a {
-color:#ffffff;
-}
-.menu-btn{
-height:100%;
-outline:none;
-background:transparent;
-border:none;
-float:right;
-}
-.menu-icon {
-display:block;
-width:90px;
-height:100%;
-font-size:15px;
-}
-.menu-icon img{
-height:100%;
-vertical-align:middle;
-}
-.menu-icon:active .navmenu, .menu-icon:hover .navmenu{
-display:block;
-}
-.loginpanel, .signuppanel {
-display:none;
-}
-.container {
-width:100%;
-}
-.loaddetails, .truckdetails {
-width: 400px;
-height: 400px;
-background:rgba(0,0,0,.8);
-float:left;
-margin:3% 3%;
-}
-.nameplace {
-height:60px;
-padding:30px 20px;
-}
-.slider {
-width:100%;
-height:325px;
-}
-.loaddetailpane, .truckdetailpane {
-padding:2% 5%;
-display:none;
-}
-.first-slide {
-display:block;
-}
-.loaddetailpane li, .truckdetailpane li {
-padding-bottom:3%;
-height:20px;
-}
-#profilepic {
-height:60px;
-vertical-align:middle;
-background:url('proholder.png') no-repeat;
-background-size:cover;
-margin-right: 11px;
-}
-.nameplace a:hover {
-color:#C24C0F;
-}
-.nameplace a {
-color:white;
-font-size: 17px;
-font-weight: 700;
-}
-.infos {
-padding:4px 10px;
-color:white;
-font-size: 17px;
-font-weight: 700;
-}
-.button-opt {
-margin-top:0;
-}
-.find-more-btn {
-float:left;
-padding-left:25px;
-}
-.button-option {
-padding:4px 15px;
-font-size:13px;
-font-weight:700;
-background:transparent;
-outline:none;
-border:2px solid white;
-color:white;
-}
-.button-option:hover {
-background:#ffffff;
-color:#242424;
-cursor:pointer;
-}
-.view-more-btn {
-float:right;
-padding-right:25px;
-}
+    header {
+        height:50px;
+        width:100%;
+        background:linear-gradient(white,lightgray);
+        box-shadow: 0 0 8px #424242;
+    }
+    #logo {
+        height:40px;
+        float:left;
+        padding:3px 0;
+        margin-left:1%;
+    }
+    .navmenu {
+        display:none;
+        width: 160px;
+        position: absolute;
+        font-size: 15px;
+        right: 10px;
+        font-weight: 500;
+        top: 51px;
+        height: 180px;
+        background:#125e90;
+    }
+    .menu-align {
+        margin-top:13px;
+    }
+    .navmenu  li{
+        padding: 4px 16px;
+        font-size: 16px;
+    }
+    .navmenu  li a {
+        color:#ffffff;
+    }
+    .menu-btn{
+        height:100%;
+        outline:none;
+        background:transparent;
+        border:none;
+        float:right;
+    }
+    .menu-icon {
+        display:block;
+        width:90px;
+        height:100%;
+        font-size:15px;
+    }
+    .menu-icon img{
+        height:100%;
+        vertical-align:middle;
+    }
+    .menu-icon:active .navmenu, .menu-icon:hover .navmenu{
+        display:block;
+    }
+    .loginpanel, .signuppanel {
+        background:rgb(0,0,0);
+        width:400px;
+    }
+    #panel-logo {
+        padding-top: 8px;
+        display:block;
+    }
+    .signuppanel label{
+        color:#ffffff;
+    }
+    .steps {
+        background: url('../images/next.png') no-repeat;
+        color:white;
+    }
+    .loginpanel ul li a{
+        color:#ffffff;
+    }
+    .step3{
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height:300px;
+
+    }
+    .step3::-webkit-scrollbar {
+        width: 3px;
+        border-radius:1px;
+    }
+    .step3::-webkit-scrollbar-track {
+        background:rgba(255,255,255,.5);
+    }
+    .step3::-webkit-scrollbar-thumb {
+        background-color: #ffffff;
+        border-radius: 4px;
+    }
+    .step3::-webkit-scrollbar-button {
+        display:none;
+    }
+    .step3::-webkit-scrollbar-corner {
+        background-color: white;
+    }
+    .container {
+        width:100%;
+    }
+    .loaddetails, .truckdetails {
+        width: 400px;
+        height: 400px;
+        background:rgba(0,0,0,.8);
+        float:left;
+        margin:3% 3%;
+    }
+    .nameplace {
+        height:60px;
+        padding:30px 20px;
+    }
+    .slider {
+        width:100%;
+        height:325px;
+    }
+    .loaddetailpane, .truckdetailpane {
+        padding:2% 5%;
+    }
+    .first-slide {
+        display:block;
+    }
+    .loaddetailpane li, .truckdetailpane li {
+        padding-bottom:3%;
+        height:20px;
+    }
+    #profilepic {
+        height:60px;
+        vertical-align:middle;
+        background:url('proholder.png') no-repeat;
+        background-size:cover;
+        margin-right: 11px;
+    }
+    .nameplace a:hover {
+        color:#C24C0F;
+    }
+    .nameplace a {
+        color:white;
+        font-size: 17px;
+        font-weight: 700;
+    }
+    .infos {
+        padding:4px 10px;
+        color:white;
+        font-size: 17px;
+        font-weight: 700;
+    }
+    .button-opt {
+        margin-top:0;
+    }
+    .find-more-btn {
+        float:left;
+        padding-left:25px;
+    }
+    .button-option {
+        padding:4px 15px;
+        font-size:13px;
+        font-weight:700;
+        background:transparent;
+        outline:none;
+        border:2px solid white;
+        color:white;
+    }
+    .button-option:hover {
+        background:#ffffff;
+        color:#242424;
+        cursor:pointer;
+    }
+    .view-more-btn {
+        float:right;
+        padding-right:25px;
+    }
+
+    .pagepane{
+        height:500px;
+        width:400px;
+        margin-top:20px;
+        box-shadow:0 0 12px #848484;
+    }
+    .mytruckpane {
+        background:linear-gradient(166deg,rgb(0, 112, 200),rgb(19, 52, 86));;
+        float:left;
+    }
+    .mypostpane{
+        background:linear-gradient(166deg,rgb(0, 112, 200),rgb(19, 52, 86));;
+        float:right;
+    }
+    .div-header {
+        width:100%;
+        height:75px;
+    }
+    .pane-icon {
+        height:50px;
+        padding:10px;
+        float:left;
+    }
+    .div-header h4 {
+        padding: 23px 4px;
+        float:left;
+        color:#f5f5f5;
+    }
+
+    .searchbox {
+        outline:none;
+        border:none;
+        background:transparent;
+        width:150px;
+        padding:7px;
+    }
+    .div-header .searchbox {
+        margin:20px 0px 0 15px;
+        float:left;
+        border-bottom:2px solid #f5f5f5;
+        color:#f5f5f5;
+    }
+    .div-header button {
+        outline: none;
+        background-color: transparent;
+        border: none;
+        height: 50px;
+        float: left;
+        border-bottom: 2px solid #f5f5f5;
+        margin-top:1px;
+    }
+    .div-header button img {
+        height: 36%;
+        margin-top: 20px;
+    }
+    .posts {
+        height:400px;
+        width:380px;
+        padding:10px;
+        overflow-y:scroll;
+        overflow-x:hidden;
+    }
+    .searchbox::-webkit-input-placeholder{
+        color:#f5f5f5;
+    }
+    .searchbox:-ms-input-placeholder{
+        color:#f5f5f5;
+    }
+    .searchbox:-moz-placeholder{
+        color:#f5f5f5;
+    }
+    .searchbox::-moz-placeholder{
+        color:#f5f5f5;
+    }
+    .runtime-div {
+        width:380px;
+        height:75px;
+        margin-bottom: 10px;
+    }
+    .runtime-details{
+        font-size:14px;
+        padding:2px;
+        width: 245px;
+        color:#f5f5f5;
+    }
+    .runtime-details a{
+        color:#f5f5f5;
+    }
+    .runtime-icon {
+        height:55px;
+        padding:10px;
+        float:left;
+    }
+    .runtime-options {
+        float:right;
+        width: 125px;
+        height: 75px;
+        margin-top: -63px;
+    }
+    .runtime-options button {
+        outline: none;
+        background-color: transparent;
+        border: none;
+        float: left;
+        height: 45px;
+        margin: 17px 3px;
+        font-size: 11px;
+        width: 32px;
+        color: #f5f5f5;
+    }
+    .runtime-options button img {
+        padding-bottom:3px;;
+    }
+
+    .add-post {
+        z-index: 100;
+        background: linear-gradient(166deg,rgb(0, 112, 200),rgb(19, 52, 86));;
+        margin:5% 35%;
+        height: 500px;
+        width: 350px;
+        color:white;
+        position:absolute;
+    }
+    .add-post  h3 {
+        padding:15px;
+    }
+    .add-post  ul {
+        padding:15px;
+        overflow-y:scroll;
+        overflow-x:hidden;
+    }
+    .add-post  ul li {
+        padding:5px 10px;
+    }
+    .close-label {
+        float:right;
+        padding: 5px;
+    }
+    .proxied-field-wrap input {
+        width:250px;
+        background:white;
+        outline:none;
+        padding:10px;
+        border:none;
+        box-shadow:0 0 2px #424242;
+        margin:2px;
+    }
+    .edit-truck-details {
+        float: left;
+        background: linear-gradient(166deg,rgb(0, 112, 200),rgb(19, 52, 86));;
+        margin-left: 7px;
+        height: 500px;
+        width: 350px;
+        margin-top: 20px;
+        color:white;
+    }
+    .edit-truck-details  ul {
+        padding:15px;
+    }
+    .edit-truck-details  h3 {
+        padding:15px;
+    }
+    .edit-truck-details  ul li {
+        padding:5px 10px;
+    }
+    .add-truck-bg {
+        position:absolute;
+        z-index:9999;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,0.5);
+        top:0;
+        left:0;
+    }
+    .add-truck-div {
+        background:#f5f5f5;
+        width:900px;
+        height:500px;
+        margin:4% auto;
+    }
+    .add-truck-head {
+        width:100%;
+        height:40px;
+        background:linear-gradient(#ffffff,#e2e2e2);
+        box-shadow:0 0 4px #242424;
+    }
+    .add-truck-head h4 {
+        color:black;
+        float:left;
+        padding:10px;
+    }
+    .add-truck-head label {
+        color:black;
+        float:right;
+        padding:10px;
+        font-size:12px;
+    }
+    .add-truck-details {
+        margin:7px auto;
+        border-collapse:collapse;
+        width: 900px;
+    }
+    .add-truck-details thead{
+        background:rgb(0, 116, 210);
+    }
+    .add-truck-details thead td {
+        padding: 7px 6px;
+    }
+    .add-truck-details tbody td {
+        padding: 7px 6px;
+    }
+    .add-truck-details tfoot td {
+        padding: 7px 5px;
+        background:#0074D2;
+    }
+    .add-truck-details tfoot button{
+        background:white;
+        padding:5px;
+        float:right;
+        margin-right:5px;
+        color:#0074D2;
+    }
+
+    .remove-row img{
+        vertical-align:middle;
+        height:75%;
+        padding:0 2px;
+        text-align:center;
+    }
+    #truckPostManagePage{
+        width: 100%;
+        height: 90%;
+        background-color: rgba(0, 0, 0, 0.82);
+        z-index: 100;
+        position: absolute;
+    }
 }

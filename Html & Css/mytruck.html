@@ -13,14 +13,29 @@
   $('head').append('<link rel="stylesheet" type="text/css" href="mobile.css">');
  
 }
-    $(".add-row").click(function(){
-        $(".add-truck-details tbody").append('<tr><td><select class="add-truck-input"><option>1<option></select></td><td><select class="add-truck-input"><option>1<option></select></td><td><input class="add-truck-input" type="text" placeholder="Truck type" /></td><td><input class="add-truck-input" type="text" placeholder="Truck type" /></td><td><input class="add-truck-input" type="text" placeholder="Truck type" /></td><td><button class="add-row">Add</button></td><td><button class="remove-row">Remove</button></td></tr>');
-    });
-    $(".add-truck-details tbody").on('click','.remove-row',function(){
+
+$(function addrow(){
+var rowcount= $('.add-truck-details tbody tr').length;
+	$('.add-row').click(function(){
+		event.preventDefault();
+        $('.add-truck-details tbody').append('<tr><td><select class="add-truck-input"><option>1<option></select></td><td><select class="add-truck-input"><option>1<option></select></td><td><input class="add-truck-input" type="text" placeholder="Truck type" /></td><td><input class="add-truck-input" type="text" placeholder="Truck type" /></td><td><input class="add-truck-input" type="text" placeholder="Truck type" /></td><td style="width:95px; text-align:center;"><button class="remove-row"><img src="images/delete.png" alt="" />Remove</button></td></tr>');
+		rowcount++;
+		alert(rowcount);
+		if(rowcount == 7){
+		$(this).hide();
+		}
+		});
+
+    $('.add-truck-details tbody').on('click','.remove-row',function(event){
+		event.preventDefault();
         $(this).parent().parent().remove();
-    });
-			$('.add-row').click(function( event ) {
-		event.preventDefault();});
+		rowcount--;
+		if(rowcount < 7){
+		$('.add-row').show();
+		}
+	});
+});
+
 $('.close-label').click(function(){
 $('.add-post').hide();
 });
@@ -86,6 +101,10 @@ function geolocate() {
 			</ul>			
 		</header>
 		<div class="container">
+		<select class="pagepane-selection">
+		<option>My Trucks</option>
+		<option>My Posts</option>
+		</select>
 		<div class="mytruckpane pagepane">
 		<div class="div-header">
 			<img class="pane-icon" src="mytruck.png" alt="" />
@@ -123,19 +142,17 @@ function geolocate() {
 		<td>Truck Model</td>
 		<td>Reg No.</td>
 		<td>Capacity</td>
-		<td>Add</td>
-		<td>Remove</td>
+		<td style="width:95px; text-align:center;">Remove</td>
 		</tr>
 		</thead>
 		<tbody>
 		<tr>
-		<td><select class="add-truck-input"><option>1<option></select></td>
-		<td><select class="add-truck-input"><option>1<option></select></td>
+		<td><select class="add-truck-input"><option selected value='' disabled='disabled'>1</option><option>2</option><option>3</option></select></td>
+		<td><select class="add-truck-input"><option>1</option></select></td>
 		<td><input class="add-truck-input" type="text" placeholder="Truck type" /></td>
 		<td><input class="add-truck-input" type="text" placeholder="Truck type" /></td>
 		<td><input class="add-truck-input" type="text" placeholder="Truck type" /></td>
-		<td><button class="add-row">Add</button></td>
-		<td><button class="remove-row">Remove</button></td>
+		<td style="width:95px; text-align:center;"><button class="remove-row"><img src="delete.png" alt="" />Remove</button></td>
 		</tr>
 		</tbody>
 		<tfoot>
@@ -144,7 +161,7 @@ function geolocate() {
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
+		<td><button class="add-row">Add row</button></td>
 		<td colspan="2"><button type="submit">Submit</button></td>
 		</tr>
 		</tfoot>

@@ -5,7 +5,7 @@
     <div class="loginpanel">
     <form method="post" name="loginForm" action="/TransEarth/login">
         <ul>
-            <li><img style="margin-left:15px; margin-bottom: 20px; margin-top: 15px;" src="images/logo1.png" alt="" /></li>
+            <li><img id="panel-logo" style="margin-left:15px; margin-bottom: 20px; margin-top: 15px;" src="images/logo1.png" alt="" /></li>
 
             <li>
                 <input class="textbox" type="text" name="username" ng-class="{ 'has-error' : loginForm.username.$error.required}" ng-model="user.username" placeholder="Enter Email/User Name" ng-required="true" />
@@ -16,7 +16,7 @@
                 <span class="text-danger" ng-show="loginForm.password.$error.required">Password required</span>
             </li>
             <li><button style="background:#006FD7; margin-left:95px;" class="buttons" type="submit" name="login"> Login </button></li>
-            <li><a style="color:white; float:left;" href="#">Forgot Password ?</a><a class="signupdiv" style="color:white; float:right;" href="#"  ng-click="signUp()">Sign up</a></li>
+            <li><a style=" float:left;" href="#">Forgot Password ?</a><a class="signupdiv" style=" float:right;" href="#"  ng-click="signUp()">Sign up</a></li>
 
         </ul>
     </form>

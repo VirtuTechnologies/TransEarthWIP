@@ -60,10 +60,16 @@
         $('.menu-btn').click(function(){
             $('.navmenu').toggle();
         });
+        $('.navmenu li a').click(function(){
+            $('.navmenu').hide();
+        });
+        $('.pagepane-selection').change(function(){
+            $('.mytruckpane, .mypostpane').toggle();
+        });
     }
     else {
         var screensize = $(window).width();
-        if(screensize < "1024"){
+        if(screensize < "1240"){
             $('link[rel=stylesheet][href~="style.css"]').remove();
             $('head').append('<link rel="stylesheet" type="text/css" href="css/mobile.css">');
             $('link[href="css/style.css"]').prop("disabled", true);

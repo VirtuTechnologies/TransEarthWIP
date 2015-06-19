@@ -1,110 +1,100 @@
-<div class="page-header" ng-controller="truckListCtrl" ng-init="init()">
-	<div class="bs-docs-section">
-		<!-- div class="row">
-			<div class="col-lg-12">
-				<div class="well bs-component">
-					<div id="source-button" class="btn btn-primary btn-xs" style="display: block;">&lt; &gt;</div>
-				</div>
-			</div>
-		</div -->
-		<!-- div class="row">
-			<div class="col-lg-12">
-				<div class="page-header">
-					<h1 id="forms">Search Trucks</h1>
-				</div>
-			</div>
-		</div -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				Search Trucks
-			</div>
-			<div class="panel-body">
-				<div class="container">
-					<form id="searchTruckForm" name="searchTruckForm" role="form">
-						<div class="form-group-sm col-md-3" ng-class="{ 'has-error' : !truckPostList.filter.from.isSelected,
-										'has-success' : truckPostList.filter.from.isSelected,
-										'has-feedback' : truckPostList.filter.from.isSelected}">
-							<label class="col-lg-6 control-label">From</label>
-							<div class="col-lg-12">
-								<google-places tagId="from_city" tagName="from_city" holder="From Location" glyph="false"
-											   location=truckPostList.filter.from></google-places>
-							</div>
-						</div>
-						<div class="form-group-sm col-md-3" ng-class="{ 'has-error' : !truckPostList.filter.to.isSelected,
-										'has-success' : truckPostList.filter.to.isSelected,
-										'has-feedback' : truckPostList.filter.to.isSelected}">
-							<label class="col-lg-6 control-label">To</label>
-							<div class="col-lg-12">
-								<google-places tagId="to_city" tagName="to_city" holder="To Location" glyph="false"
-											   location=truckPostList.filter.to></google-places>
-							</div>
-						</div>
-						<div class="form-group-sm col-md-3">
-							<label for="type">Truck Type</label>
-							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-truck"></i></span>
-								<select selectpicker id="truck_type" name="truck_type"
-										ng-model="truckPostList.filter.type"
-										ng-options="type for type in truckTypeList"
-										class="form-control col-lg-12" data-dropup-auto="false">
-									<option value="">Choose one</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group-sm col-md-2">
-							<!-- label class="col-md-9"> On</label -->
-							<div class="col-md-4 no-padding">
-								<input type="radio" ng-change="resetSearchCategory()"
-									   ng-model="truckPostList.filter.dateRange"
-									   name="optionsRadios" id="optionsRadios1" value=1>On
-							</div>
-							<div class="col-md-4 no-padding">
-								<input type="radio" ng-change="resetSearchCategory()"
-									   ng-model="truckPostList.filter.dateRange"
-									   name="optionsRadios" id="optionsRadios2" value=2 selected>After
-							</div>
-							<div class="col-md-12" ng-if="truckPostList.filter.dateRange!=null">
-								<input class="form-control input-sm" type="text" ng-change="resetSearchCategory()" placeholder="Available Date"
-									   id="daterange" name="daterange" class="form-control" datepicker-popup="dd-MMMM-yyyy"
-									   ng-model="truckPostList.filter.dt" is-open="opened"
-									   min="minDate"
-									   datepicker-options="truckPostList.dateOptions" ng-required="true" close-text="Close" />
-								<!-- span class="glyphicon error" ng-show="truckListForm.daterange.$error.required">*</span -->
-							</div>
-						</div>
-						<div class="form-group-sm col-md-1" ng-if="truckPostList.filter.dateRange!=null">
-							<label class="col-md-12">&nbsp;</label>
-							<button type="button" ng-click="searchTrucks()"
-									class="btn btn-success btn-sm" id="search">{{truckPostList.searchButtonName}}</button>
-						</div>
-						<!-- button type="submit" class="btn btn-default">Submit</button -->
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="bs-docs-section" id="search_list" ng-if="truckPostList.searchTriggered">
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="bs-component">
-					<div class="panel panel-success">
-						<div class="panel-heading">
-							<h3 class="panel-title">Truck </h3>
-							<!--div collapse-section></div -->
-						</div>
-						<div class="panel-body">
-							<div id="truckPostListMessage" ng-show="!truckPostList.listShow || truckPostDetails.messageAvailable">
-								<div id="trucklist_alert" ></div>
-							</div>
-							<div ng-show="truckPostList.listShow" class="gridMaxStyle" ng-grid="truckPostList.gridOptions"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
+<div ng-controller="truckListCtrl" ng-init="init()">
+    <form id="searchTruckForm" name="searchTruckForm" role="form">
+    <div class="search-bar">
+        <div class="location"><img src="images/location.png" >
+            <input class="search-bar-input" location=truckPostList.filter.from id="from_city" type="text" placeholder="From Location" name="from_city"/>
+        </div>
+        <div class="location"><img src="images/location.png" >
+            <input class="search-bar-input" type="text" id="to_city" name="to_city" glyph="false"
+                                                                     location=truckPostList.filter.to placeholder="To Location"/>
+        </div>
+        <div class="location"><img src="images/mytruck.png" >
+            <select selectpicker id="truck_type" name="truck_type"
+                    ng-model="truckPostList.filter.type"
+                    ng-options="type for type in truckTypeList"
+                    class="search-bar-input" data-dropup-auto="false">
+                <option value="">Choose one</option>
+            </select>
+        </div>
+        <div class="location"><img src="images/location.png" >
+            <input class="search-bar-input" type="text" ng-change="resetSearchCategory()" placeholder="Available Date"
+                   id="daterange" name="daterange" style="margin:0;" class="search-bar-input" datepicker-popup="dd-MMMM-yyyy"
+                   ng-model="truckPostList.filter.dt" is-open="opened"
+                   min="minDate"
+                   datepicker-options="truckPostList.dateOptions" ng-required="true" close-text="Close" />
+        </div>
+        <div class="radio-group">
+            <input type="radio" ng-change="resetSearchCategory()"
+                   ng-model="truckPostList.filter.dateRange"
+                   name="optionsRadios" id="optionsRadios1" value=1>
+            <label for="date-option"><span>ON</span></label></br>
+            <input type="radio" ng-change="resetSearchCategory()"
+                   ng-model="truckPostList.filter.dateRange"
+                   name="optionsRadios" id="optionsRadios2" value=2 selected>
+            <label for="date-option"><span>AFTER</span></label>
+        </div>
+        <button class="submit-search" ng-click="searchTrucks()" id="search"><img src="images/search-btn-white.png" alt="" /></button>
+    </div>
+    <img class="shadow1" src="images/shadow1.png" alt="" />
+    <div class="results">
+        <table class="results-table">
+            <thead>
+            <tr>
+                <td>
+                    From
+                </td>
+                <td>
+                    To
+                </td>
+                <td>
+                    Capacity
+                </td>
+                <td>
+                    Available From
+                </td>
+                <td>
+                    Action
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-show="truckPostList.list" ng-repeat="post in truckPostList.list">
+                <td>
+                    {{post.source}}
+                </td>
+                <td>
+                    {{post.destination}}
+                </td>
+                <td>
+                    {{post.capacity}}
+                </td>
+                <td>
+                    {{post.availableDateDisplay}}
+                </td>
+                <td>
+                    <img src="images/view.png" class="view-action" alt="" />View
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td colspan="2">
+                    <a href="#">First Page<img src="images/first.png" alt="" /></a>
+                    <a href="#">Previous<img src="images/back.png" alt="" /></a>5<a href="#"><img src="images/nextp.png" alt="" />Next</a>
+                    <a href="#"><img src="images/last.png" alt="" />Last Page</a>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <img class="shadow2" src="images/shadow2.png" alt="" />
+</form>
 </div>
 <!-- Truck Post Details Modal -->
 <script type="text/ng-template" id="truckPostDetailModal.html">
