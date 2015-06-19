@@ -7,6 +7,7 @@ function truckOwnerCtrl($scope, $http, $location, UserRequest, TruckRequest) {
     if(TruckRequest.isSharedTruckProcessed()){
         console.log("Truck processed");
         TruckRequest.setSharedTruckProcessed(false);
+        $scope.myTruckList.messageAvailable = true;
         succesAlert("Truck saved successfully", 'truck_home_alert');
     }
     $scope.truckOwnerPage = {};
@@ -29,4 +30,13 @@ function truckOwnerCtrl($scope, $http, $location, UserRequest, TruckRequest) {
         truckPosts : "truck_owner_posts",
         managePost : "manage_post"
     };
+    /*$scope.$watch('truckOwnerPage.showPostList', function (newVal, oldVal) {
+        console.log('truckOwnerPage.showPostList changed from '+oldVal+" to "+newVal);
+        //if (!oldVal && newVal) {
+            $scope.template.truckPosts = '';
+            $scope.template.truckPosts = 'truck_owner_posts';
+            //$scope.myTruckPostList.list = [];
+            //$scope.myTruckPostList.getPagedDataAsync($scope.myTruckPostList.pagingOptions.pageSize, $scope.myTruckPostList.pagingOptions.currentPage);
+        //}
+    });*/
 }

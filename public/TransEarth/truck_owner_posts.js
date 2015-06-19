@@ -56,9 +56,10 @@ function truckOwnerPostsCtrl($scope, $http, $location, $modal, UserRequest, Truc
                             && typeof data.myTruckPostList != 'undefined' && data.myTruckPostList != null
                             && typeof data.myTruckPostList.details != "undefined" && data.myTruckPostList.details != null
                             && data.myTruckPostList.details.length > 0){
-                            //console.log(JSON.stringify(data.myTruckList.details));
+                            //console.log(JSON.stringify(data.myTruckPostList.details));
                             $scope.myTruckPostList.totalServerItems = data.length;
                             $scope.myTruckPostList.list = data.myTruckPostList.details;
+                            $scope.myTruckPostList.totalServerItems = $scope.myTruckPostList.list.length;
                             var filteredData = data.myTruckPostList.details.filter(function(item) {
                                 return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
                             });
@@ -98,6 +99,7 @@ function truckOwnerPostsCtrl($scope, $http, $location, $modal, UserRequest, Truc
                             $scope.myTruckPostList.totalServerItems = data.length;
                             var filteredData = data.myTruckPostList.details;
                             $scope.myTruckPostList.list = data.myTruckPostList.details;
+                            $scope.myTruckPostList.totalServerItems = $scope.myTruckPostList.list.length;
                             $scope.myTruckPostList.columnDefs = data.myTruckPostList.headers;
                             $scope.myTruckPostList.setPagingData(filteredData,page,pageSize);
                             $scope.myTruckPostList.listShow = true;
@@ -157,7 +159,14 @@ function truckOwnerPostsCtrl($scope, $http, $location, $modal, UserRequest, Truc
 
     //$scope.searchTrucks = function(){
     $scope.myTruckPostList.searchTriggered = true;
+    /*$scope.$watch('myTruckPostList.list', function (newVal, oldVal) {
+        console.log(' My Truck Posts refresh '+JSON.stringify(newVal));
+        if(typeof newVal != "undefined" && newVal != null && Array.isArray(newVal) && newVal.length > 0){
+            $scope.myTruckPostList.getPagedDataAsync($scope.myTruckPostList.pagingOptions.pageSize, $scope.myTruckPostList.pagingOptions.currentPage);
+        }
+    });*/
     $scope.myTruckPostList.getPagedDataAsync($scope.myTruckPostList.pagingOptions.pageSize, $scope.myTruckPostList.pagingOptions.currentPage);
+
     //};
 
     $scope.myTruckList.showAddPostError = false;

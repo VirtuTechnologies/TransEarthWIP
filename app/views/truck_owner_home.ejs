@@ -1,4 +1,7 @@
 <div id="truck_owner" ng-controller="truckOwnerCtrl">
+	<div id="myTruckListMessage" ng-show="myTruckList.messageAvailable">
+		<div id="truck_home_alert" ></div>
+	</div>
 	<div ng-if="truckOwnerPage.showTruckList">
 		<div ng-include src="template.myTrucks"></div>
 	</div>

@@ -19,7 +19,7 @@ function truckPostManageCtrl($scope, $http, $location, $anchorScroll, $filter, U
     $scope.pickup.dateRange = {startDate: null, endDate: null};
     var currentDt = new Date();
     $scope.minDate = new Date();
-    $scope.maxDate = new Date(currentDt.getFullYear() + 1);
+    $scope.maxDate = new Date(moment(currentDt.getFullYear() + 1));
 
     $scope.pickup.dateOptions = {
         formatYear: 'yy',
@@ -29,9 +29,30 @@ function truckPostManageCtrl($scope, $http, $location, $anchorScroll, $filter, U
     $scope.pickup.dateRangeOptions ={
         format: 'DD-MMM-YYYY',
         popup : "dd-MMMM-yyyy",
-        "is-open" : "pickup.dateRangeOpened",
+        //"is-open" : "pickup.dateRangeOpened",
         minDate: $scope.minDate,
-        maxDate: $scope.maxDate
+        //maxDate: $scope.maxDate
+    };
+
+    $scope.pickup.startDateOptions ={
+        format: 'DD-MMM-YYYY',
+        popup : "dd-MMMM-yyyy",
+        //"is-open" : "pickup.dateRangeOpened",
+        minDate: $scope.minDate,
+        //maxDate: $scope.maxDate
+    };
+
+    $scope.clearEndDate = function(){
+        $scope.truckToPost.post.pickup.endDate = null;
+        $scope.pickup.endDateOptions ={
+            format: 'DD-MMM-YYYY',
+            popup : "dd-MMMM-yyyy",
+            //"is-open" : "pickup.dateRangeOpened",
+            minDate: ($scope.truckToPost.post.pickup.startDate!="undefined"&&$scope.truckToPost.post.pickup.startDate!=null) ? new Date($scope.truckToPost.post.pickup.startDate) : new Date(),
+            //maxDate: ($scope.truckToPost.post.pickup.startDate!="undefined"&&$scope.truckToPost.post.pickup.startDate!=null) ? (new Date($scope.truckToPost.post.pickup.startDate)).add() : new Date(),
+            maxDate : ($scope.truckToPost.post.pickup.startDate!="undefined"&&$scope.truckToPost.post.pickup.startDate!=null)
+                            ? new Date($scope.truckToPost.post.pickup.startDate).setFullYear(new Date($scope.truckToPost.post.pickup.startDate).getFullYear() + 1) : new Date()
+        };
     };
 
     $scope.pickup.opened = false;
@@ -243,6 +264,11 @@ function truckPostManageCtrl($scope, $http, $location, $anchorScroll, $filter, U
                         $scope.truckToPost = null;
                         TruckPostRequest.setSharedTruck(null);
                         succesAlert("Truck Post added successfully", 'truck_home_alert');
+                        //$scope.truckOwnerPage.showPostList = true;
+                        $scope.truckOwnerPage.showManagePost = false;
+                        $scope.myTruckList.messageAvailable = true;
+                        succesAlert("Truck Post Added Successfully", 'truck_home_alert');
+                        $scope.truckOwnerPage.showPostList = false;
                         $scope.truckOwnerPage.showPostList = true;
                         // set the location.hash to the id of
                         // the element you wish to scroll to.
@@ -255,9 +281,13 @@ function truckPostManageCtrl($scope, $http, $location, $anchorScroll, $filter, U
                         $scope.truckPostProcess.indicator.saved = false;
                         $scope.truckPostProcess.indicator.showAlert = true;
                         succesError(data, 'manage_truckPost_alert');
+
+                        $scope.myTruckList.messageAvailable = true;
+                        succesError(data, 'truck_home_alert');
+                        $location.hash('truck_home_alert');
                         // set the location.hash to the id of
                         // the element you wish to scroll to.
-                        $location.hash('manage_truckPost_alert');
+                        //$location.hash('manage_truckPost_alert');
 
                         // call $anchorScroll()
                         $anchorScroll();
@@ -279,11 +309,16 @@ function truckPostManageCtrl($scope, $http, $location, $anchorScroll, $filter, U
                         TruckPostRequest.setSharedTruck(null);
                         $scope.truckPostToUpdate = null;
                         $scope.truckToPost = null;
-                        succesAlert("Truck Post updated successfully", 'truck_home_alert');
+                        //succesAlert("Truck Post updated successfully", 'truck_home_alert');
+                        $scope.myTruckList.messageAvailable = true;
+                        succesError("Truck Post updated successfully", 'truck_home_alert');
+                        $location.hash('truck_home_alert');
+                        $scope.truckOwnerPage.showManagePost = false;
+                        $scope.truckOwnerPage.showPostList = false;
                         $scope.truckOwnerPage.showPostList = true;
                         // set the location.hash to the id of
                         // the element you wish to scroll to.
-                        $location.hash('headerBar');
+                        $location.hash('truck_home_alert');
 
                         // call $anchorScroll()
                         $anchorScroll();
@@ -291,7 +326,10 @@ function truckPostManageCtrl($scope, $http, $location, $anchorScroll, $filter, U
                         console.log("Truck Post update failed:"+JSON.stringify(err));
                         $scope.truckPostProcess.indicator.saved = false;
                         $scope.truckPostProcess.indicator.showAlert = true;
-                        succesError(JSON.stringify(err), 'manage_truck_post_alert');
+                        //succesError(JSON.stringify(err), 'manage_truck_post_alert');
+                        $scope.myTruckList.messageAvailable = true;
+                        succesError(err, 'truck_home_alert');
+                        $location.hash('truck_home_alert');
                         // set the location.hash to the id of
                         // the element you wish to scroll to.
                         $location.hash('truckPostManagePage');

@@ -1,108 +1,109 @@
-<div class="page-header" ng-controller="loadListCtrl" ng-init="init()">
-	<div class="bs-docs-section">
-		<!-- div class="row">
-			<div class="col-lg-12">
-				<div class="well bs-component">
-					<div id="source-button" class="btn btn-primary btn-xs" style="display: block;">&lt; &gt;</div>
-				</div>
+<div ng-controller="loadListCtrl" ng-init="init()">
+	<form id="searchLoadForm" name="searchLoadForm" role="form">
+		<div class="search-bar">
+			<div class="location"><img src="images/location.png" >
+				<google-places className="search-bar-input" holder="From Location"
+							   tagId="from_city" tagName="from_city"
+							   location=loadPostList.filter.from></google-places>
 			</div>
-		</div -->
-		<!-- div class="row">
-			<div class="col-lg-12">
-				<div class="page-header">
-					<h1 id="forms">Search Trucks</h1>
-				</div>
+			<div class="location"><img src="images/location.png" >
+				<google-places className="search-bar-input" holder="To Location"
+							   tagId="to_city" tagName="to_city"
+							   location=loadPostList.filter.to></google-places>
 			</div>
-		</div -->
-		<div class="panel panel-default">
-			<div class="panel-heading">Search Loads</div>
-			<div class="panel-body">
-				<div class="container">
-					<form id="searchLoadForm" name="searchLoadForm" role="form">
-						<div class="form-group-sm col-md-3" ng-class="{ 'has-error' : !loadPostList.filter.from.isSelected,
-										'has-success' : loadPostList.filter.from.isSelected,
-										'has-feedback' : loadPostList.filter.from.isSelected}">
-							<label class="col-lg-6 control-label" for="from_city">From:</label>
-							<div class="col-lg-12 no-padding">
-								<google-places tagId="from_city" tagName="from_city" holder="From Location" glyph="false"
-											   location=loadPostList.filter.from></google-places>
-							</div>
-						</div>
-						<div class="form-group-sm col-md-3" ng-class="{ 'has-error' : !loadPostList.filter.to.isSelected,
-										'has-success' : loadPostList.filter.to.isSelected,
-										'has-feedback' : loadPostList.filter.to.isSelected}">
-							<label class="col-lg-6 control-label" for="to_city">To:</label>
-							<div class="col-lg-12 no-padding">
-								<google-places tagId="to_city" tagName="to_city" holder="To Location" glyph="false"
-											   location=loadPostList.filter.to></google-places>
-							</div>
-						</div>
-						<div class="form-group-sm col-md-3">
-							<label for="material">Material</label>
-							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-cube"></i></span>
-								<select selectpicker id="material" name="material"
-										ng-model="loadPostList.filter.material"
-										ng-options="material for material in materialList"
-										class="form-control col-lg-12" data-dropup-auto="false">
-									<option value="">Choose one</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group-sm col-md-2">
-							<!-- label class="col-md-9"> On</label -->
-							<div class="col-md-4 no-padding">
-								<input type="radio" ng-change="resetSearchCategory()"
-									   ng-model="loadPostList.filter.dateRange"
-									   name="optionsRadios" id="optionsRadios1" value=1>On
-							</div>
-							<div class="col-md-4 no-padding">
-								<input type="radio" ng-change="resetSearchCategory()"
-									   ng-model="loadPostList.filter.dateRange"
-									   name="optionsRadios" id="optionsRadios2" value=2 selected>After
-							</div>
-							<div class="col-md-12" ng-if="loadPostList.filter.dateRange!=null">
-								<input class="form-control input-sm" type="text" ng-change="resetSearchCategory()" placeholder="Available Date"
-									   id="daterange" name="daterange" class="form-control" datepicker-popup="dd-MMMM-yyyy"
-									   ng-model="loadPostList.filter.dt" is-open="opened"
-									   min="minDate"
-									   datepicker-options="loadPostList.dateOptions" ng-required="true" close-text="Close" />
-								<!-- span class="glyphicon error" ng-show="truckListForm.daterange.$error.required">*</span -->
-							</div>
-						</div>
-						<div class="form-group-sm col-md-1" ng-if="loadPostList.filter.dateRange!=null">
-							<label class="col-md-12">&nbsp;</label>
-							<button type="button" ng-click="searchLoads()"
-									class="btn btn-success btn-sm" id="search">{{loadPostList.searchButtonName}}</button>
-						</div>
-						<!-- button type="submit" class="btn btn-default">Submit</button -->
-					</form>
-				</div>
+			<div class="location"><img src="images/mytruck.png" >
+				<select selectpicker id="material" name="material"
+						ng-model="loadPostList.filter.material"
+						ng-options="material for material in materialList"
+						class="search-bar-input" data-dropup-auto="false">
+					<option value="">Choose one</option>
+				</select>
 			</div>
+			<div class="location"><img src="images/location.png" >
+				<input class="textbox" type="text" ng-required="true" placeholder="Available Date" name="daterange"
+					   ui-date-format="yy-mm-dd" ng-model="loadPostList.filter.dt" ui-date="loadPostList.filter.dateRangeOptions"
+					   ng-class="{ 'has-error' : searchLoadForm.daterange.$invalid,
+										'has-success' : !(searchLoadForm.daterange.$invalid),
+										'has-feedback' : searchLoadForm.daterange.$invalid}"/>
+			</div>
+			<div class="radio-group">
+				<input type="radio" ng-change="resetSearchCategory()"
+					   ng-model="loadPostList.filter.dateRange"
+					   name="optionsRadios" id="optionsRadios1" value=1>
+				<label for="date-option"><span>ON</span></label></br>
+				<input type="radio" ng-change="resetSearchCategory()"
+					   ng-model="loadPostList.filter.dateRange"
+					   name="optionsRadios" id="optionsRadios2" value=2 selected>
+				<label for="date-option"><span>AFTER</span></label>
+			</div>
+			<button class="submit-search" ng-click="searchTrucks()" id="search"><img src="images/search-btn-white.png" alt="" /></button>
 		</div>
-	</div>
-
-	<div class="bs-docs-section" id="search_list" ng-if="loadPostList.searchTriggered">
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="bs-component">
-					<div class="panel panel-success">
-						<div class="panel-heading">
-							<h3 class="panel-title">Load List</h3>
-							<!-- div collapse-section></div -->
-						</div>
-						<div class="panel-body">
-							<div id="loadListMessage" ng-show="!loadPostList.listShow || loadPostList.messageAvailable">
-								<div id="loadlist_alert" ></div>
-							</div>
-							<div ng-show="loadPostList.listShow" class="gridMaxStyle" ng-grid="loadPostList.gridOptions"></div>
-						</div>
-					</div>
-				</div>
-			</div>
+		<img class="shadow1" src="images/shadow1.png" alt="" />
+		<div class="results" ng-if="loadPostList.searchTriggered">
+			<table class="results-table">
+				<thead>
+				<tr>
+					<td>
+						From
+					</td>
+					<td>
+						To
+					</td>
+					<td>
+						Load
+					</td>
+					<td>
+						Material
+					</td>
+					<td>
+						Pickup Date
+					</td>
+					<td>
+						Action
+					</td>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-show="loadPostList.list" ng-repeat="post in loadPostList.list">
+					<td>
+						{{post.source}}
+					</td>
+					<td>
+						{{post.destination}}
+					</td>
+					<td>
+						{{post.load}}
+					</td>
+					<td>
+						{{post.materialType}}
+					</td>
+					<td>
+						{{post.pickupDate}}
+					</td>
+					<td>
+						<img src="images/view.png" class="view-action" alt="" />View
+					</td>
+				</tr>
+				</tbody>
+				<tfoot>
+				<tr>
+					<td>
+					</td>
+					<td>
+					</td>
+					<td>
+					</td>
+					<td colspan="2">
+						<a href="#">First Page<img src="images/first.png" alt="" /></a>
+						<a href="#">Previous<img src="images/back.png" alt="" /></a>5<a href="#"><img src="images/nextp.png" alt="" />Next</a>
+						<a href="#"><img src="images/last.png" alt="" />Last Page</a>
+					</td>
+				</tr>
+				</tfoot>
+			</table>
 		</div>
-	</div>
-
+		<img class="shadow2" src="images/shadow2.png" alt="" />
+	</form>
 </div>
 <!-- Load Details Modal -->
 <script type="text/ng-template" id="loadDetailModal.html">
