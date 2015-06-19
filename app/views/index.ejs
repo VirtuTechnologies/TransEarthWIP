@@ -7,6 +7,7 @@
 		<meta name="author" content="" />
 		<!--[if IE]>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <link href='http://fonts.googleapis.com/css?family=Maven+Pro' rel='stylesheet' type='text/css'>
 		<![endif]-->
 		<title>Transport on Earth</title>
 		<!-- BOOTSTRAP CORE STYLE  -->
@@ -48,10 +49,8 @@
                     </ul>
                 </li>
                 <li ng-if="!core.loggedIn">
-                    <a class="logindiv" href="#" ng-click="loginClicked()">
-                        <button type="button" id="btn">
+                    <a href="#" ng-click="loginClicked()">
                             {{core.pageHeaders.login}}
-                        </button>
                     </a>
                 </li>
                 <li><a href="#" ng-click="searchLoad()">Search Load</a></li>

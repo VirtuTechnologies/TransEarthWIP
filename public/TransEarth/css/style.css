@@ -1,6 +1,6 @@
 * {margin:0; padding:0;}
 body {
-    font-family:'Maven Pro';
+    font-family:'Maven Pro',sans-serif;
     color:white;
     background:url('../images/pattern.png');
 }
@@ -206,6 +206,9 @@ header {
 .navmenu  li  a:hover {
     color:#006FD7;
 }
+
+/* Login page & panel Designs */
+
 .loginpanel {
     background:rgb(0,0,0);
     z-index:100;
@@ -220,6 +223,12 @@ header {
 .loginpanel ul li{
     margin:10px auto;
 }
+.loginpanel ul li a {
+    color:white;
+}
+
+/* Signup page & panel Designs */
+
 .signuppanel {
     background:rgb(0,0,0);
     z-index:100;
@@ -339,7 +348,9 @@ header {
 
 
 /* My trucks page Style */
-
+.pagepane-selection{
+    display:none;
+}
 .pagepane{
     height:500px;
     width:400px;
@@ -598,6 +609,7 @@ header {
     to {background-color: yellow;}
 }
 /* Trucks */
+
 .add-post {
     float: left;
     background: linear-gradient(166deg,rgb(0, 112, 200),rgb(19, 52, 86));;

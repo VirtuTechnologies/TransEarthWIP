@@ -2,7 +2,7 @@
 body {
 font-family:'Maven Pro';
 color:white;
-background:url('pattern.png');
+background:rgb(242, 242, 242);
 }
 li {
 list-style:none;
@@ -84,7 +84,28 @@ display:block;
 .loginpanel, .signuppanel {
 display:none;
 }
-
+.loginpanel {
+    z-index:100;
+    width:300px;
+    height:400px;
+    margin:50px auto;
+}
+.loginpanel ul {
+    width:274px;
+    margin:10% auto;
+}
+.loginpanel ul li{
+    margin:10px auto;
+}
+.loginpanel ul li a{
+    color:#006FD7;
+}
+.loginpanel ul li img{
+    display:none;
+}
+.closediv {
+display:none;
+}
 .container {
 width:100%;
 }
@@ -215,9 +236,7 @@ vertical-align:middle;
 .menu-icon:active .navmenu, .menu-icon:hover .navmenu{
 display:block;
 }
-.loginpanel, .signuppanel {
-display:none;
-}
+
 .container {
 width:100%;
 }

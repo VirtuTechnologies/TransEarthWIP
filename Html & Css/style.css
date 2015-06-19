@@ -325,7 +325,9 @@ header {
 
 
 /* My trucks page Style */
-
+.pagepane-selection {
+display:none;
+}
 .pagepane{
     height:500px;
     width:400px;
