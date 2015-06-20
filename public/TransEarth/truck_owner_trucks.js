@@ -166,6 +166,7 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
                     //$scope.truckOwnerPage.showPostList = false;
                     $scope.truckOwnerPage.showManageTruck = false;
                     $scope.truckOwnerPage.showManagePost = true;
+                    $scope.truckOwnerPage.managePostTitle = "Add Post";
                 }else{
                     $scope.myTruckList.showAddPostError = false;
                     $scope.truckOwnerPage.showPostList = true;

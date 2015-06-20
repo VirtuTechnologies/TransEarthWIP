@@ -23,13 +23,18 @@ angular.module('ui.date', [])
           var initDateWidget = function () {
             var showing = false;
             var opts = getOptions();
+            console.log(attrs);
+            console.log(element);
+            console.log("Options for UI Date: "+JSON.stringify(opts));
 
             function setVal() {
               var keys = ['Hours', 'Minutes', 'Seconds', 'Milliseconds'],
                   isDate = angular.isDate(controller.$modelValue),
                   preserve = {};
 
+              //console.log("Options for UI Date view value: "+controller.$modelValue);
               if (isDate) {
+
                 angular.forEach(keys, function(key) {
                   preserve[key] = controller.$modelValue['get' + key]();
                 });
@@ -41,6 +46,8 @@ angular.module('ui.date', [])
                   controller.$viewValue['set' + key](preserve[key]);
                 });
               }
+
+              console.log("Options for UI Date value: "+JSON.stringify(preserve));
             }
 
             // If we have a controller (i.e. ngModelController) then wire it up
@@ -81,6 +88,7 @@ angular.module('ui.date', [])
               // Update the date picker when the model changes
               controller.$render = function () {
                 var date = controller.$modelValue;
+                console.log("Controller render: "+date);
                 if ( angular.isDefined(date) && date !== null && !angular.isDate(date) ) {
                   if ( angular.isString(controller.$modelValue) ) {
                     date = uiDateConverter.stringToDate(attrs.uiDateFormat, controller.$modelValue);

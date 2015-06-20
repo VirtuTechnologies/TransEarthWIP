@@ -1060,6 +1060,10 @@ function coreController($scope, $rootScope, $http, $location, UserRequest, Truck
         $scope.page.scope = "Add Truck";
         //console.log("Search Truck clicked : "+$scope.pageTemplate);
     };
+    $scope.gotoAddTrucksPage = function(){
+        $scope.page.template = "/TransEarth/add_trucks";
+        $scope.page.scope = "Add Multiple Trucks";
+    };
 
     $scope.loadMyLoads = function(){
         console.log("My Loads clicked");

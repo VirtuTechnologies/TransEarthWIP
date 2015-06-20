@@ -36,11 +36,14 @@
 					   name="optionsRadios" id="optionsRadios2" value=2 selected>
 				<label for="date-option"><span>AFTER</span></label>
 			</div>
-			<button class="submit-search" ng-click="searchTrucks()" id="search"><img src="images/search-btn-white.png" alt="" /></button>
+			<button class="submit-search" ng-click="searchLoads()" id="search"><img src="images/search-btn-white.png" alt="" /></button>
 		</div>
 		<img class="shadow1" src="images/shadow1.png" alt="" />
 		<div class="results" ng-if="loadPostList.searchTriggered">
-			<table class="results-table">
+			<div ng-show="loadPostList.messageAvailable">
+				<div id="loadlist_alert"></div>
+			</div>
+			<table class="results-table" ng-if="loadPostList.listShow">
 				<thead>
 				<tr>
 					<td>

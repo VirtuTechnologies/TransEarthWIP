@@ -81,6 +81,8 @@ function truckListCtrl($scope, $http, $location, $modal, $filter, UserRequest) {
         if($scope.truckPostList.searchTriggered){
             setTimeout(function () {
                 var data;
+                $scope.truckPostList.listShow = false;
+                $scope.truckPostList.messageAvailable = false;
                 //console.log("Search Text: "+searchText);
                 if (searchText) {
                     var ft = searchText.toLowerCase();
@@ -104,6 +106,7 @@ function truckListCtrl($scope, $http, $location, $modal, $filter, UserRequest) {
                             $scope.truckPostList.columnDefs = data.truckPostList.headers;
                             $scope.setPagingData(filteredData,page,pageSize);
                             $scope.truckPostList.listShow = true;
+                            $scope.truckPostList.messageAvailable = false;
                             //$scope.truckPostList.searchButtonName = "Review TruckList";
                         }else{
                             //console.log("No data available");
@@ -142,6 +145,7 @@ function truckListCtrl($scope, $http, $location, $modal, $filter, UserRequest) {
                             $scope.truckPostList.columnDefs = data.truckPostList.headers;
                             $scope.setPagingData(filteredData,page,pageSize);
                             $scope.truckPostList.listShow = true;
+                            $scope.truckPostList.messageAvailable = false;
                             //$scope.truckPostList.searchButtonName = "Review TruckList";
                         }else{
                             //console.log("No data available");
@@ -149,7 +153,6 @@ function truckListCtrl($scope, $http, $location, $modal, $filter, UserRequest) {
                             $scope.truckPostList.listShow = false;
                             $scope.truckPostList.message = "No data available";
                             succesWarning($scope.truckPostList.message, 'trucklist_alert');
-
                         }
                     }).error(function(data) {
                         $scope.truckPostList.listShow = false;
@@ -202,6 +205,7 @@ function truckListCtrl($scope, $http, $location, $modal, $filter, UserRequest) {
     $scope.truckPostList.messageAvailable = false;
 
     $scope.searchTrucks = function(){
+        $scope.truckPostList.list = [];
         $scope.truckPostList.searchTriggered = true;
         $scope.getPagedDataAsync($scope.truckPostList.pagingOptions.pageSize, $scope.truckPostList.pagingOptions.currentPage);
     };

@@ -44,7 +44,10 @@
 		</div>
 		<img class="shadow1" src="images/shadow1.png" alt="" />
 		<div class="results">
-			<table class="results-table">
+			<div ng-show="truckPostList.messageAvailable">
+				<div id="trucklist_alert"></div>
+			</div>
+			<table class="results-table" ng-if="truckPostList.listShow">
 				<thead>
 				<tr>
 					<td>
@@ -76,7 +79,7 @@
 						{{post.capacity}}
 					</td>
 					<td>
-						{{post.availableDateDisplay}}
+						{{post.availableDate}}
 					</td>
 					<td>
 						<img src="images/view.png" class="view-action" alt="" />View

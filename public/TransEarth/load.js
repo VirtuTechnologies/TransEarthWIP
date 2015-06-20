@@ -79,6 +79,8 @@ function loadListCtrl($scope, $http, $location, $modal, UserRequest) {
         if($scope.loadPostList.searchTriggered){
             setTimeout(function () {
                 var data;
+                $scope.loadPostList.listShow = false;
+                $scope.loadPostList.messageAvailable = false;
                 //console.log("Search Text: "+searchText);
                 if (searchText) {
                     var ft = searchText.toLowerCase();
@@ -130,21 +132,21 @@ function loadListCtrl($scope, $http, $location, $modal, UserRequest) {
                             && typeof data.loadPostList != 'undefined' && data.loadPostList != null
                             && typeof data.loadPostList.details != "undefined" && data.loadPostList.details != null
                             && data.loadPostList.details.length > 0){
-                            //console.log(JSON.stringify(data));
+                            console.log(JSON.stringify(data));
                             $scope.loadPostList.list = data.loadPostList.details;
                             var filteredData = data.loadPostList.details;
                             //console.log("Filtered Data:"+JSON.stringify(filteredData));
                             $scope.loadPostList.columnDefs = data.loadPostList.headers;
                             $scope.setPagingData(filteredData,page,pageSize);
                             $scope.loadPostList.listShow = true;
+                            $scope.loadPostList.messageAvailable = false;
                             //$scope.loadPostList.searchButtonName = "Review LoadList";
                         }else{
-                            //console.log("No data available");
+                            console.log("No data available");
                             $scope.loadPostList.messageAvailable = true;
                             $scope.loadPostList.listShow = false;
                             $scope.loadPostList.message = "No data available";
                             succesWarning($scope.loadPostList.message, 'loadlist_alert');
-
                         }
                     }).error(function(data) {
                         $scope.loadPostList.listShow = false;
