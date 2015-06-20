@@ -1,26 +1,77 @@
-<div class="page-header" id="load_owner" ng-controller="loadOwnerCtrl">
-	<div class="bs-docs-section">
-		<div id="myLoadList_alert"></div>
-		<div class="row">
-			<div class="col-lg-11">
-				<div class="col-md-12">
-					<div class="bs-component">
-						<div class="panel panel-success">
-							<div class="panel-heading">
-								<h3 class="panel-title">My Loads</h3>
-							</div>
-							<div class="panel-body">
-								<div id="myLoadListMessage" ng-show="!myLoadList.listShow">
-									<div id="myLoadList_alert" ></div>
-								</div>
-								<div ng-show="myLoadList.listShow" class="gridMaxStyle" ng-grid="myLoadList.gridOptions"></div>
-							</div>
-						</div>
-					</div>
-				</div>
+<div id="load_owner" ng-controller="loadOwnerCtrl">
+	<form id="myLoadForm" name="myLoadForm" role="form">
+		<input type="textbox" class="searchbox" name="myloadsearch"
+			   ng-model="myLoadList.myLoads_filter"
+			   value="" placeholder="Search" />
+		<img class="shadow1" src="images/shadow1.png" alt="" />
+		<div class="results">
+			<div ng-show="myLoadList.messageAvailable">
+				<div id="myLoadList_alert"></div>
 			</div>
+			<table class="results-table" ng-if="myLoadList.listShow">
+				<thead>
+				<tr>
+					<td>
+						From
+					</td>
+					<td>
+						To
+					</td>
+					<td>
+						Load
+					</td>
+					<td>
+						Material
+					</td>
+					<td>
+						Pickup Date
+					</td>
+					<td>
+						Action
+					</td>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-show="myLoadList.list" ng-repeat="load in myLoadList.list  | filter:myLoadList.myLoads_filter">
+					<td>
+						{{load.source}}
+					</td>
+					<td>
+						{{load.destination}}
+					</td>
+					<td>
+						{{load.load}}
+					</td>
+					<td>
+						{{load.materialType}}
+					</td>
+					<td>
+						{{load.pickupDate}}
+					</td>
+					<td>
+						<img src="images/view.png" class="view-action" alt="" />View
+					</td>
+				</tr>
+				</tbody>
+				<tfoot>
+				<tr>
+					<td>
+					</td>
+					<td>
+					</td>
+					<td>
+					</td>
+					<td colspan="2">
+						<a href="#">First Page<img src="images/first.png" alt="" /></a>
+						<a href="#">Previous<img src="images/back.png" alt="" /></a>5<a href="#"><img src="images/nextp.png" alt="" />Next</a>
+						<a href="#"><img src="images/last.png" alt="" />Last Page</a>
+					</td>
+				</tr>
+				</tfoot>
+			</table>
 		</div>
-	</div>
+		<img class="shadow2" src="images/shadow2.png" alt="" />
+	</form>
 </div>
 <!-- Remove Load Confirmation Modal -->
 <script type="text/ng-template" id="myLoadRemoveModal.html">
