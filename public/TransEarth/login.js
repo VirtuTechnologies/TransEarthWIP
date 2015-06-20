@@ -1,5 +1,5 @@
 function loginCtrl($scope, $http, $location, $anchorScroll, UserRequest) {
-    console.log('Inside loginCtrl - '+JSON.stringify($scope.serverAuth));
+    //console.log('Inside loginCtrl - '+JSON.stringify($scope.serverAuth));
 
     $scope.core = {};
     $scope.width = 80;
@@ -12,7 +12,7 @@ function loginCtrl($scope, $http, $location, $anchorScroll, UserRequest) {
     }*/
 
     if($scope.serverAuth.authFailed){
-        console.log('Inside loginCtrl serverAuth failed - '+JSON.stringify($scope.serverAuth));
+        //console.log('Inside loginCtrl serverAuth failed - '+JSON.stringify($scope.serverAuth));
         succesError($scope.serverAuth.message, "login_alert");
     }else{
         clearAlert("login_alert");
@@ -26,26 +26,26 @@ function loginCtrl($scope, $http, $location, $anchorScroll, UserRequest) {
     };
 
     $scope.signUp = function(){
-        console.log("Signup clicked");
+        //console.log("Signup clicked");
         $scope.serverAuth.authFailed = false;
         clearAlert("login_alert");
         $scope.page.template = ''+"/TransEarth/signup";
     };
 
     $scope.login = function(){
-        console.log("Login clicked:: "+JSON.stringify($scope.user));
+        //console.log("Login clicked:: "+JSON.stringify($scope.user));
         $scope.login.authFailed = false;
         $scope.login.messageAvailable = false;
         $http.post("/TransEarth/login", {username : $scope.user.username, password : $scope.user.password})
             .success(function(data) {
-                console.log("Logged in");
+                //console.log("Logged in");
                 $scope.core.loggedIn = true;
                 UserRequest.setUserProfile({
                 });
                 $scope.page.template = ''+"/TransEarth";
                 //$location.url("/");
             }).error(function(data) {
-                console.log("Logged in Error: "+data);
+                //console.log("Logged in Error: "+data);
                 $scope.core.loggedIn = false;
                 $scope.serverAuth.authFailed = true;
                 succesError(data, 'login_alert');
@@ -130,11 +130,11 @@ function loginCtrl($scope, $http, $location, $anchorScroll, UserRequest) {
         $scope.saved = false;
 
         if ($scope.userForm.$valid) {
-            console.log("Form is valid! "+JSON.stringify($scope.user));
+            //console.log("Form is valid! "+JSON.stringify($scope.user));
 
             $http.post("/TransEarth/createUser", {user : $scope.user})
                 .success(function(data) {
-                    console.log("User saved successfully");
+                    //console.log("User saved successfully");
                     $scope.saved = true;
                     $scope.register.showAccountDetails = false;
                     $scope.register.showPersonalDetails = false;
@@ -148,7 +148,7 @@ function loginCtrl($scope, $http, $location, $anchorScroll, UserRequest) {
                     // call $anchorScroll()
                     $anchorScroll();
                 }).error(function(err) {
-                    console.log("User saved failed:"+err.statusMsg);
+                    //console.log("User saved failed:"+err.statusMsg);
                     $scope.saved = false;
                     succesError(err.statusMsg, 'signup_alert');
                     // set the location.hash to the id of

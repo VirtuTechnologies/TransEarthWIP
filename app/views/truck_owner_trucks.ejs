@@ -54,51 +54,46 @@
 </script>
 <!-- Truck Details Modal -->
 <script type="text/ng-template" id="myTruckDetailModal.html">
-	<!-- div ng-controller="TruckDetailModalCtrl" -->
-	<!-- div class="modal-dialog">
-		<div class="modal-content" -->
+
+
+    <div class="modal-display">
+        <div class="modal-dialog">
 	<div class="modal-header">
 		<h3 class="modal-title">Truck Information</h3>
 	</div>
 	<div class="modal-body">
 		<div id="truck_detail_alert"></div>
 		<div class="row">
-			<div class="col-sm-12">
-				<div class="col-xs-4 col-sm-4">
 					<!-- h4>Truck Details</h4 -->
 					<ul class="profile-details">
 						<li>
-							<div><i class="fa fa-truck"></i> Type</div>
-							{{truckModal.truck_details.type}}
+							<p><b>Type</b>&nbsp;&nbsp;
+							{{truckModal.truck_details.type}}</p>
 						</li>
 						<li>
-							<div><i class="fa fa-tag"></i> Make</div>
-							{{truckModal.truck_details.make}} <br/>
+							<p><b>Make</b>&nbsp;&nbsp;
+							{{truckModal.truck_details.make}}</p>
+						</li>
+						<li>
+							<p><b>Model</b>&nbsp;&nbsp;
+							{{truckModal.truck_details.model}}</p>
+						</li>
+						<li>
+							<p><b>Reg No</b>&nbsp;&nbsp;
+							{{truckModal.truck_details.reg_no}}</p>
+						</li>
+						<li><p><b>Load</b>&nbsp;&nbsp;
+							{{truckModal.truck_details.maximum_load.quantity}} &nbsp; Tons</p>
 						</li>
 					</ul>
-				</div>
-				<div class="col-xs-4 col-sm-4">
-					<ul class="profile-details">
-						<li>
-							<div><i class="fa fa-bookmark"></i> Model</div>
-							{{truckModal.truck_details.model}} <br/>
-						</li>
-						<li>
-							<div><i class="fa fa-gavel"></i> Reg No</div>
-							{{truckModal.truck_details.reg_no}}
-						</li>
-					</ul>
-				</div>
-				<div class="col-xs-4 col-sm-4">
-					<ul class="profile-details">
-						<li>
-							<div><i class="fa fa-shopping-cart"></i> Load</div>
-							{{truckModal.truck_details.maximum_load.quantity}} &nbsp; Tons
-						</li>
-					</ul>
-				</div>
-			</div>
 		</div>
+
 	</div>
+    <div class="modal-footer">
+        <!-- button type="button" class="btn btn-danger">Yes</button -->
+        <button style="background-color: rgb(45, 45, 45);"  class="buttons" ng-click="cancel()">Close</button>
+    </div>
+        </div>
+        </div>
 </script>
 <script src="truck_owner_trucks.js"></script>

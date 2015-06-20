@@ -6,9 +6,15 @@
             <li><p class="steps" style="background : url('images/current.png');background-size : cover;color : #000000;">1</p>
                 <p class="steps step-note2">2</p>
                 <p class="steps step-note3">3</p></li>
+            <li class="page-name">
+                <p style="display:block;" class="ld-step-1">Load Details</p>
+                <p style="display:none;" class="ld-step-2">Pickup Address</p>
+                <p style="display:none;" class="ld-step-3">Delivery Address</p>
+            </li>
         </ul>
         <form role="form" name="loadForm" id="loadForm" action="" method="post" ng-submit="submitForm()">
-            <ul class="step1 steps-list">
+            <div class="steps-list">
+            <ul class="step1 scroll-alignment">
                 <li>
                                 <div class="input-group">
                                     <label for="load_quantity">Quantity/ Weight</label>
@@ -110,7 +116,7 @@
 
                 <li><button style="background:#013669; float:right;" ng-disabled="!register.showAccountDetails && passwordMismatch" class="buttons next-btn">Next</button></li>
             </ul>
-            <ul class="step2 steps-list">
+            <ul class="step2 scroll-alignment">
                 <li>
 
                             <div class="input-group">
@@ -199,7 +205,7 @@
                 <li><button style="background:#0C4173; float:left;" class="buttons back-btn">Back</button></li>
                 <li><button style="background:#0C4173; float:right;" ng-disabled="passwordMismatch" class="buttons next-btn">Next</button></li>
             </ul>
-            <ul class="step3 steps-list">
+            <ul class="step3 scroll-alignment">
                 <li>
                         <label>Contact Number</label>
                             <div class="input-group">
@@ -268,6 +274,8 @@
                 <li><button style="background:#013669; float:left;" class="buttons back-btn">Back</button></li>
                 <li><button style="background:#013669; float:right; display:none;" class="buttons submit-button" type="submit">Register</button></li>
             </ul>
+                </div>
+            <label style="color:red; padding-left: 10px; font-size: 13px;" ng-show="loadForm.$invalid">*Please correct errors to proceed</label>
         </form>
     </div>
 </div>
@@ -277,15 +285,14 @@
 
     $('.next-btn').click(function() {
         if($('.step1').is(':visible')){
-            $('.step1').hide();
-            $('.step2').show();
+            $('.step1, .ld-step-1').hide();
+            $('.step2, .ld-step-2').show();
             $('.step-note2').css({"background" : "url('images/current.png')",'background-size' : 'cover','color' : '#000000'});
-            clicks++;
         }
         else{
             if($('.step2').is(':visible')){
-                $('.step2').hide();
-                $('.step3').show();
+                $('.step2, .ld-step-2').hide();
+                $('.step3, .ld-step-3').show();
                 $('.next-btn').hide();
                 $('.submit-button').show();
                 $('.step-note3').css({"background" : "url('images/current.png')",'background-size' : 'cover','color' : '#000000'});
@@ -295,16 +302,16 @@
 
     $('.back-btn').click(function() {
         if($('.step3').is(':visible')){
-            $('.step3').hide();
-            $('.step2').show();
+            $('.step3, .ld-step-3').hide();
+            $('.step2, .ld-step-2').show();
             $('.step-note3').css({"background" : "url('images/next.png')",'background-size' : 'cover','color' : '#ffffff'});
             $('.submit-button').hide();
             $('.next-btn').show();
         }
         else{
             if($('.step2').is(':visible')){
-                $('.step2').hide();
-                $('.step1').show();
+                $('.step2, .ld-step-2').hide();
+                $('.step1, .ld-step-1').show();
                 $('.step-note2').css({"background" : "url('images/next.png')",'background-size' : 'cover','color' : '#ffffff'});
             }
         }

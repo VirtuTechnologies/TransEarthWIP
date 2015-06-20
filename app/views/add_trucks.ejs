@@ -5,6 +5,7 @@
             <label>Close</label>
         </div>
         <div class="add-truck-body">
+            <form name="addtruckform" novalidate>
                 <table class="add-truck-details" ng-table="tableParams">
                     <thead>
                     <tr>
@@ -100,8 +101,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td colspan="2"><label style="color:white; padding-left: 10px; font-size: 13px;" ng-show="addtruckform.$invalid">*  Please correct the errors to submit the trucks</label></td>
                         <td></td>
                         <td></td>
                         <td><button ng-click="addTruckRow()" class="add-row">Add row</button></td>
@@ -109,6 +109,7 @@
                     </tr>
                     </tfoot>
                 </table>
+            </form>
         </div>
     </div>
 </div>

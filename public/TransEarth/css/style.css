@@ -27,28 +27,43 @@ a {
     color: black;
 }
 ::-webkit-scrollbar {
-    width: 5px;
-    border-radius:1px;
+    width: 7px;
+    border-radius:4px;
+    cursor: pointer;
 }
 ::-webkit-scrollbar-track {
-    background-color: #D4DEE8;
+    background-color: #242424;
+    border-radius:4px;
+    cursor: pointer;
 }
 ::-webkit-scrollbar-thumb {
     background-color: #ffffff;
     border-radius: 4px;
+    cursor: pointer;
 }
 ::-webkit-scrollbar-button {
     background-color: #7D92A6;
     height: 10px;
     border-radius: 4px;
+    display:none;
 }
 ::-webkit-scrollbar-corner {
     background-color: white;
+    cursor: pointer;
 }
 button {
     outline: none;
     background-color: transparent;
     border: none;
+}
+button:hover{
+    cursor:pointer;
+}
+input[type=submit]:hover{
+    cursor:pointer;
+}
+input[type=button]:hover{
+    cursor:pointer;
 }
 textarea{
     outline: none;
@@ -83,6 +98,14 @@ textarea{
     border:none;
     color:white;
 }
+.modal-display{
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.49);
+    position: fixed;
+    z-index: 500;
+    top: 0;
+}
 .modal-dialog {
     background-color: white;
     z-index: 150;
@@ -100,7 +123,7 @@ textarea{
 .modal-body{
     padding:20px;
     float:left;
-    width: 50%;
+    width: 55%;
 }
 .modal-body .row div{
     float:left;
@@ -134,31 +157,33 @@ textarea{
     font-size: 12px;
     color:red;
 }
-.steps-list li label{
+.signup-list {
+    width:360px;
+    margin:5% auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height:320px;
+}
+.signup-list li label{
     float:left;
     padding:4px 0;
 }
-.step3{
-    overflow-y: scroll;
-    overflow-x: hidden;
-    height:300px;
 
-}
-.step3::-webkit-scrollbar {
-    width: 3px;
+.signup-list::-webkit-scrollbar {
+    width: 5px;
     border-radius:1px;
 }
-.step3::-webkit-scrollbar-track {
-    background:rgba(255,255,255,.5);
+.signup-list::-webkit-scrollbar-track {
+    background:#242424;
 }
-.step3::-webkit-scrollbar-thumb {
+.signup-list::-webkit-scrollbar-thumb {
     background-color: #ffffff;
     border-radius: 4px;
 }
-.step3::-webkit-scrollbar-button {
+.signup-list::-webkit-scrollbar-button {
     display:none;
 }
-.step3::-webkit-scrollbar-corner {
+.signup-list::-webkit-scrollbar-corner {
     background-color: white;
 }
 .alert-success {
@@ -245,7 +270,9 @@ header {
 }
 
 /* Login page & panel Designs */
-
+#panel-logo {
+    width:88%;
+}
 .loginpanel {
     background:rgb(0,0,0);
     z-index:100;
@@ -385,6 +412,15 @@ header {
 
 
 /* My trucks page Style */
+.profile-details p{
+    font-family: 'Maven Pro', sans-serif;
+}
+.profile-details li {
+    float:left;
+}
+.profile-details b {
+    color:#006CDB;
+}
 .pagepane-selection{
     display:none;
 }
@@ -436,11 +472,11 @@ header {
     border: none;
     height: 50px;
     float: left;
-    border-bottom: 2px solid #f5f5f5;
     margin-top:1px;
+    cursor: default;
 }
 .div-header button img {
-    height: 36%;
+    height: 45%;
     margin-top: 20px;
 }
 .posts {
@@ -474,7 +510,7 @@ header {
     color:#f5f5f5;
 }
 .runtime-details a{
-    color:#f5f5f5;
+    color:#F9FF02;
 }
 .runtime-icon {
     height:55px;
@@ -656,8 +692,9 @@ header {
     margin-top: 20px;
     color:white;
 }
-.add-post  h3 {
+.add-post  h4 {
     padding:15px;
+    color:white;
 }
 .add-post  ul {
     padding:15px;
@@ -669,7 +706,12 @@ header {
 }
 .close-label {
     float:right;
-    padding: 5px;
+    padding: 10px 5px;
+    font-size: 13px;
+    cursor: pointer;
+}
+#truckManagePanel label{
+    font-size: 13px;
 }
 .proxied-field-wrap input {
     width:250px;
@@ -692,8 +734,9 @@ header {
 .edit-truck-details  ul {
     padding:15px;
 }
-.edit-truck-details  h3 {
+.edit-truck-details  h4 {
     padding:15px;
+    color:white;
 }
 .edit-truck-details  ul li {
     padding:5px 10px;
@@ -767,33 +810,29 @@ header {
 /* Search Pages*/
 
 .custom-dp {
-    padding: 9px 15px;
+    margin-top:  3px;
+    padding: 7px 15px;
     border: none;
     outline:none;
 }
 .location {
-    width: 220px;
-    height: 35px;
-    background-color: white;
+    width: 210px;
     float: left;
     margin: 5px 10px;
-    box-shadow: 0 0 2px #424242;
+}
+.location label{
+    font-size: 13px;
 }
 .radio-group {
     width: 75px;
     height: 35px;
     float: left;
-    margin: 5px 10px;
+    margin:22px 10px 0 10px;
     color: white;
     font-size: 12px;
 }
 .radio-group  input {
     margin:2px;
-}
-.location img {
-    height: 53%;
-    float: left;
-    margin-top: 8px;
 }
 .search-bar-input {
     width: 185px;
@@ -802,12 +841,19 @@ header {
     border: none;
     margin-top: 3px;
 }
+.search-bar-drop {
+    width: 190px;
+    outline: none;
+    padding:6px 7px;
+    border: none;
+    margin-top: 3px;
+}
 .search-bar {
     width: 1125px;
     background: rgba(0,0,0, 0.92);
-    height: 46px;
+    height: 70px;
     margin: 8px auto;
-    padding: 15px;
+    padding: 5px 15px;
 }
 .shadow1 {
     z-index: -1;
@@ -833,7 +879,7 @@ header {
     height: 35px;
     outline: none;
     border: none;
-    margin-top: 4px;
+    margin-top: 22px;
     background: rgb(0, 119, 232);
 }
 .submit-search img{
@@ -886,15 +932,25 @@ header {
     background:rgb(7, 102, 192);
     z-index:100;
     width:400px;
-    height:500px;;
-    margin:3% auto;
+    height:550px;;
+    margin:1% auto;
 }
-.addload .steps-list {
-    width:280px;
-    margin:5% auto;
+.steps-list {
+    width:360px;
+    margin:3% auto;
     overflow-y: scroll;
     overflow-x: hidden;
     height:370px;
+}
+.scroll-alignment{
+    width: 280px;
+    margin-left: 45px;
+}
+.page-name{
+    padding-top: 60px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 17px;
 }
 .addload ul li{
     margin:10px auto;
