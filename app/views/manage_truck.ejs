@@ -1,7 +1,7 @@
 <div id="truckManagePage" ng-controller="truckManageCtrl" ng-init="init()">
     <div id="manage_truck_alert" ng-show="truckProcess.indicator.showAlert"></div>
     <div id="truckManagePanel" class="edit-truck-details">
-        <a href="#" ng-click="gotoAddTrucksPage()" class="pull-right" ><span class="badge">Add Multiple Trucks</span></a>
+        <!-- a href="#" ng-click="gotoAddTrucksPage()" class="pull-right" ><span class="badge">Add Multiple Trucks</span></a -->
         <label class="close-label">Close</label><h3>Manage Truck</h3>
         <form id="truckForm" name="truckForm" ng-submit="submitForm()" novalidate>
             <div id="truck_alert"></div>
@@ -113,7 +113,11 @@
                                  for="load">Carrying Capacity is mandatory. Enter it in numbers
                             </div>
                 </li>
-                <li><input type="submit" style="background:#242424; color:white;" class="buttons" name="Post" /></li>
+                <li>
+                    <input type="submit" style="background:#242424; color:white;" class="buttons" name="Post" />
+                    &nbsp;
+                    <input type="button" ng-click="cancelTruckUpdate()" style="background:#242424; color:white;" class="buttons" value="Cancel" name="Cancel" />
+                </li>
             </ul>
         </form>
     </div>
