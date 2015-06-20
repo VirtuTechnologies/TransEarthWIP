@@ -83,6 +83,33 @@ textarea{
     border:none;
     color:white;
 }
+.modal-dialog {
+    background-color: white;
+    z-index: 150;
+    position: absolute;
+    width: 100%;
+    margin-top: 192px;
+    box-shadow: 0 0 41px #242424;
+    color: rgb(52, 52, 52);
+}
+.modal-header{
+    float:left;
+    color:rgb(0, 132, 255);
+    padding:25px;
+}
+.modal-body{
+    padding:20px;
+    float:left;
+    width: 50%;
+}
+.modal-body .row div{
+    float:left;
+    padding:7px 5px;
+}
+.modal-footer{
+    float: left;
+    padding: 20px;
+}
 .add-truck-input {
     width:140px;
     outline: none;
@@ -194,12 +221,12 @@ header {
 
 .dropdown-menu {
     display:none;
-    background-color: rgb(9, 70, 133);
+    background-color: rgb(5, 101, 200);
     width: 125px;
-    height: 70px;
+    height: 50px;
     position: absolute;
-    margin-top: 11px;
-    margin-left: -35px;
+    margin-top: 14px;
+    margin-left: -53px;
     border-radius: 0 0 4px 4px;
     box-shadow: 0 2px 6px #424242;
 }
