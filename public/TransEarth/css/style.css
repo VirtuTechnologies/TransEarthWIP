@@ -395,11 +395,11 @@ header {
     box-shadow:0 0 12px #848484;
 }
 .mytruckpane {
-    background:linear-gradient(166deg,rgb(0, 112, 200),rgb(19, 52, 86));;
+    background:rgb(0, 108, 219);
     float:left;
 }
 .mypostpane{
-    background:linear-gradient(166deg,rgb(0, 112, 200),rgb(19, 52, 86));;
+    background:rgb(0, 108, 219);
     float:right;
 }
 .div-header {
@@ -649,7 +649,7 @@ header {
 
 .add-post {
     float: left;
-    background: linear-gradient(166deg,rgb(0, 112, 200),rgb(19, 52, 86));;
+    background: rgb(0, 108, 219);
     margin-left: 7px;
     height: 500px;
     width: 350px;
@@ -682,7 +682,7 @@ header {
 }
 .edit-truck-details {
     float: left;
-    background: linear-gradient(166deg,rgb(0, 112, 200),rgb(19, 52, 86));;
+    background:rgb(0, 108, 219);
     margin-left: 7px;
     height: 500px;
     width: 350px;
