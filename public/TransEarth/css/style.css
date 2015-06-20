@@ -50,6 +50,13 @@ button {
     background-color: transparent;
     border: none;
 }
+textarea{
+    outline: none;
+    border: none;
+    width: 270px;
+    box-shadow:0 0 2px #424242;
+    padding:10px 5px;
+}
 .textbox {
     width:250px;
     background:white;
@@ -128,20 +135,23 @@ button {
     background-color: white;
 }
 .alert-success {
+    background-color: rgb(0, 189, 0);
+}
+.alert{
     width: 400px;
     margin: 0 auto;
-    background-color: rgb(0, 189, 0);
     height: 20px;
     text-align: center;
     padding: 20px 0;
 }
 .alert-danger {
-    width: 400px;
-    margin: 0 auto;
     background-color: #ff0000;
-    height: 20px;
-    text-align: center;
-    padding: 20px 0;
+}
+.alert-info {
+    background-color: #ffff50;
+}
+.alert-warning {
+    background-color: orange;
 }
 .datepicker-date{
     display:none;
@@ -728,6 +738,12 @@ header {
 
 
 /* Search Pages*/
+
+.custom-dp {
+    padding: 9px 15px;
+    border: none;
+    outline:none;
+}
 .location {
     width: 220px;
     height: 35px;
@@ -836,3 +852,45 @@ header {
 .results-table tfoot td a img{
     padding:0 5px;
 }
+
+
+
+.addload {
+    background:rgb(7, 102, 192);
+    z-index:100;
+    width:400px;
+    height:500px;;
+    margin:3% auto;
+}
+.addload .steps-list {
+    width:280px;
+    margin:5% auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height:370px;
+}
+.addload ul li{
+    margin:10px auto;
+}
+.addload-head {
+    width:280px;
+    margin:5% auto;
+    padding-top: 1%;
+}
+.addload-head h3 {
+    text-align: center;
+    color: white;
+}
+
+@media screen and (max-width:1280px) {
+    body {
+    width: 1280px;
+    overflow:scroll;
+    }
+    .conatiner{
+        width:1280px;
+    }
+    header {
+        width:1280px;
+    }
+    }

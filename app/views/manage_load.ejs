@@ -1,580 +1,326 @@
-<div class="col-md-12" id="loadManagePage" ng-controller="loadManageCtrl" ng-init="init()">
-
-	<!-- PAGE HEADER -->
-	<div id="page-header" class="page-header">
-		<h3>{{page_header}}</h3>
-		<div id="goto_home">
-			<!-- a href="/TransEarth/truck_owner_home" class="btn btn-primary btn-sm">Back to Home</a -->
-			<!-- a href="#" ng-click="gotoHome()" class="pull-right" ><span class="label label-info">Go Back Home</span></a -->
-			<a href="#" ng-click="gotoHome()" class="pull-right" ><span class="badge">Go Back Home</span></a>
-		</div>
-	</div>
-
-	<div id="manage_load_alert" ng-show="loadProcess.indicator.showAlert"></div>
-
-	<div id="goto_home" ng-show="loadProcess.indicator.saved"><a href="/TransEarth">GO BACK TO HOME</a></div>
-
-	<!-- FORM : YOU CAN DISABLE, HTML5 VALIDATION BY USING "novalidate" ATTRIBUTE-->
-	<div class="stepwizard col-md-offset-3">
-		<div class="stepwizard-row setup-panel">
-			<div class="stepwizard-step">
-				<a href="#step-1" type="button" class="btn btn-primary btn-circle">1</a>
-				<p>Load</p>
-			</div>
-			<div class="stepwizard-step">
-				<a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
-				<p>Pickup</p>
-			</div>
-			<div class="stepwizard-step">
-				<a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
-				<p>Delivery</p>
-			</div>
-
-		</div>
-	</div>
-
-	<form role="form" name="loadForm" id="loadForm" action="" method="post" ng-submit="submitForm()">
-		<div class="row setup-content" id="step-1">
-			<div class="col-xs-6 col-md-offset-3">
-				<div class="col-md-12">
-					<!-- h3> Step 3</h3 -->
-					<div id="load_alert"></div>
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<h5>Load Details</h5>
-						</div>
-						<div class="panel-body">
-							<fieldset>
-								<!-- Load Quantity -->
-								<div class="row">
-									<div class="form-group-sm col-lg-12"
-										 ng-class="{ 'has-error' : loadForm.load_quantity.$invalid,
-							 				'has-success' : !(loadForm.load_quantity.$invalid),
-					 						'has-feedback' : loadForm.load_quantity.$invalid}">
-										<label class="col-lg-3 control-label">Quantity/ Weight</label>
-										<div class="col-lg-9">
-											<div class="input-group">
-												<span class="input-group-addon"><i class="fa fa-square"></i></span>
-												<input type="text" numbers-only class="form-control" name="load_quantity" id="load_quantity" ng-model="load.load.quantity"
-													   ng-maxlength="10" maxlength="10" ng-required="true" placeholder="Enter Load Weight">
-											</div>
-											<i class="form-control-feedback"
-											   ng-class="{ 'glyphicon glyphicon-remove' : loadForm.load_quantity.$invalid,
-							 				'glyphicon glyphicon-ok' : !(loadForm.load_quantity.$invalid),
-					 						'has-feedback' : loadForm.load_quantity.$valid}"
-											   for="load_quantity">
-											</i>
-											<div ng-if="loadForm.load_quantity.$invalid"
-												 class="help-block pull-right"
-												 ng-class="{ 'has-error' : loadForm.load_quantity.$invalid,
+<div id="loadManagePage" ng-controller="loadManageCtrl" ng-init="init()">
+    <div id="manage_load_alert" ng-show="loadProcess.indicator.showAlert"></div>
+    <div class="addload" >
+        <ul class="addload-head">
+            <li><h3>Add Load</h3></li>
+            <li><p class="steps" style="background : url('images/current.png');background-size : cover;color : #000000;">1</p>
+                <p class="steps step-note2">2</p>
+                <p class="steps step-note3">3</p></li>
+        </ul>
+        <form role="form" name="loadForm" id="loadForm" action="" method="post" ng-submit="submitForm()">
+            <ul class="step1 steps-list">
+                <li>
+                                <div class="input-group">
+                                    <label for="load_quantity">Quantity/ Weight</label>
+                                    <input type="text" numbers-only class="textbox" name="load_quantity" id="load_quantity" ng-model="load.load.quantity"
+                                           ng-maxlength="10" maxlength="10" ng-required="true"
+                                           ng-class="{ 'has-error' : loadForm.load_quantity.$invalid,
 							 				'has-success' : !(loadForm.load_quantity.$invalid),
 					 						'has-feedback' : loadForm.load_quantity.$invalid}"
-												 for="load_quantity">Enter load/ weight in Tons
-											</div>
-										</div>
-									</div>
-								</div>
+                                           placeholder="Enter Load Weight">
+                                </div>
 
-								<!-- Material Type -->
-								<div class="row">
-									<div class="form-group-sm col-lg-12"
-										 ng-class="{ 'has-error' : loadForm.materialType.$invalid,
-							 				'has-success' : !(loadForm.materialType.$invalid),
-					 						'has-feedback' : loadForm.materialType.$invalid,
-					 						'error' : loadForm.materialType.$invalid,
-					 						'success' : !loadForm.materialType.$invalid}">
-										<label class="col-lg-3 control-label">Material</label>
-										<div class="col-lg-9">
-											<!-- div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
-                                                <input type="text" class="form-control" name="material" id="material" ng-model="load.details.material" placeholder="Enter Material" ng-minlength="1" ng-required="true">
-                                            </div -->
-											<div class="input-group" id="material" >
-												<span class="input-group-addon"><i class="fa fa-truck"></i></span>
-												<!-- select selectpicker id="materialType" name="materialType"
-														ng-options="material for material in materialTypeList"
-														ng-class="{ 'has-error' : loadForm.materialType.$invalid,
+                                <div ng-if="loadForm.load_quantity.$invalid"
+                                     class="help-block pull-right"
+                                     ng-class="{ 'line-error' : loadForm.load_quantity.$invalid,
+							 				'line-success' : !(loadForm.load_quantity.$invalid),
+					 						'line-feedback' : loadForm.load_quantity.$invalid}"
+                                     for="load_quantity">Enter load/ weight in Tons
+                                </div>
+                </li>
+    <li>
+                <label class="col-lg-3 control-label">Material</label>
+                    <div class="input-group" id="material" >
+                        <select selectpicker id="materialType" name="materialType"
+                                ng-class="{ 'has-error' : loadForm.materialType.$invalid,
 							 										'has-success' : !(loadForm.materialType.$invalid),
 					 												'has-feedback' : loadForm.materialType.$invalid}"
-														ng-model="load.load.material.type"  ng-required="true"
-														class="dropup form-control col-lg-12" data-dropup-auto="false">
-													<option value="">{{chooseOne}}</option>
-												</select -->
-												<select selectpicker id="materialType" name="materialType"
-														ng-class="{ 'has-error' : loadForm.materialType.$invalid,
-							 										'has-success' : !(loadForm.materialType.$invalid),
-					 												'has-feedback' : loadForm.materialType.$invalid}"
-														ng-model="load.load.material.type"  ng-required="true"
-														class="dropup form-control col-lg-12" data-dropup-auto="false">
-												</select>
-												<!-- div class="radio col-lg-9" ng-repeat="item in materialTypeList">
-													<label for="{{item}}">
-														<input type="radio" name="{{item}}" id="{{item}}" ng-value="item" ng-model="load.load.material.type" ng-required="!load.load.material.type">{{item}}</input>
-														<br/>
-													</label>
+                                ng-model="load.load.material.type"  ng-required="true"
+                                class="dropdown"
+                                data-dropup-auto="false">
+                        </select>
+                    </div>
 
-												</div -->
-												<!-- span class="glyphicon error" ng-show="truckListForm.daterange.$error.required">*</span -->
-											</div>
-											<!-- i class="form-control-feedback"
-											   ng-class="{ 'glyphicon glyphicon-remove' : loadForm.materialType.$invalid,
-							 				'glyphicon glyphicon-ok' : !(loadForm.materialType.$invalid),
-					 						'has-feedback' : loadForm.materialType.$valid}"
-											   for="materialType">
-											</i -->
-											<div ng-if="loadForm.materialType.$invalid"
-												 class="help-block pull-right"
-												 ng-class="{ 'has-error' : loadForm.materialType.$invalid,
-							 				'has-success' : !(loadForm.materialType.$invalid),
-					 						'has-feedback' : loadForm.materialType.$invalid}"
-												 for="materialType">Material Type is mandatory
-											</div>
-											<!--cpre>{{loadForm.materialType.$error}}</prec-->
-										</div>
-									</div>
-									<div class="form-group-sm col-lg-12"
-										 ng-class="{ 'has-error' : loadForm.materialTypeDesc.$invalid,
-							 				'has-success' : !(loadForm.materialTypeDesc.$invalid),
-					 						'has-feedback' : loadForm.materialTypeDesc.$invalid}">
-										<div class="col-lg-9 col-lg-offset-3" ng-if="load.load.material.type=='Others'">
-											<div class="input-group">
-												<input type="text" class="form-control" name="materialTypeDesc" id="materialTypeDesc" ng-model="load.load.material.typeDescription" ng-minlength="1" ng-required="true" placeholder="Enter Material Type">
-											</div>
-											<i class="form-control-feedback"
-											   ng-class="{ 'glyphicon glyphicon-remove' : loadForm.materialTypeDesc.$invalid,
-							 				'glyphicon glyphicon-ok' : !(loadForm.materialTypeDesc.$invalid),
-					 						'has-feedback' : loadForm.materialTypeDesc.$valid}"
-											   for="materialTypeDesc">
-											</i>
-											<div ng-if="loadForm.materialTypeDesc.$invalid"
-												 class="help-block pull-right"
-												 ng-class="{ 'has-error' : loadForm.materialTypeDesc.$invalid,
+                    <div ng-if="loadForm.materialType.$invalid"
+                         class="help-block pull-right"
+                         ng-class="{ 'line-error' : loadForm.materialType.$invalid,
+							 				'line-success' : !(loadForm.materialType.$invalid),
+					 						'line-feedback' : loadForm.materialType.$invalid}"
+                         for="materialType">Material Type is mandatory
+                    </div>
+        <div ng-if="load.load.material.type=='Others'">
+                    <div class="input-group">
+                        <input type="text" class="textbox"
+                               name="materialTypeDesc" id="materialTypeDesc"
+                               ng-class="{ 'has-error' : loadForm.materialTypeDesc.$invalid,
 							 				'has-success' : !(loadForm.materialTypeDesc.$invalid),
 					 						'has-feedback' : loadForm.materialTypeDesc.$invalid}"
-												 for="materialTypeDesc">Material Type is mandatory
-											</div>
-										</div>
-									</div>
-								</div>
+                               ng-model="load.load.material.typeDescription" ng-minlength="1" ng-required="true" placeholder="Enter Material Type">
+                    </div>
+                    <div ng-if="loadForm.materialTypeDesc.$invalid"
+                         class="help-block pull-right"
+                         ng-class="{ 'line-error' : loadForm.materialTypeDesc.$invalid,
+							 				'line-success' : !(loadForm.materialTypeDesc.$invalid),
+					 						'line-feedback' : loadForm.materialTypeDesc.$invalid}"
+                         for="materialTypeDesc">Material Type is mandatory
+                    </div>
+</div>
+    </li>
 
-								<!-- Truck Type -->
-								<div class="row">
-									<div class="form-group-sm col-lg-12"
-										 ng-class="{ 'has-error' : loadForm.truckType.$invalid,
-							 				'has-success' : !(loadForm.truckType.$invalid),
-					 						'has-feedback' : loadForm.truckType.$invalid,
-					 						'error' : loadForm.truckType.$invalid,
-					 						'success' : !loadForm.truckType.$invalid}">
-										<label class="col-lg-3 control-label">Preferred Truck Type</label>
-										<div class="col-lg-9">
-											<div class="input-group" id="truckTypeId" >
-												<span class="input-group-addon"><i class="fa fa-exchange"></i></span>
-												<select selectpicker id="truckType" name="truckType"
-														ng-model="load.load.preferredTruck.type"  ng-required="true"
-														class="form-control col-lg-12" data-dropup-auto="false">
-												</select>
-											</div>
-											<div ng-if="loadForm.truckType.$invalid"
-												 class="help-block pull-right"
-												 ng-class="{ 'has-error' : loadForm.truckType.$invalid,
+                <li>
+
+                                <div class="input-group" id="truckTypeId" >
+                                    <label for="truckType">Preferred Truck Type</label>
+                                    <select selectpicker id="truckType" name="truckType"
+                                            ng-model="load.load.preferredTruck.type"  ng-required="true"
+                                            class="dropdown"
+                                            ng-class="{ 'has-error' : loadForm.truckType.$invalid,
 							 				'has-success' : !(loadForm.truckType.$invalid),
 					 						'has-feedback' : loadForm.truckType.$invalid}"
-												 for="materialType">Preferred Truck Type is mandatory
-											</div>
-										</div>
-									</div>
-									<div class="form-group-sm col-lg-12"
-										 ng-class="{ 'has-error' : loadForm.truckTypeDesc.$invalid,
-							 				'has-success' : !(loadForm.truckTypeDesc.$invalid),
-					 						'has-feedback' : loadForm.truckTypeDesc.$invalid}">
-										<div class="col-lg-6 col-lg-offset-3" ng-if="load.load.preferredTruck.type=='Others'">
-											<div class="input-group">
-												<input type="text" class="form-control" name="truckTypeDesc" id="truckTypeDesc"
-													   ng-model="load.load.preferredTruck.typeDescription"
-													   ng-minlength="1" ng-required="true" placeholder="Enter Preferred Truck Type">
-											</div>
-											<i class="form-control-feedback"
-											   ng-class="{ 'glyphicon glyphicon-remove' : loadForm.truckTypeDesc.$invalid,
-							 				'glyphicon glyphicon-ok' : !(loadForm.truckTypeDesc.$invalid),
-					 						'has-feedback' : loadForm.truckTypeDesc.$valid}"
-											   for="truckTypeDesc">
-											</i>
-											<div ng-if="loadForm.truckTypeDesc.$invalid"
-												 class="help-block pull-right"
-												 ng-class="{ 'has-error' : loadForm.truckTypeDesc.$invalid,
+                                            data-dropup-auto="false">
+                                    </select>
+                                </div>
+                                <div ng-if="loadForm.truckType.$invalid"
+                                     class="help-block pull-right"
+                                     ng-class="{ 'line-error' : loadForm.truckType.$invalid,
+							 				'line-success' : !(loadForm.truckType.$invalid),
+					 						'line-feedback' : loadForm.truckType.$invalid}"
+                                     for="materialType">Preferred Truck Type is mandatory
+                                </div>
+
+                            <div  ng-if="load.load.preferredTruck.type=='Others'">
+                                <div class="input-group">
+                                    <input type="text" class="textbox" name="truckTypeDesc" id="truckTypeDesc"
+                                           ng-model="load.load.preferredTruck.typeDescription"
+                                           ng-minlength="1"
+                                           ng-class="{ 'has-error' : loadForm.truckTypeDesc.$invalid,
 							 				'has-success' : !(loadForm.truckTypeDesc.$invalid),
 					 						'has-feedback' : loadForm.truckTypeDesc.$invalid}"
-												 for="truckTypeDesc">Preferred Truck Type is mandatory
-											</div>
-										</div>
-									</div>
-								</div>
-								<button class="btn btn-primary prevBtn btn-sm pull-left" type="button">Previous</button>
-								<button class="btn btn-success nextBtn btn-sm pull-right" type="button">Next</button>
-							</fieldset>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row setup-content" id="step-2">
-			<div class="col-xs-6 col-md-offset-3">
-				<div class="col-md-12">
-					<!-- h3> Step 4</h3 -->
-					<div id="pickup_alert"></div>
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<h5>Pickup Address</h5>
-						</div>
-						<div class="panel-body">
-							<fieldset>
-								<!-- CONTACTNO -->
-								<div class="form-group-sm"
-									 ng-class="{ 'has-error' : loadForm.pickup_contact.$invalid,
+                                           ng-required="true" placeholder="Enter Preferred Truck Type">
+                                </div>
+                                <div ng-if="loadForm.truckTypeDesc.$invalid"
+                                     class="help-block pull-right"
+                                     ng-class="{ 'line-error' : loadForm.truckTypeDesc.$invalid,
+							 				'line-success' : !(loadForm.truckTypeDesc.$invalid),
+					 						'line-feedback' : loadForm.truckTypeDesc.$invalid}"
+                                     for="truckTypeDesc">Preferred Truck Type is mandatory
+                                </div>
+                            </div>
+                </li>
+
+                <li><button style="background:#013669; float:right;" ng-disabled="!register.showAccountDetails && passwordMismatch" class="buttons next-btn">Next</button></li>
+            </ul>
+            <ul class="step2 steps-list">
+                <li>
+
+                            <div class="input-group">
+                                <label>Contact Number</label>
+                                <input type="text" numbers-only class="textbox" name="pickup_contact"
+                                       id="pickup_contact" ng-model="load.load.pickup.contact" placeholder="Enter Contact Number"
+                                       ng-minlength="10" ng-maxlength="11" maxlength="11" ng-required="true"
+                                       ng-class="{ 'has-error' : loadForm.pickup_contact.$invalid,
 												'has-success' : !(loadForm.pickup_contact.$invalid),
 												'has-feedback' : loadForm.pickup_contact.$invalid}">
-									<label class="col-lg-3 control-label">Contact Number</label>
-									<div class="col-lg-9">
-										<div class="input-group">
-											<span class="input-group-addon"><i class="fa fa-mobile fa-2"></i></span>
-											<input type="text" numbers-only class="form-control" name="pickup_contact"
-												   id="pickup_contact" ng-model="load.load.pickup.contact" placeholder="Enter Contact Number"
-												   ng-minlength="10" ng-maxlength="11" maxlength="11" ng-required="true">
-										</div>
-										<i class="form-control-feedback"
-										   ng-class="{ 'glyphicon glyphicon-remove' : loadForm.pickup_contact.$invalid,
-												'glyphicon glyphicon-ok' : !(loadForm.pickup_contact.$invalid),
-												'has-feedback' : loadForm.pickup_contact.$valid}"
-										   for="pickup_contact">
-										</i>
-										<div ng-if="loadForm.pickup_contact.$invalid"
-											 class="help-block pull-right"
-											 ng-class="{ 'has-error' : loadForm.pickup_contact.$invalid,
-												'has-success' : !(loadForm.pickup_contact.$invalid),
-												'has-feedback' : loadForm.pickup_contact.$invalid}"
-											 for="pickup_contactno">Contact Number is mandatory
-										</div>
-									</div>
-									<!-- pre>{{userForm.user_type.$valid}}</pre -->
-								</div>
-								<!-- Pickup Date -->
-								<div class="form-group-sm"
-									 ng-class="{ 'has-error' : loadForm.pickupDaterange.$invalid || load.load.pickup.date==null,
-												'has-success' : !(loadForm.pickupDaterange.$invalid || load.load.pickup.date==null),
-												'has-feedback' : loadForm.pickupDaterange.$invalid || load.load.pickup.date==null}">
-									<label class="col-lg-3 control-label">Date</label>
-									<div class="col-lg-9">
-										<div class="input-group">
-											<span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-import"></i></span>
-											<input class="form-control input-sm" type="text" placeholder="Pickup Date" id="pickupDaterange"
-												   name="pickupDaterange" class="form-control" datepicker-popup="dd-MMMM-yyyy"
-												   min="minDate"
-												   ng-model="load.load.pickup.date" is-open="pickup.opened" datepicker-options="pickup.dateOptions"
-												   ng-required="true" close-text="Close" />
-										</div>
-										<i class="form-control-feedback"
-										   ng-class="{ 'glyphicon glyphicon-remove' : loadForm.pickupDaterange.$invalid || load.load.pickup.date==null,
-														'glyphicon glyphicon-ok' : !(loadForm.pickupDaterange.$invalid || load.load.pickup.date==null),
-														'has-feedback' : loadForm.pickupDaterange.$valid || load.load.pickup.date==null}"
-										   for="pickup_date">
-										</i>
-										<div ng-if="loadForm.pickupDaterange.$invalid"
-											 class="help-block pull-right"
-											 ng-class="{ 'has-error' : loadForm.pickupDaterange.$invalid || load.load.pickup.date==null,
+                            </div>
+                            <div ng-if="loadForm.pickup_contact.$invalid"
+                                 class="help-block pull-right"
+                                 ng-class="{ 'line-error' : loadForm.pickup_contact.$invalid,
+												'line-success' : !(loadForm.pickup_contact.$invalid),
+												'line-feedback' : loadForm.pickup_contact.$invalid}"
+                                 for="pickup_contactno">Contact Number is mandatory
+                            </div>
+                </li>
+                <li>
+
+                            <div class="input-group">
+                                <label >Date</label>
+                                <input class="textbox" type="text" placeholder="Pickup Date" id="pickupDaterange"
+                                       name="pickupDaterange"  ui-date-format="yy-mm-dd"
+                                       ng-model="load.load.pickup.date" is-open="pickup.opened" ui-date="pickup.dateRangeOptions"
+                                       ng-required="true"
+                                       ng-class="{ 'has-error' : loadForm.pickupDaterange.$invalid || load.load.pickup.date==null,
 															'has-success' : !(loadForm.pickupDaterange.$invalid || load.load.pickup.date==null),
 															'has-feedback' : loadForm.pickupDaterange.$invalid || load.load.pickup.date==null}"
-											 for="pickup_date">Pickup Date is mandatory
-										</div>
-									</div>
-									<!-- pre>{{userForm.user_type.$valid}}</pre -->
-								</div>
-								<!-- CITY -->
-								<div class="form-group-sm"
-									 ng-class="{ 'has-error' : !load.load.pickup.address.mapLocation.isSelected,
-												'has-success' : load.load.pickup.address.mapLocation.isSelected,
-												'has-feedback' : load.load.pickup.address.mapLocation.isSelected}">
-									<label class="col-lg-3 control-label">City</label>
-									<div class="col-lg-9">
-										<google-places required
-													   tagId="pickup_city" tagName="pickup_city"
-													   location=load.load.pickup.address.mapLocation></google-places>
-									</div>
-									<!-- pre>{{userForm.city.$invalid}}</pre>
-									<pre>{{userForm.city.$error}}</pre -->
-								</div>
-								<!-- Pickup Address -->
-								<div class="form-group-sm"
-									 ng-class="{ 'has-error' : loadForm.pickup_address.$invalid,
-													'has-success' : !(loadForm.pickup_address.$invalid),
-													'has-feedback' : loadForm.pickup_address.$invalid}">
-									<label class="col-lg-3 control-label">Address </label>
-									<div class="col-lg-12">
-										<div class="input-group width-full">
-											<span class="input-group-addon"><i class="fa fa-envelope-o fa-2"></i></span>
+                                       close-text="Close" />
+                            </div>
+                            <div ng-if="loadForm.pickupDaterange.$invalid"
+                                 class="help-block pull-right"
+                                 ng-class="{ 'line-error' : loadForm.pickupDaterange.$invalid || load.load.pickup.date==null,
+															'line-success' : !(loadForm.pickupDaterange.$invalid || load.load.pickup.date==null),
+															'line-feedback' : loadForm.pickupDaterange.$invalid || load.load.pickup.date==null}"
+                                 for="pickup_date">Pickup Date is mandatory
+                            </div>
+
+                </li>
+                <li>
+                        <label>City</label>
+                            <google-places required
+                                           tagId="pickup_city" tagName="pickup_city"
+                                           location=load.load.pickup.address.mapLocation></google-places>
+                </li>
+                <li>
+                        <label>Address </label>
+                            <div class="input-group width-full">
 											<textarea myFocus rows="3" class="form-control" name="pickup_address" id="pickup_address"
-													  ng-change="isPickupPincodeRequired()"
-													  ng-model="load.load.pickup.address.line1" placeholder="Enter Pickup Address">
-											</textarea>
-										</div>
-										<!-- i class="form-control-feedback"
-										   ng-class="{ 'glyphicon glyphicon-remove' : loadForm.pickup_address.$invalid,
-													'glyphicon glyphicon-ok' : !(loadForm.pickup_address.$invalid),
-													'has-feedback' : loadForm.pickup_address.$valid}"
-										   for="delivery_line1">
-										</i -->
-										<div class="help-block pull-right"
-											 ng-class="{ 'has-error' : loadForm.pickup_address.$invalid,
+                                                      ng-change="isPickupPincodeRequired()"
+                                                      ng-model="load.load.pickup.address.line1"
+                                                      ng-class="{ 'has-error' : loadForm.pickup_address.$invalid,
 													'has-success' : !(loadForm.pickup_address.$invalid),
 													'has-feedback' : loadForm.pickup_address.$invalid}"
-											 for="pickup_address">Address is optional
-										</div>
-									</div>
-								</div>
-
-								<!-- PINCODE -->
-								<div ng-if="pickupPinFlag" class="form-group-sm"
-									 ng-class="{ 'has-error' : loadForm.pickup_pincode.$invalid,
-												'has-success' : !(loadForm.pickup_pincode.$invalid),
-												'has-feedback' : loadForm.pickup_pincode.$invalid}">
-									<label class="col-lg-3 control-label">PIN</label>
-									<div class="col-lg-9">
-										<div class="input-group">
-											<span class="input-group-addon"><i class="fa fa-envelope-o fa-2"></i></span>
-											<input type="text" numbers-only="numbers-only" class="form-control" name="pickup_pincode"
-												   id="pickup_pincode" ng-model="load.load.pickup.address.pincode" placeholder="Enter Pincode"
-												   ng-minlength="6" ng-maxlength="6" maxlength="6" ng-required="true">
-										</div>
-										<i class="form-control-feedback"
-										   ng-class="{ 'glyphicon glyphicon-remove' : loadForm.pickup_pincode.$invalid,
-												'glyphicon glyphicon-ok' : !(loadForm.pickup_pincode.$invalid),
-												'has-feedback' : loadForm.pickup_pincode.$valid}"
-										   for="pickup_pincode">
-										</i>
-										<div ng-if="loadForm.pickup_pincode.$invalid"
-											 class="help-block pull-right"
-											 ng-class="{ 'has-error' : loadForm.pickup_pincode.$invalid,
+                                                      placeholder="Enter Pickup Address">
+											</textarea>
+                            </div>
+                            <div class="help-block pull-right"
+                                 ng-class="{ 'line-error' : loadForm.pickup_address.$invalid,
+													'line-success' : !(loadForm.pickup_address.$invalid),
+													'line-feedback' : loadForm.pickup_address.$invalid}"
+                                 for="pickup_address">Address is optional
+                            </div>
+                </li>
+                <li>
+                        <label>PIN</label>
+                            <div class="input-group">
+                                <input type="text" numbers-only="numbers-only" class="textbox" name="pickup_pincode"
+                                       id="pickup_pincode" ng-model="load.load.pickup.address.pincode" placeholder="Enter Pincode"
+                                       ng-minlength="6" ng-maxlength="6" maxlength="6"
+                                       ng-class="{ 'has-error' : loadForm.pickup_pincode.$invalid,
 												'has-success' : !(loadForm.pickup_pincode.$invalid),
 												'has-feedback' : loadForm.pickup_pincode.$invalid}"
-											 for="pickup_pincode">Pincode is mandatory with address
-										</div>
-									</div>
-									<!-- pre>{{userForm.user_type.$valid}}</pre -->
-								</div>
-
-								<button class="btn btn-primary prevBtn btn-sm pull-left" type="button">Previous</button>
-								<button class="btn btn-success nextBtn btn-sm pull-right" type="button">Next</button>
-							</fieldset>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row setup-content" id="step-3">
-			<div class="col-xs-6 col-md-offset-3">
-				<div class="col-md-12">
-					<!-- h3> Step 5</h3 -->
-					<div id="delivery_alert"></div>
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<h5>Delivery Address</h5>
-						</div>
-						<div class="panel-body">
-							<fieldset>
-								<!-- CONTACTNO -->
-								<div class="form-group-sm"
-									 ng-class="{ 'has-error' : loadForm.delivery_contact.$invalid,
-												'has-success' : !(loadForm.delivery_contact.$invalid),
-												'has-feedback' : loadForm.delivery_contact.$invalid}">
-									<label class="col-lg-3 control-label">Contact Number</label>
-									<div class="col-lg-9">
-										<div class="input-group">
-											<span class="input-group-addon"><i class="fa fa-mobile fa-2"></i></span>
-											<input type="text" numbers-only class="form-control" name="delivery_contact"
-												   id="delivery_contact" ng-model="load.load.delivery.contact" placeholder="Enter Contact Number"
-												   ng-minlength="10" ng-maxlength="11" maxlength="11" ng-required="true">
-										</div>
-										<i class="form-control-feedback"
-										   ng-class="{ 'glyphicon glyphicon-remove' : loadForm.delivery_contact.$invalid,
-												'glyphicon glyphicon-ok' : !(loadForm.delivery_contact.$invalid),
-												'has-feedback' : loadForm.delivery_contact.$valid}"
-										   for="delivery_contact">
-										</i>
-										<div ng-if="loadForm.delivery_contact.$invalid"
-											 class="help-block pull-right"
-											 ng-class="{ 'has-error' : loadForm.delivery_contact.$invalid,
+                                       ng-required="true">
+                            </div>
+                            <div ng-if="loadForm.pickup_pincode.$invalid"
+                                 class="help-block pull-right"
+                                 ng-class="{ 'line-error' : loadForm.pickup_pincode.$invalid,
+												'line-success' : !(loadForm.pickup_pincode.$invalid),
+												'line-feedback' : loadForm.pickup_pincode.$invalid}"
+                                 for="pickup_pincode">Pincode is mandatory with address
+                            </div>
+                </li>
+                <li><button style="background:#0C4173; float:left;" class="buttons back-btn">Back</button></li>
+                <li><button style="background:#0C4173; float:right;" ng-disabled="passwordMismatch" class="buttons next-btn">Next</button></li>
+            </ul>
+            <ul class="step3 steps-list">
+                <li>
+                        <label>Contact Number</label>
+                            <div class="input-group">
+                                <input type="text" numbers-only class="textbox" name="delivery_contact"
+                                       id="delivery_contact" ng-model="load.load.delivery.contact" placeholder="Enter Contact Number"
+                                       ng-minlength="10" ng-maxlength="11" maxlength="11"
+                                       ng-class="{ 'has-error' : loadForm.delivery_contact.$invalid,
 												'has-success' : !(loadForm.delivery_contact.$invalid),
 												'has-feedback' : loadForm.delivery_contact.$invalid}"
-											 for="delivery_contact">Contact Number is mandatory
-										</div>
-									</div>
-									<!-- pre>{{userForm.user_type.$valid}}</pre -->
-								</div>
-								<!-- CITY -->
-								<div class="form-group-sm"
-									 ng-class="{ 'has-error' : !load.load.delivery.address.mapLocation.isSelected,
-												'has-success' : load.load.delivery.address.mapLocation.isSelected,
-												'has-feedback' : !load.load.delivery.address.mapLocation.isSelected}">
-									<label class="col-lg-3 control-label">City</label>
-									<div class="col-lg-9">
-										<google-places required
-													   tagId="delivery_city" tagName="delivery_city"
-													   location=load.load.delivery.address.mapLocation></google-places>
-									</div>
-									<!-- pre>{{userForm.city.$invalid}}</pre>
-									<pre>{{userForm.city.$error}}</pre -->
-								</div>
-								<!-- Delivery Address -->
-								<div class="form-group-sm"
-									 ng-class="{ 'has-error' : loadForm.delivery_address.$invalid,
-													'has-success' : !(loadForm.delivery_address.$invalid),
-													'has-feedback' : loadForm.delivery_address.$invalid}">
-									<label class="col-lg-3 control-label">Address </label>
-									<div class="col-lg-12">
-										<div class="input-group width-full">
-											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+                                       ng-required="true">
+                            </div>
+                            <div ng-if="loadForm.delivery_contact.$invalid"
+                                 class="help-block pull-right"
+                                 ng-class="{ 'line-error' : loadForm.delivery_contact.$invalid,
+												'line-success' : !(loadForm.delivery_contact.$invalid),
+												'line-feedback' : loadForm.delivery_contact.$invalid}"
+                                 for="delivery_contact">Contact Number is mandatory
+                            </div>
+                </li>
+                <li>
+                        <label>City</label>
+                            <google-places required
+                                           tagId="delivery_city" tagName="delivery_city"
+                                           location=load.load.delivery.address.mapLocation></google-places>
+                </li>
+                <li>
+                        <label >Address </label>
+                            <div class="input-group width-full">
 											<textarea rows="3" class="form-control" name="delivery_address" id="delivery_address"
-													  ng-change="isDeliveryPincodeRequired()"
-													  ng-model="load.load.delivery.address.line1" placeholder="Enter Delivery Address">
-											</textarea>
-										</div>
-										<i class="form-control-feedback"
-										   ng-class="{ 'glyphicon glyphicon-remove' : loadForm.delivery_address.$invalid,
-													'glyphicon glyphicon-ok' : !(loadForm.delivery_address.$invalid),
-													'has-feedback' : loadForm.delivery_address.$valid}"
-										   for="delivery_address">
-										</i>
-										<div ng-if="loadForm.delivery_address.$invalid"
-											 class="help-block pull-right"
-											 ng-class="{ 'has-error' : loadForm.delivery_address.$invalid,
+                                                      ng-change="isDeliveryPincodeRequired()"
+                                                      ng-model="load.load.delivery.address.line1"
+                                                      ng-class="{ 'has-error' : loadForm.delivery_address.$invalid,
 													'has-success' : !(loadForm.delivery_address.$invalid),
 													'has-feedback' : loadForm.delivery_address.$invalid}"
-											 for="delivery_address">Address is mandatory
-										</div>
-									</div>
-								</div>
+                                                      placeholder="Enter Delivery Address">
+											</textarea>
+                            </div>
 
-								<!-- PINCODE -->
-								<div ng-if="deliveryPinFlag" class="form-group-sm"
-									 ng-class="{ 'has-error' : loadForm.delivery_pincode.$invalid,
-												'has-success' : !(loadForm.delivery_pincode.$invalid),
-												'has-feedback' : loadForm.delivery_pincode.$invalid}">
-									<label class="col-lg-3 control-label">PIN</label>
-									<div class="col-lg-9">
-										<div class="input-group">
-											<span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
-											<input type="text" numbers-only class="form-control" name="delivery_pincode"
-												   id="delivery_pincode" ng-model="load.load.delivery.address.pincode" placeholder="Enter Pincode"
-												   ng-minlength="6" ng-maxlength="6" maxlength="6" ng-required="true">
-										</div>
-										<i class="form-control-feedback"
-										   ng-class="{ 'glyphicon glyphicon-remove' : loadForm.delivery_pincode.$invalid,
-												'glyphicon glyphicon-ok' : !(loadForm.delivery_pincode.$invalid),
-												'has-feedback' : loadForm.delivery_pincode.$valid}"
-										   for="delivery_pincode">
-										</i>
-										<div ng-if="loadForm.delivery_pincode.$invalid"
-											 class="help-block pull-right"
-											 ng-class="{ 'has-error' : loadForm.delivery_pincode.$invalid,
+                            <div ng-if="loadForm.delivery_address.$invalid"
+                                 class="help-block pull-right"
+                                 ng-class="{ 'line-error' : loadForm.delivery_address.$invalid,
+													'line-success' : !(loadForm.delivery_address.$invalid),
+													'line-feedback' : loadForm.delivery_address.$invalid}"
+                                 for="delivery_address">Address is mandatory
+                            </div>
+                </li>
+                <li>
+                        <label>PIN</label>
+                            <div class="input-group">
+                                <input type="text" numbers-only class="textbox" name="delivery_pincode"
+                                       id="delivery_pincode" ng-model="load.load.delivery.address.pincode" placeholder="Enter Pincode"
+                                       ng-minlength="6" ng-maxlength="6" maxlength="6"
+                                       ng-class="{ 'has-error' : loadForm.delivery_pincode.$invalid,
 												'has-success' : !(loadForm.delivery_pincode.$invalid),
 												'has-feedback' : loadForm.delivery_pincode.$invalid}"
-											 for="delivery_pincode">Pincode is mandatory
-										</div>
-									</div>
-									<!-- pre>{{userForm.user_type.$valid}}</pre -->
-								</div>
-
-								<button class="btn btn-primary prevBtn btn-sm pull-left" type="button">Previous</button>
-								<button class="btn btn-success btn-sm pull-right" type="submit">Submit</button>
-							</fieldset>
-
-							<!-- TERMS & CONDITIONS -->
-							<!-- fieldset ng-if="loadForm.delivery_contactno.$valid" -->
-							<!-- fieldset ng-if="loadForm.delivery_contactno.$valid">
-								<div class="form-group-sm">
-									<div class="col-md-offset-3 col-md-3">
-										<button type="submit" class="btn btn-success btn-sm" ng-model="button">Save</button>
-									</div>
-									<div class="col-md-4">
-										<button type="button" class="btn btn-danger btn-sm" ng-click="load={}">Reset</button>
-									</div>
-								</div>
-							</fieldset -->
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>
+                                       ng-required="true">
+                            </div>
+                            <div ng-if="loadForm.delivery_pincode.$invalid"
+                                 class="help-block pull-right"
+                                 ng-class="{ 'line-error' : loadForm.delivery_pincode.$invalid,
+												'line-success' : !(loadForm.delivery_pincode.$invalid),
+												'line-feedback' : loadForm.delivery_pincode.$invalid}"
+                                 for="delivery_pincode">Pincode is mandatory
+                            </div>
+                </li>
+                <li><button style="background:#013669; float:left;" class="buttons back-btn">Back</button></li>
+                <li><button style="background:#013669; float:right; display:none;" class="buttons submit-button" type="submit">Register</button></li>
+            </ul>
+        </form>
+    </div>
 </div>
-
-<!-- Modal -->
-<div class="modal fade" id="tcModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-				<h4 class="modal-title">Terms and Conditions</h4>
-			</div>
-			<div class="modal-body">
-				Terms & conditions text here
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-dismiss="modal">I Agree</button>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <script>
-	$(document).ready(function () {
-		var navListItems = $('div.setup-panel div a'),
-				allWells = $('.setup-content'),
-				allNextBtn = $('.nextBtn'),
-				allPrevBtn = $('.prevBtn');
+    $('.next-btn, .back-btn').click(function( event ) {
+        event.preventDefault();});
 
-		allWells.hide();
+    $('.next-btn').click(function() {
+        if($('.step1').is(':visible')){
+            $('.step1').hide();
+            $('.step2').show();
+            $('.step-note2').css({"background" : "url('images/current.png')",'background-size' : 'cover','color' : '#000000'});
+            clicks++;
+        }
+        else{
+            if($('.step2').is(':visible')){
+                $('.step2').hide();
+                $('.step3').show();
+                $('.next-btn').hide();
+                $('.submit-button').show();
+                $('.step-note3').css({"background" : "url('images/current.png')",'background-size' : 'cover','color' : '#000000'});
+            }
+        }
+    });
 
-		navListItems.click(function (e) {
-			e.preventDefault();
-			var $target = $($(this).attr('href')),
-					$item = $(this);
-
-			if (!$item.hasClass('disabled')) {
-				navListItems.removeClass('btn-primary').addClass('btn-default');
-				$item.addClass('btn-primary');
-				allWells.hide();
-				$target.show();
-				$target.find('input:eq(0)').focus();
-			}
-		});
-
-		allPrevBtn.click(function(){
-			var curStep = $(this).closest(".setup-content"),
-					curStepBtn = curStep.attr("id"),
-					prevStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().prev().children("a");
-
-			prevStepWizard.removeAttr('disabled').trigger('click');
-		});
-
-		allNextBtn.click(function(){
-			var curStep = $(this).closest(".setup-content"),
-					curStepBtn = curStep.attr("id"),
-					nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
-					curInputs = curStep.find("input[type='text'],input[type='url']"),
-					isValid = true;
-
-			$(".form-group").removeClass("has-error");
-			for(var i=0; i<curInputs.length; i++){
-				if (!curInputs[i].validity.valid){
-					isValid = false;
-					$(curInputs[i]).closest(".form-group").addClass("has-error");
-				}
-			}
-
-			if (isValid)
-				nextStepWizard.removeAttr('disabled').trigger('click');
-		});
-
-		$('div.setup-panel div a.btn-primary').trigger('click');
-	});
+    $('.back-btn').click(function() {
+        if($('.step3').is(':visible')){
+            $('.step3').hide();
+            $('.step2').show();
+            $('.step-note3').css({"background" : "url('images/next.png')",'background-size' : 'cover','color' : '#ffffff'});
+            $('.submit-button').hide();
+            $('.next-btn').show();
+        }
+        else{
+            if($('.step2').is(':visible')){
+                $('.step2').hide();
+                $('.step1').show();
+                $('.step-note2').css({"background" : "url('images/next.png')",'background-size' : 'cover','color' : '#ffffff'});
+            }
+        }
+    });
 </script>
+<script src="login.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
 <script src="manage_load.js"></script>
