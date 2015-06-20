@@ -200,12 +200,6 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
         $scope.page.scope = "Truck Owner Home";
     };
 
-    $scope.gotoAddTrucksPage = function(){
-        TruckRequest.setSharedTruck(null);
-        $scope.page.template = "/TransEarth/add_trucks";
-        $scope.page.scope = "Add Multiple Trucks";
-    };
-
     $scope.truckProcess = {};
     $scope.truckProcess.function = {};
     $scope.truckProcess.indicator = {};
@@ -423,6 +417,11 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
         $scope.truck = {};
     };
 
+    $scope.cancelTruckUpdate = function(){
+        TruckRequest.setSharedTruck(null);
+        $scope.truckOwnerPage.showManageTruck = false;
+    };
+
     $scope.submitForm = function () {
 
         // Set the 'submitted' flag to true
@@ -466,8 +465,14 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
                     TruckRequest.setSharedTruck(null);
                     TruckRequest.setSharedTruckProcessed(true);
 
-                    $scope.page.template = "/TransEarth/truck_owner_home";
-                    $scope.page.scope = "Truck Owner Home";
+                    $scope.myTruckList.messageAvailable = true;
+                    succesAlert("Truck updated successfully", 'truck_home_alert');
+                    $location.hash('truck_home_alert');
+
+                    $scope.truckOwnerPage.showManageTruck = false;
+
+                    //$scope.page.template = "/TransEarth/truck_owner_home";
+                    //$scope.page.scope = "Truck Owner Home";
                     /*if($scope.addTruckInd){
                         $scope.truckProcess.indicator.showAlert = true;
                         successInfo(data.statusMsg, 'truck_home_alert');
@@ -505,10 +510,10 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
                     console.log("Truck saved failed:"+data);
                     $scope.truckProcess.indicator.saved = false;
                     $scope.truckProcess.indicator.showAlert = true;
-                    succesError(data.statusMsg, 'manage_truck_alert');
+                    succesError(data.statusMsg, 'truck_home_alert');
                     // set the location.hash to the id of
                     // the element you wish to scroll to.
-                    $location.hash('truckManagePage');
+                    $location.hash('truck_home_alert');
 
                     // call $anchorScroll()
                     $anchorScroll();

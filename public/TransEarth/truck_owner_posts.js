@@ -189,9 +189,13 @@ function truckOwnerPostsCtrl($scope, $http, $location, $modal, UserRequest, Truc
                     TruckPostRequest.setSharedTruckPostId(postId);
                     //console.log("Get Shared Truck Request: "+JSON.stringify(TruckRequest.getSharedTruck()));
                     $scope.myTruckList.showAddPostError = false;
-                    $scope.truckOwnerPage.showPostList = false;
+                    //$scope.truckOwnerPage.showPostList = false;
+                    $scope.truckOwnerPage.showManageTruck = false;
+                    $scope.truckOwnerPage.showManagePost = true;
+                    $scope.truckOwnerPage.managePostTitle = "Edit Post";
                 }else{
                     $scope.myTruckList.showAddPostError = false;
+                    $scope.truckOwnerPage.showManageTruck = false;
                     $scope.truckOwnerPage.showPostList = true;
                     succesError("Truck Not found to add post", 'truck_home_alert');
                     console.log("No data available");

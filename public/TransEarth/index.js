@@ -4,7 +4,7 @@ function indexCtrl($scope, $http, $location, $timeout, $route, UserRequest) {
     //$scope.user = window.user_name;
     clearAlert("indexTruckPostListMessage");
     clearAlert("indexLoadPostListMessage");
-    $scope.itemDuration = 5000;
+    $scope.itemDuration = 3000;
     $scope.itemLeaveDelay = 1500;
 
     if(typeof $scope.user == "undefined"){
@@ -87,7 +87,7 @@ function indexCtrl($scope, $http, $location, $timeout, $route, UserRequest) {
             if(typeof data != 'undefined' && data != null
                 && data.loadPostList != 'undefined' && data.loadPostList != null
                 && data.loadPostList.details.length > 0){
-               // console.log(JSON.stringify(data));
+                //console.log(""+JSON.stringify(data));
                 $scope.index.loadPostList = data.loadPostList.details;
                 $scope.loadPosting.nextItem = 1;
                 $scope.loadPosts.push($scope.index.loadPostList[0]);

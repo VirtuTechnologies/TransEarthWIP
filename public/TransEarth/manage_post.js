@@ -12,6 +12,7 @@ function truckPostManageCtrl($scope, $http, $location, $anchorScroll, $filter, U
     $scope.cancelPost = function(){
         TruckPostRequest.setSharedTruck(null);
         $scope.truckOwnerPage.showPostList=true;
+        $scope.truckOwnerPage.showManagePost = false;
     };
 
     $scope.pickup = {};
@@ -215,6 +216,7 @@ function truckPostManageCtrl($scope, $http, $location, $anchorScroll, $filter, U
         //$("#post_frequency").selectpicker('refresh');
         $scope.showLocations = true;
     }
+    console.log("tempPost : "+JSON.stringify($scope.truckToPost));
     $scope.truckPostForm = {};
     $scope.truckPostProcess = {};
     //$scope.truckPostProcess.function = {};
@@ -311,7 +313,7 @@ function truckPostManageCtrl($scope, $http, $location, $anchorScroll, $filter, U
                         $scope.truckToPost = null;
                         //succesAlert("Truck Post updated successfully", 'truck_home_alert');
                         $scope.myTruckList.messageAvailable = true;
-                        succesError("Truck Post updated successfully", 'truck_home_alert');
+                        succesAlert("Truck Post updated successfully", 'truck_home_alert');
                         $location.hash('truck_home_alert');
                         $scope.truckOwnerPage.showManagePost = false;
                         $scope.truckOwnerPage.showPostList = false;
