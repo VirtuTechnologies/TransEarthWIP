@@ -83,6 +83,7 @@ exports.getLoadListSummary = function(req,res){
             "load.pickup.date" : {"$gte":currentDate}
         },
         {
+            "_id" : true,
             "load.pickup.address.city" : true,
             "load.delivery.address.city" : true,
             "load.quantity" : true,
@@ -100,6 +101,7 @@ exports.getLoadListSummary = function(req,res){
                 var item = data[i];
                 loadPostList.push({
                     //assign : "NA",
+                    load_id : item._id,
                     source : item.load.pickup.address.city,
                     destination : item.load.delivery.address.city,
                     load : item.load.quantity + " " + item.load.unit,
@@ -267,7 +269,7 @@ exports.searchLoadList = function(req,res){
             var jsonResponse = {'statusMsg' : ' Date Range Filter required'};
             res.json(500, jsonResponse);
         }
-        if(typeof filters[4] != "undefined" && filters[4] != null) {
+        if(typeof filters[4] != "undefined" && filters[4] != null && filters[4] != '') {
             var material = filters[4];
             searchParams["load.material.type"] = material;
         }

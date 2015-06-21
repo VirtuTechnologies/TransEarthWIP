@@ -1,6 +1,6 @@
 //ng-grid Truck List
 function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, TruckRequest, TruckPostRequest) {
-    console.log('Inside truckOwnerTrucksCtrl');
+    //console.log('Inside truckOwnerTrucksCtrl');
 
     clearAlert("myTrucklist_alert");
     $scope.myTruckList = {};
@@ -47,11 +47,17 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
             }, 100);
         //}
     };
+    $scope.$watch('truckOwnerPage.refresh', function (newVal, oldVal) {
+        //console.log(' My Truck Posts refresh '+JSON.stringify(newVal));
+        if(typeof newVal != "undefined" && newVal != null){
+            $scope.getPagedDataAsync();
+        }
+    });
     //$scope.getPagedDataAsync($scope.truckPostList.pagingOptions.pageSize, $scope.truckPostList.pagingOptions.currentPage);
     $scope.getPagedDataAsync();
 
     $scope.editTruck = function(id){
-        console.log("Editing truck: "+id);
+        //console.log("Editing truck: "+id);
         //console.log("Get Shared Truck Request: "+TruckRequest.getSharedTruckId());
         $http.post("/TransEarth/getTruckById", {truckId : id})
             .success(function(data) {
@@ -68,7 +74,7 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
                     $scope.myTruckList.messageAvailable = true;
                     $scope.truckOwnerPage.showAlert = true;
                     succesError("Truck Details Not available for update", 'myTrucklist_alert');
-                    console.log("No data available");
+                    //console.log("No data available");
                 }
             }).error(function(err) {
                 $scope.myTruckList.listShow = false;
@@ -87,18 +93,18 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
             size: size,
             resolve: {
                 truckToInactivate: function () {
-                    console.log("Modal $scope.truckToRemove: "+JSON.stringify($scope.truckToRemove));
+                    //console.log("Modal $scope.truckToRemove: "+JSON.stringify($scope.truckToRemove));
                     return $scope.truckToRemove;
                 }
             }
         });
         modalInstance.result.then(function(truckToRemove){
             //on ok button press
-            console.log("On ok button press");
+            //console.log("On ok button press");
             //$scope.inActivateTruck(truckToRemove);
         },function(){
             //on cancel button press
-            console.log("Modal Closed");
+            //console.log("Modal Closed");
             $scope.getPagedDataAsync($scope.myTruckList.pagingOptions.pageSize, $scope.myTruckList.pagingOptions.currentPage);
         });
     };
@@ -108,10 +114,10 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
         clearAlert("remove_truck_alert");
         $scope.truckToInactivate = truckToInactivate;
         $scope.showClose = false;
-        console.log("Inside TruckRemoveModalCtrl: truckToRemove = "+JSON.stringify($scope.truckToInactivate));
+        //console.log("Inside TruckRemoveModalCtrl: truckToRemove = "+JSON.stringify($scope.truckToInactivate));
 
         $scope.inActivateTruck = function(truck){
-            console.log("Removing truck: "+truck._id);
+            //console.log("Removing truck: "+truck._id);
             //console.log("Get Shared Truck Request: "+TruckRequest.getSharedTruckId());
             $scope.truckToInactivate = truck;
             $http.post("/TransEarth/removeTruck", {truck : truck})
@@ -120,13 +126,13 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
                     // succesAlert(data.statusMsg, 'eaiSaveStatus');
                     successInfo(data.statusMsg, 'remove_truck_alert');
                     /*if(typeof data != 'undefined' && data != null){
-                        console.log(JSON.stringify(data));
+                        //console.log(JSON.stringify(data));
                         TruckRequest.setSharedTruck(data);
                         $scope.page.template = "/TransEarth/truck_owner_home";
                         $scope.page.scope = "Truck Owner Home";
                         succesError(err.statusMsg, 'myTrucklist_alert');
                     }else{
-                        console.log("No data available");
+                        //console.log("No data available");
                     }*/
                 }).error(function(err) {
                     $scope.showClose = false;
@@ -151,14 +157,14 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
     };
 
     $scope.addTruckPost = function(truckId){
-        console.log("Add post to truck: "+truckId);
+        //console.log("Add post to truck: "+truckId);
         $scope.myTruckList.showAddPostError = false;
         $http.post("/TransEarth/getTruckById", {truckId : truckId})
             .success(function(data) {
                 // succesAlert(data.statusMsg, 'eaiSaveStatus');
                 $scope.myTruckList.showAddPostError = false;
                 if(typeof data != 'undefined' && data != null){
-                    console.log(JSON.stringify(data));
+                    //console.log(JSON.stringify(data));
                     TruckRequest.setSharedTruck(data);
                     //TruckPostRequest.setSharedTruck(null);
                     //console.log("Get Shared Truck Request: "+JSON.stringify(TruckRequest.getSharedTruck()));
@@ -171,7 +177,7 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
                     $scope.myTruckList.showAddPostError = false;
                     $scope.truckOwnerPage.showPostList = true;
                     succesError("Truck Not found to add post", 'myTrucklist_alert');
-                    console.log("No data available");
+                    //console.log("No data available");
                 }
             }).error(function(err) {
                 $scope.myTruckList.showAddPostError = true;
@@ -190,18 +196,18 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
             size: size,
             resolve: {
                 truck: function () {
-                    console.log("Modal $scope.truckInfo: "+JSON.stringify($scope.truckToRemove));
+                    //console.log("Modal $scope.truckInfo: "+JSON.stringify($scope.truckToRemove));
                     return $scope.truckInfo;
                 }
             }
         });
         modalInstance.result.then(function(truck){
             //on ok button press
-            console.log("On ok button press");
+            //console.log("On ok button press");
             //$scope.inActivateTruck(truckToRemove);
         },function(){
             //on cancel button press
-            console.log("Modal Closed");
+            //console.log("Modal Closed");
             //$scope.getPagedDataAsync($scope.myTruckList.pagingOptions.pageSize, $scope.myTruckList.pagingOptions.currentPage);
         });
     };
@@ -213,7 +219,7 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
             $scope.truckModal.owner.name = $scope.truckModal.owner.last_name + " ," + $scope.truckModal.owner.first_name;
         }
         $scope.showClose = false;
-        console.log("Inside TruckDetailModalCtrl: truckModal = "+JSON.stringify($scope.truckModal));
+        //console.log("Inside TruckDetailModalCtrl: truckModal = "+JSON.stringify($scope.truckModal));
 
         $scope.ok = function () {
             $modalInstance.close($scope.truckToRemove);
@@ -225,13 +231,13 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
     };
 
     $scope.getTruckDetails = function(truckId){
-        console.log("Get truck details: "+truckId);
+        //console.log("Get truck details: "+truckId);
 
         $http.post("/TransEarth/getTruckById", {truckId : truckId})
             .success(function(data) {
                 // succesAlert(data.statusMsg, 'eaiSaveStatus');
                 if(typeof data != 'undefined' && data != null){
-                    console.log(JSON.stringify(data));
+                    //console.log(JSON.stringify(data));
                     $scope.truckInfo = data;
                     //TruckRequest.setSharedTruck(data);
                     //console.log("Get Shared Truck Request: "+JSON.stringify(TruckRequest.getSharedTruck()));
@@ -240,7 +246,7 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
                     $scope.myTruckList.messageAvailable = true;
                     $scope.truckOwnerPage.showAlert = true;
                     succesError("Truck Details Not available", 'myTrucklist_alert');
-                    console.log("No data available");
+                    //console.log("No data available");
                 }
             }).error(function(err) {
                 $scope.myTruckList.listShow = false;

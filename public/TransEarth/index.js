@@ -1,4 +1,4 @@
-function indexCtrl($scope, $http, $location, $timeout, $route, UserRequest) {
+function indexCtrl($scope, $http, $location, $timeout, $route, $modal, UserRequest) {
     //console.log('Inside indexCtrl');
 
     //$scope.user = window.user_name;
@@ -15,6 +15,7 @@ function indexCtrl($scope, $http, $location, $timeout, $route, UserRequest) {
 
     $scope.truckPosts = [];
     $scope.truckPosting = {};
+    $scope.truckPosted = {};
     $scope.truckPosting.animation = "slide-right";
 
     $scope.truckPosting.timeOut = function(index){
@@ -29,6 +30,7 @@ function indexCtrl($scope, $http, $location, $timeout, $route, UserRequest) {
             var truck_post = $scope.index.truckPostList[$scope.truckPosting.nextItem];
             $timeout(function(){
                 $scope.truckPosts.push(truck_post);
+                $scope.truckPosted = truck_post;
                 //console.log("Next truck post to display:"+JSON.stringify($scope.index.truckPostList[$scope.truckPosting.nextItem]));
                 $scope.truckPosting.timeOut($scope.truckPosting.nextItem);
             }, $scope.itemLeaveDelay);
@@ -46,6 +48,7 @@ function indexCtrl($scope, $http, $location, $timeout, $route, UserRequest) {
                 $scope.index.truckPostList = data.truckPostList.details;
                 $scope.truckPosting.nextItem = 1;
                 $scope.truckPosts.push($scope.index.truckPostList[0]);
+                $scope.truckPosted = $scope.index.truckPostList[0];
                 $scope.truckPosting.timeOut($scope.truckPosting.nextItem);
             }else{
                 $scope.index.truckPostListMessageAvailable = true;
@@ -60,6 +63,7 @@ function indexCtrl($scope, $http, $location, $timeout, $route, UserRequest) {
 
     $scope.loadPosts = [];
     $scope.loadPosting = {};
+    $scope.loadPosted = {};
     $scope.loadPosting.animation = "slide-right";
 
     $scope.loadPosting.timeOut = function(index){
@@ -74,6 +78,7 @@ function indexCtrl($scope, $http, $location, $timeout, $route, UserRequest) {
             var load_post = $scope.index.loadPostList[$scope.loadPosting.nextItem];
             $timeout(function(){
                 $scope.loadPosts.push(load_post);
+                $scope.loadPosted = load_post;
                 //console.log("Next load post to display:"+JSON.stringify($scope.index.loadPostList[$scope.loadPosting.nextItem]));
                 $scope.loadPosting.timeOut($scope.loadPosting.nextItem);
             }, $scope.itemLeaveDelay);
@@ -91,6 +96,7 @@ function indexCtrl($scope, $http, $location, $timeout, $route, UserRequest) {
                 $scope.index.loadPostList = data.loadPostList.details;
                 $scope.loadPosting.nextItem = 1;
                 $scope.loadPosts.push($scope.index.loadPostList[0]);
+                $scope.loadPosted = $scope.index.loadPostList[0];
                 $scope.loadPosting.timeOut($scope.loadPosting.nextItem);
             }else{
                 $scope.index.loadPostListMessageAvailable = true;

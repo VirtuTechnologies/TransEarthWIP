@@ -1,6 +1,6 @@
 //ng-grid Load List
 function loadListCtrl($scope, $http, $location, $modal, UserRequest) {
-    console.log('Inside loadListCtrl');
+    //console.log('Inside loadListCtrl');
     clearAlert("loadlist_alert");
 
     $scope.loadPostList = {};
@@ -37,7 +37,7 @@ function loadListCtrl($scope, $http, $location, $modal, UserRequest) {
     $scope.open = function($event) {
         $event.preventDefault();
         $event.stopPropagation();
-        console.log("Opened");
+        //console.log("Opened");
         $scope.opened = true;
     };
 
@@ -132,17 +132,28 @@ function loadListCtrl($scope, $http, $location, $modal, UserRequest) {
                             && typeof data.loadPostList != 'undefined' && data.loadPostList != null
                             && typeof data.loadPostList.details != "undefined" && data.loadPostList.details != null
                             && data.loadPostList.details.length > 0){
-                            console.log(JSON.stringify(data));
+                            //console.log(JSON.stringify(data));
                             $scope.loadPostList.list = data.loadPostList.details;
                             var filteredData = data.loadPostList.details;
                             //console.log("Filtered Data:"+JSON.stringify(filteredData));
                             $scope.loadPostList.columnDefs = data.loadPostList.headers;
+                            var reminder = filteredData.length % $scope.loadPostList.pagingOptions.pageSize;
+                            var floor = Math.floor(filteredData.length / $scope.loadPostList.pagingOptions.pageSize);
+                            if(reminder>0){
+                                $scope.loadPostList.pagingOptions.lastPage = floor + 1;
+                            }else{
+                                $scope.loadPostList.pagingOptions.lastPage = floor;
+                            }
+
+                            $scope.loadPostList.pagingOptions.currentPage = page;
+                            console.log("Current Page: "+$scope.loadPostList.pagingOptions.currentPage);
+                            console.log("Last Page: "+$scope.loadPostList.pagingOptions.lastPage);
                             $scope.setPagingData(filteredData,page,pageSize);
                             $scope.loadPostList.listShow = true;
                             $scope.loadPostList.messageAvailable = false;
                             //$scope.loadPostList.searchButtonName = "Review LoadList";
                         }else{
-                            console.log("No data available");
+                            //console.log("No data available");
                             $scope.loadPostList.messageAvailable = true;
                             $scope.loadPostList.listShow = false;
                             $scope.loadPostList.message = "No data available";
@@ -159,7 +170,7 @@ function loadListCtrl($scope, $http, $location, $modal, UserRequest) {
     };
     //$scope.getPagedDataAsync($scope.truckPostList.pagingOptions.pageSize, $scope.truckPostList.pagingOptions.currentPage);
 
-    $scope.$watch('loadPostList.pagingOptions', function (newVal, oldVal) {
+    /*$scope.$watch('loadPostList.pagingOptions', function (newVal, oldVal) {
         if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
             $scope.getPagedDataAsync($scope.loadPostList.pagingOptions.pageSize, $scope.loadPostList.pagingOptions.currentPage, $scope.loadPostList.filterOptions.filterText);
         }
@@ -168,7 +179,7 @@ function loadListCtrl($scope, $http, $location, $modal, UserRequest) {
         if (newVal !== oldVal) {
             $scope.getPagedDataAsync($scope.loadPostList.pagingOptions.pageSize, $scope.loadPostList.pagingOptions.currentPage, $scope.loadPostList.filterOptions.filterText);
         }
-    }, true);
+    }, true);*/
 
     $scope.loadPostList.columnDefs = [];
     $scope.loadPostList.gridOptions = {
@@ -208,11 +219,11 @@ function loadListCtrl($scope, $http, $location, $modal, UserRequest) {
     $scope.getMaterials = function(){
         $http.get("/TransEarth/getMaterialTypes")
             .success(function(data) {
-                console.log("Materials looked up:"+JSON.stringify(data));
+                //console.log("Materials looked up:"+JSON.stringify(data));
                 $scope.materialList = data;
                 $scope.loadPostList.filter.material = "";
             }).error(function(err) {
-                console.log("truckType Lookup failed:"+JSON.stringify(err));
+                //console.log("truckType Lookup failed:"+JSON.stringify(err));
             });
     };
     $scope.getMaterials();
@@ -227,18 +238,18 @@ function loadListCtrl($scope, $http, $location, $modal, UserRequest) {
             size: size,
             resolve: {
                 load: function () {
-                    console.log("Modal $scope.loadInfo: "+JSON.stringify($scope.loadInfo));
+                    //console.log("Modal $scope.loadInfo: "+JSON.stringify($scope.loadInfo));
                     return $scope.loadInfo;
                 }
             }
         });
         modalInstance.result.then(function(truck){
             //on ok button press
-            console.log("On ok button press");
+            //console.log("On ok button press");
             //$scope.inActivateTruck(truckToRemove);
         },function(){
             //on cancel button press
-            console.log("Modal Closed");
+            //console.log("Modal Closed");
             //$scope.getPagedDataAsync($scope.myTruckList.pagingOptions.pageSize, $scope.myTruckList.pagingOptions.currentPage);
         });
     };
@@ -250,7 +261,7 @@ function loadListCtrl($scope, $http, $location, $modal, UserRequest) {
             $scope.loadModal.owner.name = $scope.loadModal.owner.last_name + " ," + $scope.loadModal.owner.first_name;
         }
         $scope.showClose = false;
-        console.log("Inside LoadDetailModalCtrl: loadModal = "+JSON.stringify($scope.loadModal));
+        //console.log("Inside LoadDetailModalCtrl: loadModal = "+JSON.stringify($scope.loadModal));
 
         $scope.ok = function () {
             $modalInstance.close($scope.loadModal);
@@ -266,13 +277,13 @@ function loadListCtrl($scope, $http, $location, $modal, UserRequest) {
             $scope.loadPostList.messageAvailable = true;
             succesError("Please login to view details", 'loadlist_alert');
         }else{
-            console.log("Get load details: "+loadId);
+            //console.log("Get load details: "+loadId);
 
             $http.post("/TransEarth/getLoadById", {loadId : loadId})
                 .success(function(data) {
                     // succesAlert(data.statusMsg, 'eaiSaveStatus');
                     if(typeof data != 'undefined' && data != null){
-                        console.log(JSON.stringify(data));
+                        //console.log(JSON.stringify(data));
                         $scope.loadInfo = data;
                         //TruckRequest.setSharedTruck(data);
                         //console.log("Get Shared Truck Request: "+JSON.stringify(TruckRequest.getSharedTruck()));
@@ -281,7 +292,7 @@ function loadListCtrl($scope, $http, $location, $modal, UserRequest) {
                         $scope.loadPostList.messageAvailable = true;
                         //$scope.loadPostList.message = "No data available";
                         succesWarning("Load details not found", 'loadlist_alert');
-                        console.log("No data available");
+                        //console.log("No data available");
                     }
                 }).error(function(err) {
                     $scope.loadPostList.messageAvailable = true;

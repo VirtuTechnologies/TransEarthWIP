@@ -183,7 +183,7 @@
                              for="pickup_address">Address is optional
                         </div>
                     </li>
-                    <li>
+                    <li ng-if="load.load.pickup.address.line1">
                         <label>PIN</label>
                         <div class="input-group">
                             <input type="text" numbers-only="numbers-only" class="textbox" name="pickup_pincode"
@@ -252,7 +252,7 @@
                              for="delivery_address">Address is mandatory
                         </div>
                     </li>
-                    <li>
+                    <li ng-if="load.load.delivery_address.address.line1">
                         <label>PIN</label>
                         <div class="input-group">
                             <input type="text" numbers-only class="textbox" name="delivery_pincode"

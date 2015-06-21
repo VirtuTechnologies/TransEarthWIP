@@ -5,7 +5,7 @@ function loginCtrl($scope, $http, $location, $anchorScroll, UserRequest) {
     $scope.width = 80;
     $scope.width = $scope.width.toFixed();
     $scope.width = $scope.width + "%";
-    console.log("$scope.width "+$scope.width);
+    //console.log("$scope.width "+$scope.width);
     /*if(typeof $scope.error != "undefined" && $scope.error != null){
         $scope.serverAuth.authFailed = true;
         succesError($scope.error, "login_alert");
@@ -80,7 +80,7 @@ function loginCtrl($scope, $http, $location, $anchorScroll, UserRequest) {
         }
     };
     $scope.showAccountDetails = function(){
-        console.log("User Type Form validity: "+$scope.userForm.user_type.$valid);
+        //console.log("User Type Form validity: "+$scope.userForm.user_type.$valid);
         if($scope.userForm.user_type.$valid){
             $scope.register.showAccountDetails = true;
         }else{

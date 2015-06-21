@@ -61,11 +61,27 @@
                     </td>
                     <td>
                     </td>
-                    <td colspan="2">
-                        <a href="#">First Page<img src="images/first.png" alt="" /></a>
-                        <a href="#">Previous<img src="images/back.png" alt="" /></a>5<a href="#"><img src="images/nextp.png" alt="" />Next</a>
-                        <a href="#"><img src="images/last.png" alt="" />Last Page</a>
+                    <td colspan="3">
+                        <a href="#"
+                           ng-disabled="myLoadList.pagingOptions.currentPage==1||myLoadList.totalServerItems<truckPostList.pagingOptions.pageSize"
+                           ng-click="getPagedDataAsync(myLoadList.pagingOptions.pageSize, 1)">First Page<img src="images/first.png" alt="" /></a>
+                        <a href="#"
+                           ng-disabled="myLoadList.pagingOptions.currentPage==1"
+                           ng-click="getPagedDataAsync(truckPostList.pagingOptions.pageSize, myLoadList.pagingOptions.currentPage - 1)">Previous<img src="images/back.png" alt="" /></a>
+                        {{myLoadList.totalServerItems}}
+                        <a href="#"
+                           ng-disabled="myLoadList.pagingOptions.currentPage==myLoadList.pagingOptions.lastPage"
+                           ng-click="getPagedDataAsync(myLoadList.pagingOptions.pageSize, myLoadList.pagingOptions.currentPage + 1)"><img src="images/nextp.png" alt="" />Next</a>
+                        <a href="#"
+                           ng-disabled="myLoadList.pagingOptions.currentPage==myLoadList.pagingOptions.lastPage"
+                           ng-click="getPagedDataAsync(myLoadList.pagingOptions.pageSize, myLoadList.pagingOptions.lastPage - 1)"><img src="images/last.png" alt="" />Last Page</a>
                     </td>
+                    <!-- td colspan="3">
+                        <a href="#">First Page<img src="images/first.png" alt="" /></a>
+                        <a href="#">Previous<img src="images/back.png" alt="" /></a>5
+                        <a href="#"><img src="images/nextp.png" alt="" />Next</a>
+                        <a href="#"><img src="images/last.png" alt="" />Last Page</a>
+                    </td -->
                 </tr>
                 </tfoot>
             </table>
@@ -118,90 +134,5 @@
         <button class="btn btn-warning" ng-click="cancel()">Close</button>
     </div>
     <!-- /div -->
-</script>
-<!-- Load Details Modal -->
-<script type="text/ng-template" id="myLoadDetailModal.html">
-    <!-- div ng-controller="LoadDetailModalCtrl" -->
-    <!-- div class="modal-dialog">
-        <div class="modal-content" -->
-    <div class="modal-header">
-        <h3 class="modal-title">Load Information</h3>
-    </div>
-    <div class="modal-body">
-        <div id="load_detail_alert"></div>
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="col-xs-5 col-sm-12">
-                    <h4>Owner Details</h4>
-                    <ul class="profile-details">
-                        <li>
-                            <div><i class="fa fa-user"></i> Name</div>
-                            {{loadModal.owner.name}}
-                        </li>
-                        <li>
-                            <div><i class="fa fa-map-marker"></i> Address</div>
-                            <p class="nopadding">{{loadModal.owner.address.line1}}</p>
-                            <p class="nopadding" ng-if="showText(loadModal.owner.address.line2)">{{loadModal.owner.address.line2}}</p>
-                            <p class="nopadding">{{loadModal.owner.address.city}}</p>
-                            <p class="nopadding">{{loadModal.owner.address.state}}</p>
-                            <p class="nopadding">{{loadModal.owner.address.country}}</p>
-                            <p class="nopadding">{{loadModal.owner.address.pincode}}</p>
-                        </li>
-                        <li>
-                            <div><i class="fa fa-phone"></i> Contact</div>
-                            {{loadModal.owner.contact}}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="col-xs-5 col-sm-12">
-                    <h4>Company Details</h4>
-                    <ul class="profile-details">
-                        <li>
-                            <div><i class="fa fa-user"></i> Name</div>
-                            {{loadModal.company.name}}
-                        </li>
-                        <li>
-                            <div><i class="fa fa-map-marker"></i> Address</div>
-                            <p class="nopadding">{{loadModal.company.address.line1}}</p>
-                            <p class="nopadding" ng-if="showText(loadModal.company.address.line2)">{{loadModal.company.address.line2}}</p>
-                            <p class="nopadding">{{loadModal.company.address.city}}</p>
-                            <p class="nopadding">{{loadModal.company.address.state}}</p>
-                            <p class="nopadding">{{loadModal.company.address.country}}</p>
-                            <p class="nopadding">{{loadModal.company.address.pincode}}</p>
-                        </li>
-                        <li>
-                            <div><i class="fa fa-phone"></i> Contact</div>
-                            {{loadModal.company.contact}}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="col-xs-5 col-sm-12">
-                    <h4>Load Details</h4>
-                    <ul class="profile-details">
-                        <li>
-                            <div><i class="fa fa-suitcase"></i> Quantity/ Weight</div>
-                            {{loadModal.load.quantity}}
-                        </li>
-                        <li>
-                            <div><i class="fa fa-cube"></i> Material</div>
-                            {{loadModal.load.material.type}} <br/>
-                        </li>
-                        <li>
-                            <div><i class="fa fa-map-marker"></i> Pickup City</div>
-                            {{loadModal.load.pickup.address.city}} <br/>
-                        </li>
-                        <li>
-                            <div><i class="fa fa-map-marker"></i> Delivery City</div>
-                            {{loadModal.load.delivery.address.city}}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
 </script>
 <script src="load_owner.js"></script>

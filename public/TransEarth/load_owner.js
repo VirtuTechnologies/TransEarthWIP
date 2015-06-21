@@ -1,6 +1,6 @@
 //ng-grid Load List
 function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadRequest) {
-    console.log('Inside loadOwnerCtrl');
+    //console.log('Inside loadOwnerCtrl');
 
     clearAlert("myLoadList_alert");
 
@@ -12,6 +12,7 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
         }
     };
     $scope.myLoadList = {};
+    $scope.myLoadList.myLoads_filter = "";
     $scope.myLoadList.filter = {};
 
     $scope.myLoadList.filter.dateRange = null;
@@ -24,7 +25,7 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
 
     LoadRequest.setSharedLoad(null);
     if(LoadRequest.isSharedLoadProcessed()){
-        console.log("Load processed");
+        //console.log("Load processed");
         LoadRequest.setSharedLoadProcessed(false);
         succesAlert("Load saved successfully", 'myLoadList_alert');
     }
@@ -33,7 +34,7 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
     $scope.open = function($event) {
         $event.preventDefault();
         $event.stopPropagation();
-        console.log("Opened");
+        //console.log("Opened");
         $scope.opened = true;
     };
 
@@ -59,13 +60,10 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
         $scope.myLoadList.list = pagedData;
 
         $scope.myLoadList.totalServerItems = data.length;
-        $scope.myLoadList.gridOptions = {
+        /*$scope.myLoadList.gridOptions = {
             data: 'myLoadList.list',
-            /*beforeSelectionChange: function() {
-             return $scope.truckList.truckListOption;
-             },*/
             columnDefs: 'myLoadList.columnDefs'
-        };
+        };*/
 
         if (!$scope.$$phase) {
             $scope.$apply();
@@ -73,7 +71,7 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
     };
     $scope.getPagedDataAsync = function (pageSize, page, searchText) {
         //if($scope.myLoadList.searchTriggered){
-        console.log("Load Owner getPagedDataAsync");
+        //console.log("Load Owner getPagedDataAsync");
             setTimeout(function () {
                 var data;
                 //console.log("Search Text: "+searchText);
@@ -87,7 +85,7 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
                             && typeof data.myLoadList.details != "undefined" && data.myLoadList.details != null
                             && data.myLoadList.details.length > 0){
                             //console.log(JSON.stringify(data));
-                            $scope.myLoadList.list = data.myLoadList.details;
+                            //$scope.myLoadList.list = data.myLoadList.details;
                             $scope.myLoadList.totalServerItems = data.myLoadList.details.length;
                             var filteredData = data.myLoadList.details.filter(function(item) {
                                 return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
@@ -119,16 +117,29 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
                             && typeof data.myLoadList.details != "undefined" && data.myLoadList.details != null
                             && data.myLoadList.details.length > 0){
                             //console.log(JSON.stringify(data));
-                            $scope.myLoadList.list = data.myLoadList.details;
+                            //$scope.myLoadList.list = data.myLoadList.details;
                             $scope.myLoadList.totalServerItems = data.myLoadList.details.length;
                             var filteredData = data.myLoadList.details;
                             //console.log("Filtered Data:"+JSON.stringify(filteredData));
                             $scope.myLoadList.columnDefs = data.myLoadList.headers;
+                            var reminder = filteredData.length % $scope.myLoadList.pagingOptions.pageSize;
+                            var floor = Math.floor(filteredData.length / $scope.myLoadList.pagingOptions.pageSize);
+                            if(reminder>0){
+                                $scope.myLoadList.pagingOptions.lastPage = floor + 1;
+                            }else{
+                                $scope.myLoadList.pagingOptions.lastPage = floor;
+                            }
+
+                            $scope.myLoadList.pagingOptions.currentPage = page;
+                            console.log("Current Page: "+$scope.myLoadList.pagingOptions.currentPage);
+                            console.log("Last Page: "+$scope.myLoadList.pagingOptions.lastPage);
                             $scope.setPagingData(filteredData,page,pageSize);
                             $scope.myLoadList.listShow = true;
+                            $scope.myLoadList.messageAvailable = false;
+
                             $scope.myLoadList.searchButtonName = "Review LoadList";
                         }else{
-                            console.log("No data available");
+                            //console.log("No data available");
                             $scope.myLoadList.messageAvailable = true;
                             $scope.myLoadList.listShow = false;
                             $scope.myLoadList.message = "No data available";
@@ -146,7 +157,7 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
     };
     //$scope.getPagedDataAsync($scope.truckPostList.pagingOptions.pageSize, $scope.truckPostList.pagingOptions.currentPage);
 
-    $scope.$watch('myLoadList.pagingOptions', function (newVal, oldVal) {
+    /*$scope.$watch('myLoadList.pagingOptions', function (newVal, oldVal) {
         if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
             $scope.getPagedDataAsync($scope.myLoadList.pagingOptions.pageSize, $scope.myLoadList.pagingOptions.currentPage, $scope.myLoadList.filterOptions.filterText);
         }
@@ -155,7 +166,7 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
         if (newVal !== oldVal) {
             $scope.getPagedDataAsync($scope.myLoadList.pagingOptions.pageSize, $scope.myLoadList.pagingOptions.currentPage, $scope.myLoadList.filterOptions.filterText);
         }
-    }, true);
+    }, true);*/
 
     $scope.myLoadList.columnDefs = [];
     $scope.myLoadList.gridOptions = {
@@ -183,14 +194,14 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
 
     //$scope.searchLoads = function(){
         $scope.myLoadList.searchTriggered = true;
-        $scope.getPagedDataAsync($scope.myLoadList.pagingOptions.pageSize, $scope.myLoadList.pagingOptions.currentPage);
+        $scope.getPagedDataAsync($scope.myLoadList.pagingOptions.pageSize, 1);
     //};
     //$location.url('/TransEarth/forms');
 
     $scope.loadOwnerPage = {};
 
     $scope.editLoad = function(id){
-        console.log("Editing Load: "+id);
+        //console.log("Editing Load: "+id);
         //console.log("Get Shared Load Request: "+LoadRequest.getSharedLoad());
         $http.post("/TransEarth/getLoadById", {loadId : id})
             .success(function(data) {
@@ -206,7 +217,7 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
                     $scope.myLoadList.messageAvailable = true;
                     $scope.loadOwnerPage.showAlert = true;
                     succesError("Load Details Not available for update", 'myLoadList_alert');
-                    console.log("No data available");
+                    //console.log("No data available");
                 }
             }).error(function(err) {
                 $scope.myLoadList.listShow = false;
@@ -225,18 +236,18 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
             size: size,
             resolve: {
                 loadToInactivate: function () {
-                    console.log("Modal $scope.loadToRemove: "+JSON.stringify($scope.loadToRemove));
+                    //console.log("Modal $scope.loadToRemove: "+JSON.stringify($scope.loadToRemove));
                     return $scope.loadToRemove;
                 }
             }
         });
         modalInstance.result.then(function(loadToRemove){
             //on ok button press
-            console.log("On ok button press");
+            //console.log("On ok button press");
             //$scope.inActivateTruck(loadToRemove);
         },function(){
             //on cancel button press
-            console.log("Modal Closed");
+            //console.log("Modal Closed");
             $scope.getPagedDataAsync($scope.myLoadList.pagingOptions.pageSize, $scope.myLoadList.pagingOptions.currentPage);
         });
     };
@@ -246,10 +257,10 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
         clearAlert("remove_load_alert");
         $scope.loadToInactivate = loadToInactivate;
         $scope.showClose = false;
-        console.log("Inside LoadRemoveModalCtrl: loadToRemove = "+JSON.stringify($scope.loadToInactivate));
+        //console.log("Inside LoadRemoveModalCtrl: loadToRemove = "+JSON.stringify($scope.loadToInactivate));
 
         $scope.inActivateLoad = function(load){
-            console.log("Removing load: "+load._id);
+            //console.log("Removing load: "+load._id);
             //console.log("Get Shared Truck Request: "+TruckRequest.getSharedTruckId());
             $scope.loadToInactivate = load;
             $http.post("/TransEarth/removeLoad", {load : load})
@@ -257,13 +268,13 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
                     $scope.showClose = true;
                     successInfo(data.statusMsg, 'remove_load_alert');
                     /*if(typeof data != 'undefined' && data != null){
-                     console.log(JSON.stringify(data));
+                     //console.log(JSON.stringify(data));
                      TruckRequest.setSharedTruck(data);
                      $scope.page.template = "/TransEarth/truck_owner_home";
                      $scope.page.scope = "Truck Owner Home";
                      succesError(err.statusMsg, 'myTrucklist_alert');
                      }else{
-                     console.log("No data available");
+                     //console.log("No data available");
                      }*/
                 }).error(function(err) {
                     $scope.showClose = false;
@@ -297,22 +308,22 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
         var modalInstance = $modal.open({
             templateUrl: 'myLoadDetailModal.html',
             controller: LoadDetailModalCtrl,
-            windowClass: 'xx-dialog',
+            //windowClass: 'xx-dialog',
             size: size,
             resolve: {
                 load: function () {
-                    console.log("Modal $scope.loadInfo: "+JSON.stringify($scope.loadInfo));
+                    //console.log("Modal $scope.loadInfo: "+JSON.stringify($scope.loadInfo));
                     return $scope.loadInfo;
                 }
             }
         });
         modalInstance.result.then(function(truck){
             //on ok button press
-            console.log("On ok button press");
+            //console.log("On ok button press");
             //$scope.inActivateTruck(truckToRemove);
         },function(){
             //on cancel button press
-            console.log("Modal Closed");
+            //console.log("Modal Closed");
             //$scope.getPagedDataAsync($scope.myTruckList.pagingOptions.pageSize, $scope.myTruckList.pagingOptions.currentPage);
         });
     };
@@ -324,7 +335,7 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
             $scope.loadModal.owner.name = $scope.loadModal.owner.last_name + " ," + $scope.loadModal.owner.first_name;
         }
         $scope.showClose = false;
-        console.log("Inside LoadDetailModalCtrl: loadModal = "+JSON.stringify($scope.loadModal));
+        //console.log("Inside LoadDetailModalCtrl: loadModal = "+JSON.stringify($scope.loadModal));
 
         $scope.ok = function () {
             $modalInstance.close($scope.loadModal);
@@ -336,13 +347,13 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
     };
 
     $scope.viewLoad = function(loadId){
-        console.log("Get load details: "+loadId);
+        //console.log("Get load details: "+loadId);
 
         $http.post("/TransEarth/getLoadById", {loadId : loadId})
             .success(function(data) {
                 // succesAlert(data.statusMsg, 'eaiSaveStatus');
                 if(typeof data != 'undefined' && data != null){
-                    console.log(JSON.stringify(data));
+                    //console.log(JSON.stringify(data));
                     $scope.loadInfo = data;
                     //TruckRequest.setSharedTruck(data);
                     //console.log("Get Shared Truck Request: "+JSON.stringify(TruckRequest.getSharedTruck()));
@@ -351,7 +362,7 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
                     $scope.myLoadList.messageAvailable = true;
                     $scope.loadOwnerPage.showAlert = true;
                     succesError("Load Details Not available", 'myLoadList_alert');
-                    console.log("No data available");
+                    //console.log("No data available");
                 }
             }).error(function(err) {
                 $scope.myLoadList.listShow = false;
