@@ -1,20 +1,20 @@
 <div ng-controller="loadListCtrl" ng-init="init()">
 	<form id="searchLoadForm" name="searchLoadForm" role="form">
 		<div class="search-bar">
-            <div class="location">
-                <label>From</label>
+			<div class="location">
+				<label>From</label>
 				<google-places className="search-bar-input" holder="From Location"
 							   tagId="from_city" tagName="from_city"
 							   location=loadPostList.filter.from></google-places>
 			</div>
-            <div class="location">
-                <label>To</label>
+			<div class="location">
+				<label>To</label>
 				<google-places className="search-bar-input" holder="To Location"
 							   tagId="to_city" tagName="to_city"
 							   location=loadPostList.filter.to></google-places>
 			</div>
-            <div class="location">
-                <label>Material</label>
+			<div class="location">
+				<label>Material</label>
 				<select selectpicker id="material" name="material"
 						ng-model="loadPostList.filter.material"
 						ng-options="material for material in materialList"
@@ -22,8 +22,8 @@
 					<option value="">Choose one</option>
 				</select>
 			</div>
-            <div class="location">
-                <label>Date</label>
+			<div class="location">
+				<label>Date</label>
 				<input class="custom-dp" type="text" ng-required="true" placeholder="Available Date" name="daterange"
 					   ui-date-format="yy-mm-dd" ng-model="loadPostList.filter.dt" ui-date="loadPostList.filter.dateRangeOptions"
 					   ng-class="{ 'has-error' : searchLoadForm.daterange.$invalid,

@@ -1,38 +1,41 @@
 <div ng-controller="truckListCtrl" ng-init="init()">
     <form id="searchTruckForm" name="searchTruckForm" role="form">
 		<div class="search-bar">
-            <div class="location">
-                <label>From</label>
+			<div class="location">
+				<label>From</label>
+				<!-- input class="search-bar-input" location=truckPostList.filter.from id="from_city"
+					   type="text" placeholder="From Location" name="from_city"/ -->
 				<google-places className="search-bar-input" holder="From Location"
 							   tagId="from_city" tagName="from_city"
 							   location=truckPostList.filter.from></google-places>
-
-            </div>
-            <div class="location">
-                <label>To</label>
+			</div>
+			<div class="location">
+				<label>To</label>
+				<!-- input class="search-bar-input" type="text" id="to_city" name="to_city" glyph="false"
+					   location=truckPostList.filter.to placeholder="To Location"/ -->
 				<google-places className="search-bar-input" holder="To Location"
 							   tagId="to_city" tagName="to_city"
 							   location=truckPostList.filter.to></google-places>
-            </div>
-            <div class="location">
-                <label>Truck Type</label>
+			</div>
+			<div class="location">
+				<label>Truck Type</label>
 				<select selectpicker id="truck_type" name="truck_type"
 						ng-model="truckPostList.filter.type"
 						ng-options="type for type in truckTypeList"
-						class="search-bar-drop" data-dropup-auto="false">
+						class="search-bar-input" data-dropup-auto="false">
 					<option value="">Choose one</option>
 				</select>
-            </div>
-            <div class="location">
-                <label>Date</label>
+			</div>
+			<div class="location">
+				<label>Date</label>
 				<input class="custom-dp" type="text" ng-required="true" placeholder="Available Date" name="daterange"
 					   ui-date-format="yy-mm-dd" ng-model="truckPostList.filter.dt" ui-date="truckPostList.filter.dateRangeOptions"
 					   ng-class="{ 'has-error' : searchTruckForm.daterange.$invalid,
 										'has-success' : !(searchTruckForm.daterange.$invalid),
 										'has-feedback' : searchTruckForm.daterange.$invalid}"/>
-            </div>
+			</div>
 			<div class="radio-group">
-				<input type="radio" ng-change="resetSearchCategory()"
+				<input type="radio" ng-change="resetSearchCategory()"x
 					   ng-model="truckPostList.filter.dateRange"
 					   name="optionsRadios" id="optionsRadios1" value=1>
 				<label for="date-option">ON</label></br>
