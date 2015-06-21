@@ -1,120 +1,258 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" ng-app="TransEarthApp">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+		<meta name="description" content="" />
+		<meta name="author" content="" />
+		<title>LoadX</title>
+		<!-- BOOTSTRAP CORE STYLE  -->
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <link href='http://fonts.googleapis.com/css?family=Maven+Pro' rel='stylesheet' type='text/css'>
+		<!--- link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" / -->
 
-    <link href="css/style.css" rel="stylesheet" />
-    <link href="css/date.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<link href="css/date.css" rel="stylesheet" />
 
-    <!-- FONT AWESOME ICONS  -->
-    
-    <!-- CUSTOM STYLE  -->
-    <link href="angular/css/ng-grid.css" rel="stylesheet" type="text/css" />
-    <link href="css/transEarthStyle.css" rel="stylesheet" />
-    <link href="angular/css/ng-animation.css" rel="stylesheet" />
-    <!-- Google Places API -->
-    <!-- script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <script src="maps.js"></script -->
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" type="text/css" href="css/ie8Styles.css"/>
-    <![endif]-->
-    <script src="scripts/respond.min.js"></script>
-    <!--[if lte IE 8]>
-    <script>
-        document.createElement('footer');
-    </script>
-    <![endif]-->
+		<!-- FONT AWESOME ICONS  -->
 
-</head>
-<body ng-controller="coreController" ng-init="local='<%= JSON.stringify(session)%>'" class=" pace-done">
-<header>
-    <a href="../"><img id="logo" src="images/logo.png" alt=""></a>
-    <button class="menu-btn">
-        <p class="menu-icon">Menu<img src="images/menu-icon.png" alt=""></p>
-    </button>
-    <ul class="navmenu">
-        <li ng-if="core.loggedIn" class="username-place">
-            <a href="#"> {{user.display_name}}</a>
-            <ul class="dropdown-menu">
-                <li><a href="/TransEarth/logout">Logout</a></li>
-            </ul>
-        </li>
-        <li ng-if="!core.loggedIn">
-            <a href="#" ng-click="loginClicked()">
-                {{core.pageHeaders.login}}
-            </a>
-        </li>
-        <li>
-            <a href="#" ng-click="searchLoad()">Search Load</a>
-        </li>
-        <li>
-            <a href="#" ng-click="searchTrucks()">Search Truck</a>
-        </li>
-        <li ng-if="core.load_owner||core.agent||core.contractor">
-            <a href="#" ng-click="addLoad()">{{core.pageHeaders.addLoad}}</a>
-        </li>
-        <li ng-if="core.truck_owner||core.agent||core.contractor">
-            <a href="#" ng-click="gotoAddTrucksPage()">{{core.pageHeaders.addTruck}}</a>
-        </li>
-        <li ng-if="core.load_owner||core.agent||core.contractor">
-            <a href="#" ng-click="loadMyLoads()">{{core.pageHeaders.myLoads}}</a>
-        </li>
-        <li ng-if="core.truck_owner||core.agent||core.contractor">
-            <a href="#" ng-click="loadMyTrucks()">{{core.pageHeaders.myTrucks}}</a>
-        </li>
-        <li class="menu-align">
-            <a href="#" ng-click="siteHome()">{{core.pageHeaders.home}}</a>
-        </li>
-    </ul>
-</header>
-<div class="container">
-    <!-- div id="session_alert" ng-if="ifSessionInvalid==true">Session Not Valid. Please login again</div -->
-    <!-- div class="slide-animate-container">
-        <div class="slide-animate" ng-include src="page.template"></div>
-    </div -->
-    <div class="toggle" ng-include src="page.template"></div>
-</div>
 
-<!-- Moment Date formatter -->
-<script src="scripts/moment.min.js"></script>
+		<!-- CUSTOM STYLE  -->
+		<link href="angular/css/ng-grid.css" rel="stylesheet" type="text/css" />
+		<link href="css/transEarthStyle.css" rel="stylesheet" />
+		<link href="angular/css/ng-animation.css" rel="stylesheet" />
+		<!-- Google Places API -->
+		<!-- script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+		<script src="maps.js"></script -->
+		<!--[if lte IE 8]>
+		<link rel="stylesheet" type="text/css" href="css/ie8Styles.css"/>
+		<![endif]-->
+		<script src="scripts/respond.min.js"></script>
+		<!--[if lte IE 8]>
+		<script>
+			document.createElement('footer');
+		</script>
+		<![endif]-->
 
-<!-- script src="assets/js/jquery-1.11.1.js"></script -->
-<script src="scripts/jquery-1.9.1.min.js"></script>
-<script src="scripts/jquery-ui-1.10.1.custom.min.js"></script>
-<!-- script src="scripts/jquery-1.10.2.js"></script>
-<script src="scripts/jquery-ui.js"></script -->
-<!-- Angular -->
-<script src="angular/angular.min.js"></script>
-<script src="angular/angular-route.min.js"></script>
-<script src="angular/angular-animate.min.js"></script>
-<script src="angular/angular-ui-date.js"></script>
-<!-- BOOTSTRAP SCRIPTS  -->
-<!-- Angular Addon -->
-<script src="angular/ui-bootstrap-tpls-0.10.0.js"></script>
-<script src="angular/nya-bootstrap-select.js"></script>
-<!-- Load Date & Time picker plugins -->
-<!-- script src="angular/angular-daterangepicker.js"></script -->
-<!-- Load Angular ng-grid -->
-<script src="angular/ng-grid.debug.js"></script>
-<!-- Load Angular ng-table -->
-<script src="angular/ng-table.js"></script>
-<!-- Google Maps API -->
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false&amp;libraries=places"></script>
-<!-- Application specific scripts -->
-<script src="util.js"></script>
-<script src="scripts/alert.js"></script>
-<script src="core.js"></script>
-<script src="master.js"></script>
-<script type="text/ng-template" id="custom-datepicker.html">
-    <div class="textbox"><input type="text" ui-date-format="yy-mm-dd" ng-model="ngModel" ui-date="dateOptions"/></div>
-</script>
-</body>
+	</head>
+	<body ng-controller="coreController" ng-init="local='<%= JSON.stringify(session)%>'" class=" pace-done">
+		<header>
+			<a href="../"><img id="logo" src="images/logo.png" alt=""></a>
+			<button class="menu-btn">
+				<p class="menu-icon">Menu<img src="images/menu-icon.png" alt=""></p>
+			</button>
+			<ul class="navmenu">
+                <li ng-if="core.loggedIn" class="username-place">
+                    <a href="#"> {{user.display_name}}</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/TransEarth/logout">Logout</a></li>
+                    </ul>
+                </li>
+                <li ng-if="!core.loggedIn">
+                    <a href="#" ng-click="loginClicked()">
+                            {{core.pageHeaders.login}}
+                    </a>
+                </li>
+                <li>
+					<a href="#" ng-click="searchLoad()">Search Load</a>
+				</li>
+                <li>
+					<a href="#" ng-click="searchTrucks()">Search Truck</a>
+				</li>
+                <li ng-if="core.load_owner||core.agent||core.contractor">
+					<a href="#" ng-click="addLoad()">{{core.pageHeaders.addLoad}}</a>
+				</li>
+                <li ng-if="core.truck_owner||core.agent||core.contractor">
+					<a href="#" ng-click="gotoAddTrucksPage()">{{core.pageHeaders.addTruck}}</a>
+				</li>
+                <li ng-if="core.load_owner||core.agent||core.contractor">
+					<a href="#" ng-click="loadMyLoads()">{{core.pageHeaders.myLoads}}</a>
+				</li>
+                <li ng-if="core.truck_owner||core.agent||core.contractor">
+					<a href="#" ng-click="loadMyTrucks()">{{core.pageHeaders.myTrucks}}</a>
+				</li>
+                <li class="menu-align">
+					<a href="#" ng-click="siteHome()">{{core.pageHeaders.home}}</a>
+				</li>
+			</ul>
+		</header>
+		<div class="container">
+			<!-- div id="session_alert" ng-if="ifSessionInvalid==true">Session Not Valid. Please login again</div -->
+			<!-- div class="slide-animate-container">
+				<div class="slide-animate" ng-include src="page.template"></div>
+			</div -->
+			<div class="toggle" ng-include src="page.template"></div>
+		</div>
+
+		<!-- Moment Date formatter -->
+		<script src="scripts/moment.min.js"></script>
+
+		<!-- script src="assets/js/jquery-1.11.1.js"></script -->
+		<script src="scripts/jquery-1.9.1.min.js"></script>
+		<script src="scripts/jquery-ui-1.10.1.custom.min.js"></script>
+		<!-- script src="scripts/jquery-1.10.2.js"></script>
+        <script src="scripts/jquery-ui.js"></script -->
+		<!-- Angular -->
+		<script src="angular/angular.min.js"></script>
+		<script src="angular/angular-route.min.js"></script>
+		<script src="angular/angular-animate.min.js"></script>
+		<script src="angular/angular-ui-date.js"></script>
+		<!-- BOOTSTRAP SCRIPTS  -->
+		<!-- Angular Addon -->
+		<script src="angular/ui-bootstrap-tpls-0.10.0.js"></script>
+		<script src="angular/nya-bootstrap-select.js"></script>
+        <!-- Load Date & Time picker plugins -->
+        <!-- script src="angular/angular-daterangepicker.js"></script -->
+		<!-- Load Angular ng-grid -->
+		<script src="angular/ng-grid.debug.js"></script>
+		<!-- Load Angular ng-table -->
+		<script src="angular/ng-table.js"></script>
+		<!-- Google Maps API -->
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false&amp;libraries=places"></script>
+		<!-- Application specific scripts -->
+		<script src="util.js"></script>
+		<script src="scripts/alert.js"></script>
+		<script src="core.js"></script>
+		<script src="master.js"></script>
+        <script type="text/ng-template" id="custom-datepicker.html">
+			<div class="textbox"><input type="text" ui-date-format="yy-mm-dd" ng-model="ngModel" ui-date="dateOptions"/></div>
+        </script>
+		<script type="text/ng-template" id="addTrucks.html">
+			<div class="modal-header">
+				<h3 class="modal-title">Load Information</h3>
+			</div>
+			<div class="modal-body">
+				<div class="add-truck-bg" id="addTrucksPage" ng-init="init()">
+					<div class="add-truck-div">
+						<div class="add-truck-head">
+							<h4>ADD TRUCK</h4>
+							<label ng-click="cancel()">X</label>
+						</div>
+						<div class="add-truck-body">
+							<form name="addtruckform" novalidate>
+								<table class="add-truck-details">
+									<thead>
+										<tr>
+											<td>Truck Type</td>
+											<td>Truck Make</td>
+											<td>Truck Model</td>
+											<td>Reg No.</td>
+											<td>Capacity</td>
+											<td style="width:95px; text-align:center;">Actions</td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="truck in newTrucksModal.trucks track by $index">
+											<td data-title="'Truck Type'">
+												<select selectpicker id="truck_type{{$index}}" name="truck_type{{$index}}"
+														ng-model="truck.details.type"  ng-required="true"
+														ng-options="type for type in truckTypeList"
+														class="add-truck-input"
+														data-dropup-auto="false">
+													<option selected disabled value="">Choose one</option>
+												</select>
+												<div ng-if="truck.details.type==undefined || truck.details.type==null || truck.details.type==''"
+													 class="help-block pull-right"
+													 ng-class="{ 'line-error' : truck.details.type==undefined || truck.details.type==null || truck.details.type=='',
+													'line-success' : !(truck.details.type==undefined || truck.details.type==null || truck.details.type==''),
+													'line-feedback' : truck.details.type==undefined || truck.details.type==null || truck.details.type==''}"
+													 for="truck_type{{truck.index}}">Truck Type is mandatory
+												</div>
+												<div class="" ng-if="truck.details.type=='Others'">
+													<input type="text" class="add-truck-input" name="truckTypeDesc{{truck.index}}" id="truckTypeDesc{{truck.index}}"
+														   ng-model="truck.details.typeDescription"
+														   ng-minlength="1" ng-required="true" placeholder="Enter Other Type">
+													<div ng-if="truck.details.typeDescription==undefined || truck.details.typeDescription==null"
+														 class="help-block pull-right"
+														 ng-class="{ 'line-error' : truck.details.typeDescription==undefined || truck.details.typeDescription==null,
+													'line-success' : !(truck.details.typeDescription==undefined || truck.details.typeDescription==null),
+													'line-feedback' : truck.details.typeDescription==undefined || truck.details.typeDescription==null}"
+														 for="truckTypeDesc{{truck.index}}">Truck Type is mandatory
+													</div>
+												</div>
+											</td>
+											<td>
+												<select selectpicker id="truck_make{{$index}}" name="truck_make{{truck.index}}"
+														ng-model="truck.details.make"  ng-required="true"
+														ng-options="make for make in makeList"
+														class="add-truck-input" data-dropup-auto="false">
+													<option selected disabled value="">Choose one</option>
+												</select>
+												<div ng-if="truck.details.make==undefined || truck.details.make==null || truck.details.make==''"
+													 class="help-block pull-right"
+													 ng-class="{ 'line-error' : truck.details.make==undefined || truck.details.make==null || truck.details.make=='',
+													'line-success' : !(truck.details.make==undefined || truck.details.make==null || truck.details.make==''),
+													'line-feedback' : truck.details.make==undefined || truck.details.make==null || truck.details.make==''}"
+													 for="truckTypeDesc{{truck.index}}">Truck Make is mandatory
+												</div>
+											</td>
+											<td><input class="add-truck-input" type="text" name="model{{truck.index}}" id="model{{truck.index}}"
+													   ng-model="truck.details.model" placeholder="Enter Model"
+													   ng-minlength="1" maxlength="35" ng-required="true">
+												<div ng-if="truck.details.model==undefined || truck.details.model == null || truck.details.model == ''"
+													 class="help-block pull-right"
+													 ng-class="{ 'line-error' : truck.details.model==undefined || truck.details.model == null || truck.details.model == '',
+													'line-success' : !(truck.details.model==undefined || truck.details.model == null || truck.details.model == ''),
+													'line-feedback' : truck.details.model==undefined || truck.details.model == null || truck.details.model == ''}"
+													 for="model{{truck.index}}">Model is mandatory
+												</div></td>
+											<td><input type="text" class="add-truck-input" name="regno{{truck.index}}" id="regno{{truck.index}}"
+													   ng-model="truck.details.regno"
+													   placeholder="Enter Reg No"
+													   capitalize-no-blanks maxlength="10" ng-required="true">
+												<div ng-if="truck.details.regno==undefined || truck.details.regno == null || truck.details.regno == '' || truck.details.regno.length < 7"
+													 class="help-block pull-right"
+													 ng-class="{ 'line-error' : truck.details.regno==undefined || truck.details.regno == null || truck.details.regno == '' || truck.details.regno.length < 7,
+													'line-success' : !(truck.details.regno==undefined || truck.details.regno == null || truck.details.regno == '' || truck.details.regno.length < 7),
+													'line-feedback' : truck.details.regno==undefined || truck.details.regno == null || truck.details.regno == '' || truck.details.regno.length < 7}"
+													 for="regno{{truck.index}}">Reg No. is mandatory.
+												</div>
+											</td>
+											<td><input class="add-truck-input" type="text" numbers-only class="form-control" name="load{{truck.index}}" id="load{{truck.index}}"
+													   ng-model="truck.details.load"
+													   maxlength="2"
+													   placeholder="Enter Load in Tons" ng-minlength="1" ng-maxlength="2" ng-required="true">
+												<div ng-if="truck.details.load==undefined || truck.details.load == null || truck.details.load == ''"
+													 class="help-block pull-right"
+													 ng-class="{ 'line-error' : truck.details.load==undefined || truck.details.load == null || truck.details.load == '',
+													'line-success' : !(truck.details.load==undefined || truck.details.load == null || truck.details.load == ''),
+													'line-feedback' : truck.details.load==undefined || truck.details.load == null || truck.details.load == ''}"
+													 for="load{{truck.index}}">Capacity is mandatory
+												</div>
+											</td>
+											<td style="width:95px; text-align:center;">
+												<!-- p ng-show="checkErrors(truck)" class="text-danger" ng-if="closeOut && !truck.haveMessage">Clear Errors</p -->
+												<p ng-class="{'line-success':hasError, 'line-error':!hasError}" ng-if="closeOut">{{truck.message}}</p>
+												<button ng-click="removeTruck($index)" class="remove-row" ng-if="!closeOut"><img src="images/delete.png" alt="" />Remove</button>
+											</td>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<td colspan="2">
+												<label style="color:white; padding-left: 10px; font-size: 13px;" ng-show="addtruckform.$invalid">
+													*  Please correct the errors to submit the trucks
+												</label>
+											</td>
+											<td>
+												<button ng-click="goToHome()" class="add-row" ng-if="closeOut">View Your Trucks</button>
+											</td>
+											<td></td>
+											<td>
+												<button ng-click="addTruckRow()" class="add-row" ng-if="!closeOut">Add row</button>
+											</td>
+											<td colspan="2">
+												<button ng-disabled="disableSubmit(newTrucksModal.trucks)" ng-if="!closeOut&&newTrucksModal.trucks.length>0" ng-click="addTrucks(newTrucksModal.trucks)" type="submit">Submit</button>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</script>
+	</body>
 </html>

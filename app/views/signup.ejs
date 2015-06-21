@@ -9,288 +9,288 @@
         </ul>
     <form name="userForm" ng-submit="submitForm()" novalidate>
         <div class="signup-list">
-        <ul class="step1 scroll-alignment">
-            <li>
-                        <div class="input-group" id="user_role">
-                            <label for="user_type">User Type</label>
-                            <select selectpicker name="user_type" class="dropdown"
-                                    id="user_type"
-                                    ng-model="user.user_type"
-                                    ng-options="user_type.type as user_type.Name for user_type in userTypes"
-                                    ng-required="true"
-                                    ng-change="showAccountDetails()"
-                                    ng-class="{ 'has-error' : userForm.user_type.$invalid,
+            <ul class="step1 scroll-alignment">
+                <li>
+                    <div class="input-group" id="user_role">
+                        <label for="user_type">User Type</label>
+                        <select selectpicker name="user_type" class="dropdown"
+                                id="user_type"
+                                ng-model="user.user_type"
+                                ng-options="user_type.type as user_type.Name for user_type in userTypes"
+                                ng-required="true"
+                                ng-change="showAccountDetails()"
+                                ng-class="{ 'has-error' : userForm.user_type.$invalid,
 									'has-success' : !(userForm.user_type.$invalid),
 									'has-feedback' : userForm.user_type.$invalid}">
-                                <option default disabled value="">Please Choose One</option>
-                            </select>
-                        </div>
-                        <!-- i class="form-control-feedback"
-                                 ng-class="{ 'glyphicon glyphicon-remove' : userForm.user_type.$invalid,
-                                     'glyphicon glyphicon-ok' : !(userForm.user_type.$invalid),
-                                     'has-feedback' : userForm.user_type.$valid}"
-                                 for="user_type">
-                        </i -->
-                        <div ng-if="userForm.user_type.$invalid"
-                             class="help-block"
-                             for="user_type">User Type is mandatory
-                        </div>
+                            <option default disabled value="">Please Choose One</option>
+                        </select>
+                    </div>
+                    <!-- i class="form-control-feedback"
+                             ng-class="{ 'glyphicon glyphicon-remove' : userForm.user_type.$invalid,
+                                 'glyphicon glyphicon-ok' : !(userForm.user_type.$invalid),
+                                 'has-feedback' : userForm.user_type.$valid}"
+                             for="user_type">
+                    </i -->
+                    <div ng-if="userForm.user_type.$invalid"
+                         class="help-block"
+                         for="user_type">User Type is mandatory
+                    </div>
                     <!-- pre>{{userForm.user_type.$valid}}</pre -->
                     <!-- a class="btn btn-primary btn-sm pull-right next" href="#" ng-disabled="!register.showAccountDetails">Continue</a -->
                 </li>
-            <li><button style="background:#006FD7; float:right;" ng-disabled="userForm.user_type.$invalid" class="buttons next-btn">Next</button></li>
+                <li><button style="background:#006FD7; float:right;"ng-disabled="userForm.user_type.$invalid" class="buttons next-btn">Next</button></li>
             </ul>
-        <ul class="step2 scroll-alignment">
-            <li>
-                        <div class="input-group">
-                            <label for="username">Email ID</label>
-                            <input type="email" class="textbox" name="username" id="username" ng-model="user.username" placeholder="Enter Email"
-                                   ng-maxlength="35" maxlength="35" ng-required="true"
-                                   ng-class="{ 'has-error' : userForm.username.$invalid,
+            <ul class="step2 scroll-alignment">
+                <li>
+                    <div class="input-group">
+                        <label for="username">Email ID</label>
+                        <input type="email" class="textbox" name="username" id="username" ng-model="user.username" placeholder="Enter Email"
+                               ng-maxlength="35" maxlength="35" ng-required="true"
+                               ng-class="{ 'has-error' : userForm.username.$invalid,
 							 				'has-success' : !(userForm.username.$error),
 					 						'has-feedback' : userForm.username.$invalid,
 					 						'has-feedback' : userForm.username.$error}">
-                        </div>
-                        <i class="form-control-feedback"
-                           ng-class="{ 'glyphicon glyphicon-remove' : userForm.username.$invalid,
+                    </div>
+                    <i class="form-control-feedback"
+                       ng-class="{ 'glyphicon glyphicon-remove' : userForm.username.$invalid,
 							 				'glyphicon glyphicon-ok' : !(userForm.username.$invalid),
 					 						'has-feedback' : userForm.username.$valid}"
-                           for="username">
+                       for="username">
 
-                        </i>
-                        <div ng-if="userForm.username.$invalid"
-                             class="help-block"
-                             for="username">
-                            <!-- div class="has-error" -->
-                            <p ng-show="userForm.username.$error" >Please enter a valid Email ID</p>
-                            <!-- p ng-show="userForm.username.$error.required" >User Name is required or invalid</p>
-                            <p ng-show="userForm.username.$error.minlength" >Username is too short.</p>
-                            <p ng-show="userForm.username.$error.maxlength" >Username is too long.</p -->
-                            <!-- /div -->
-                        </div>
-               </li>
-            <li>
-                        <div class="input-group">
-                            <label for="password">Password</label>
-                            <input class="textbox" type="password" name="password" id="password" ng-model="user.password" placeholder="Enter Password"
-                                   ng-maxlength="12" maxlength="12"
-                                   ng-class="{ 'has-error' : userForm.password.$invalid,
+                    </i>
+                    <div ng-if="userForm.username.$invalid"
+                         class="help-block"
+                         for="username">
+                        <!-- div class="has-error" -->
+                        <p ng-show="userForm.username.$error" >Please enter a valid Email ID</p>
+                        <!-- p ng-show="userForm.username.$error.required" >User Name is required or invalid</p>
+                        <p ng-show="userForm.username.$error.minlength" >Username is too short.</p>
+                        <p ng-show="userForm.username.$error.maxlength" >Username is too long.</p -->
+                        <!-- /div -->
+                    </div>
+                </li>
+                <li>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input class="textbox" type="password" name="password" id="password" ng-model="user.password" placeholder="Enter Password"
+                               ng-maxlength="12" maxlength="12"
+                               ng-class="{ 'has-error' : userForm.password.$invalid,
 													'has-success' : (!userForm.password.$invalid),
 													'has-error' : userForm.password.$error.pattern}"
-                                   ng-required="true" ng-pattern="/^().{8,12}$/">
-                        </div>
-                        <i class="form-control-feedback"
-                           ng-class="{ 'glyphicon glyphicon-remove' : userForm.password.$invalid,
+                               ng-required="true" ng-pattern="/^().{8,12}$/">
+                    </div>
+                    <i class="form-control-feedback"
+                       ng-class="{ 'glyphicon glyphicon-remove' : userForm.password.$invalid,
 							 				'glyphicon glyphicon-ok' : !(userForm.password.$invalid),
 					 						'has-feedback' : userForm.password.$valid}"
-                           for="password"></i>
-                        <div ng-if="userForm.password.$invalid"
-                             class="help-block"
-                             for="password">
-                            New Password should contain Minimum 8 and Maximum 12 characters
-                </div></li>
-            <li>
-                        <div class="input-group">
-                            <label for="confirmPassword">Confirm Password</label>
-                            <input type="password" class="textbox" name="confirmPassword" id="confirmPassword" ng-model="user.confirmPassword"
-                                   placeholder="Confirm Password"
-                                   ng-maxlength="12" maxlength="12"
-                                   ng-class="{ 'has-error' : passwordMismatch,
+                       for="password"></i>
+                    <div ng-if="userForm.password.$invalid"
+                         class="help-block"
+                         for="password">
+                        New Password should contain Minimum 8 and Maximum 12 characters
+                    </div></li>
+                <li>
+                    <div class="input-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" class="textbox" name="confirmPassword" id="confirmPassword" ng-model="user.confirmPassword"
+                               placeholder="Confirm Password"
+                               ng-maxlength="12" maxlength="12"
+                               ng-class="{ 'has-error' : passwordMismatch,
 													'has-success' : !passwordMismatch}"
-                                   ng-required="true" ng-change="passwordValidation()">
-                        </div>
-                        <i class="form-control-feedback"
-                           ng-class="{ 'glyphicon glyphicon-remove' : passwordMismatch,
+                               ng-required="true" ng-change="passwordValidation()">
+                    </div>
+                    <i class="form-control-feedback"
+                       ng-class="{ 'glyphicon glyphicon-remove' : passwordMismatch,
 							 				'glyphicon glyphicon-ok' : !passwordMismatch,
 					 						'has-feedback' : !passwordMismatch}"
-                           for="confirmPassword"></i>
-                        <div ng-if="passwordMismatch"
-                             class="help-block"
-                             for="confirmPassword">
-                            <!-- pre>{{userForm.confirmPassword.$invalid}}</pre>
-                            <pre>{{passwordMismatch}}</pre -->
-                            Password does not match
-                        </div>
-            </li>
-            <li><button style="background:#006FD7; float:left;" class="buttons back-btn">Back</button></li>
-            <li><button style="background:#006FD7; float:right;" ng-disabled="passwordMismatch" class="buttons next-btn">Next</button></li>
+                       for="confirmPassword"></i>
+                    <div ng-if="passwordMismatch"
+                         class="help-block"
+                         for="confirmPassword">
+                        <!-- pre>{{userForm.confirmPassword.$invalid}}</pre>
+                        <pre>{{passwordMismatch}}</pre -->
+                        Password does not match
+                    </div>
+                </li>
+                <li><button style="background:#006FD7; float:left;" class="buttons back-btn">Back</button></li>
+                <li><button style="background:#006FD7; float:right;" ng-disabled="passwordMismatch" class="buttons next-btn">Next</button></li>
             </ul>
-        <ul class="step3 scroll-alignment">
-            <li>
-                        <div class="input-group">
-                            <label for="first_name">First Name</label>
-                            <input type="text" class="textbox" name="first_name" id="first_name" ng-model="user.first_name"
-                                   placeholder="Enter First Name"
-                                   ng-class="{ 'has-error' : userForm.first_name.$invalid,
+            <ul class="step3 scroll-alignment">
+                <li>
+                    <div class="input-group">
+                        <label for="first_name">First Name</label>
+                        <input type="text" class="textbox" name="first_name" id="first_name" ng-model="user.first_name"
+                               placeholder="Enter First Name"
+                               ng-class="{ 'has-error' : userForm.first_name.$invalid,
 							 				'has-success' : !(userForm.first_name.$invalid),
 					 						'has-feedback' : userForm.first_name.$invalid}"
-                                   maxlength="35" ng-required="true" capitalizeFirst>
-                        </div>
-                        <i class="form-control-feedback"
-                           ng-class="{ 'glyphicon glyphicon-remove' : userForm.first_name.$invalid,
+                               maxlength="35" ng-required="true" capitalizeFirst>
+                    </div>
+                    <i class="form-control-feedback"
+                       ng-class="{ 'glyphicon glyphicon-remove' : userForm.first_name.$invalid,
 							 				'glyphicon glyphicon-ok' : !(userForm.first_name.$invalid),
 					 						'has-feedback' : userForm.first_name.$valid}"
-                           for="first_name">
-                        </i>
-                        <div ng-if="userForm.first_name.$invalid"
-                             class="help-block"
-                             for="first_name">First Name is mandatory
-                    <!-- pre>{{userForm.user_type.$valid}}</pre -->
-                </div>
-            </li>
-            <li>
-                        <div class="input-group">
-                            <label for="last_name">Last Name</label>
-                            <input type="text" class="textbox" name="last_name" id="last_name" ng-model="user.last_name"
-                                   ng-class="{ 'has-error' : userForm.last_name.$invalid,
+                       for="first_name">
+                    </i>
+                    <div ng-if="userForm.first_name.$invalid"
+                         class="help-block"
+                         for="first_name">First Name is mandatory
+                        <!-- pre>{{userForm.user_type.$valid}}</pre -->
+                    </div>
+                </li>
+                <li>
+                    <div class="input-group">
+                        <label for="last_name">Last Name</label>
+                        <input type="text" class="textbox" name="last_name" id="last_name" ng-model="user.last_name"
+                               ng-class="{ 'has-error' : userForm.last_name.$invalid,
 							 				'has-success' : !(userForm.last_name.$invalid),
 					 						'has-feedback' : userForm.last_name.$invalid}"
-                                   placeholder="Enter Last Name" maxlength="35" ng-required="true" capitalizeFirst>
-                        </div>
-                        <i class="form-control-feedback"
-                           ng-class="{ 'glyphicon glyphicon-remove' : userForm.last_name.$invalid,
+                               placeholder="Enter Last Name" maxlength="35" ng-required="true" capitalizeFirst>
+                    </div>
+                    <i class="form-control-feedback"
+                       ng-class="{ 'glyphicon glyphicon-remove' : userForm.last_name.$invalid,
 							 				'glyphicon glyphicon-ok' : !(userForm.last_name.$invalid),
 					 						'has-feedback' : userForm.last_name.$valid}"
-                           for="last_name">
-                        </i>
-                        <div ng-if="userForm.last_name.$invalid"
-                             class="help-block"
-                             for="last_name">Last Name is mandatory
-                        </div>
-            </li>
-            <li>
-                        <div class="input-group">
-                            <label for="company_name">Company Name</label>
-                            <input type="text" class="textbox" name="company_name" id="company_name" ng-model="user.company_name"
-                                   placeholder="Enter Company Name" maxlength="35" ng-required="true"
-                                   ng-class="{ 'has-error' : userForm.company_name.$invalid,
+                       for="last_name">
+                    </i>
+                    <div ng-if="userForm.last_name.$invalid"
+                         class="help-block"
+                         for="last_name">Last Name is mandatory
+                    </div>
+                </li>
+                <li>
+                    <div class="input-group">
+                        <label for="company_name">Company Name</label>
+                        <input type="text" class="textbox" name="company_name" id="company_name" ng-model="user.company_name"
+                               placeholder="Enter Company Name" maxlength="35" ng-required="true"
+                               ng-class="{ 'has-error' : userForm.company_name.$invalid,
 							 				'has-success' : !(userForm.company_name.$invalid),
 					 						'has-feedback' : userForm.company_name.$invalid}">
-                        </div>
-                        <i class="form-control-feedback"
-                           ng-class="{ 'glyphicon glyphicon-remove' : userForm.company_name.$invalid,
+                    </div>
+                    <i class="form-control-feedback"
+                       ng-class="{ 'glyphicon glyphicon-remove' : userForm.company_name.$invalid,
 							 				'glyphicon glyphicon-ok' : !(userForm.company_name.$invalid),
 					 						'has-feedback' : userForm.company_name.$valid}"
-                           for="company_name">
-                        </i>
-                        <div ng-if="userForm.company_name.$invalid"
-                             class="help-block"
-                             for="company_name">Company Name is mandatory
-                        </div>
-            </li>
-            <li>
-                        <div class="input-group">
-                            <label for="line1">Address Line 1</label>
-                            <input type="text" class="textbox" name="line1" id="line1" ng-model="user.line1" placeholder="Enter Address Line1"
-                                   maxlength="35" ng-required="true"
-                                   ng-class="{ 'has-error' : userForm.line1.$invalid,
+                       for="company_name">
+                    </i>
+                    <div ng-if="userForm.company_name.$invalid"
+                         class="help-block"
+                         for="company_name">Company Name is mandatory
+                    </div>
+                </li>
+                <li>
+                    <div class="input-group">
+                        <label for="line1">Address Line 1</label>
+                        <input type="text" class="textbox" name="line1" id="line1" ng-model="user.line1" placeholder="Enter Address Line1"
+                               maxlength="35" ng-required="true"
+                               ng-class="{ 'has-error' : userForm.line1.$invalid,
 							 				'has-success' : !(userForm.line1.$invalid),
 					 						'has-feedback' : userForm.line1.$invalid}">
-                        </div>
-                        <i class="form-control-feedback"
-                           ng-class="{ 'glyphicon glyphicon-remove' : userForm.line1.$invalid,
+                    </div>
+                    <i class="form-control-feedback"
+                       ng-class="{ 'glyphicon glyphicon-remove' : userForm.line1.$invalid,
 							 				'glyphicon glyphicon-ok' : !(userForm.line1.$invalid),
 					 						'has-feedback' : userForm.line1.$valid}"
-                           for="line1">
-                        </i>
-                        <div ng-if="userForm.line1.$invalid"
-                             class="help-block"
-                             for="line1">Line 1 is mandatory
-                        </div>
-            </li>
-            <li>
-                        <div class="input-group">
-                            <label  for="line2">Address Line 2</label>
-                            <input type="text" class="textbox" name="line2" id="line2" ng-model="user.line2"
-                                   maxlength="35" placeholder="Enter Address Line2"
-                                   ng-class="{ 'has-error' : userForm.line2.$invalid,
+                       for="line1">
+                    </i>
+                    <div ng-if="userForm.line1.$invalid"
+                         class="help-block"
+                         for="line1">Line 1 is mandatory
+                    </div>
+                </li>
+                <li>
+                    <div class="input-group">
+                        <label  for="line2">Address Line 2</label>
+                        <input type="text" class="textbox" name="line2" id="line2" ng-model="user.line2"
+                               maxlength="35" placeholder="Enter Address Line2"
+                               ng-class="{ 'has-error' : userForm.line2.$invalid,
 							 				'has-success' : !(userForm.line2.$invalid),
 					 						'has-feedback' : userForm.line2.$invalid}">
-                        </div>
-                        <i class="form-control-feedback"
-                           ng-class="{ 'glyphicon glyphicon-remove' : userForm.line2.$invalid,
+                    </div>
+                    <i class="form-control-feedback"
+                       ng-class="{ 'glyphicon glyphicon-remove' : userForm.line2.$invalid,
 							 				'glyphicon glyphicon-ok' : !(userForm.line2.$invalid),
 					 						'has-feedback' : userForm.line2.$valid}"
-                           for="line2">
-                        </i>
-                        <div ng-if="userForm.line2.$invalid"
-                             class="help-block"
-                             for="line2">Line 2 is optional
-                </div>
-            </li>
-            <li>
+                       for="line2">
+                    </i>
+                    <div ng-if="userForm.line2.$invalid"
+                         class="help-block"
+                         for="line2">Line 2 is optional
+                    </div>
+                </li>
+                <li>
                     <label for="user_city">City</label>
-                        <!-- div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
-                            <div id="city">
-                                <google-places required
-                                        tagId="user_city" tagName="user_city" location=user.mapLocation></google-places>
-                            </div>
-                        </div -->
-                        <google-places required
-                                       tagId="user_city" tagName="user_city"
-                                       location=user.mapLocation></google-places>
-                        <!-- i class="form-control-feedback"
-                           ng-class="{ 'glyphicon glyphicon-remove' : !user.mapLocation.isSelected,
-                    'glyphicon glyphicon-ok' : user.mapLocation.isSelected,
-                    'has-feedback' : !user.mapLocation.isSelected}"
-                           for="city">
-                        </i>
-                        <div ng-if="!user.mapLocation.isSelected"
-                             class="help-block"
-                             ng-class="{ 'has-error' : !user.mapLocation.isSelected,
-                    'has-success' : user.mapLocation.isSelected,
-                    'has-feedback' : !user.mapLocation.isSelected}"
-                             for="city">Location is mandatory
-                        </div -->
+                    <!-- div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-map-marker fa-2"></i></span>
+                        <div id="city">
+                            <google-places required
+                                    tagId="user_city" tagName="user_city" location=user.mapLocation></google-places>
+                        </div>
+                    </div -->
+                    <google-places required
+                                   tagId="user_city" tagName="user_city"
+                                   location=user.mapLocation></google-places>
+                    <!-- i class="form-control-feedback"
+                       ng-class="{ 'glyphicon glyphicon-remove' : !user.mapLocation.isSelected,
+                'glyphicon glyphicon-ok' : user.mapLocation.isSelected,
+                'has-feedback' : !user.mapLocation.isSelected}"
+                       for="city">
+                    </i>
+                    <div ng-if="!user.mapLocation.isSelected"
+                         class="help-block"
+                         ng-class="{ 'has-error' : !user.mapLocation.isSelected,
+                'has-success' : user.mapLocation.isSelected,
+                'has-feedback' : !user.mapLocation.isSelected}"
+                         for="city">Location is mandatory
+                    </div -->
                     <!-- pre>{{userForm.city.$invalid}}</pre>
                     <pre>{{userForm.city.$error}}</pre -->
-            </li>
-            <li>
-                        <div class="input-group">
-                            <label for="pincode">PIN</label>
-                            <input type="text" numbers-only class="textbox" name="pincode" id="pincode" ng-model="user.pincode"
-                                   placeholder="Enter Pincode" ng-minlength="6" ng-maxlength="6" maxlength="6" ng-required="true"
-                                   ng-class="{ 'has-error' : userForm.pincode.$invalid,
+                </li>
+                <li>
+                    <div class="input-group">
+                        <label for="pincode">PIN</label>
+                        <input type="text" numbers-only class="textbox" name="pincode" id="pincode" ng-model="user.pincode"
+                               placeholder="Enter Pincode" ng-minlength="6" ng-maxlength="6" maxlength="6" ng-required="true"
+                               ng-class="{ 'has-error' : userForm.pincode.$invalid,
 										'has-success' : !(userForm.pincode.$invalid),
 										'has-feedback' : userForm.pincode.$invalid}">
-                        </div>
-                        <i class="form-control-feedback"
-                           ng-class="{ 'glyphicon glyphicon-remove' : userForm.pincode.$invalid,
+                    </div>
+                    <i class="form-control-feedback"
+                       ng-class="{ 'glyphicon glyphicon-remove' : userForm.pincode.$invalid,
 										'glyphicon glyphicon-ok' : !(userForm.pincode.$invalid),
 										'has-feedback' : userForm.pincode.$valid}"
-                           for="pincode">
-                        </i>
-                        <div ng-if="userForm.pincode.$invalid"
-                             class="help-block"
-                             for="pincode">Pincode is mandatory
-                        </div>
-            </li>
-            <li>
-                        <div class="input-group">
-                            <label for="contact">Contact Number</label>
-                            <input type="text" numbers-only class="textbox" name="contact" id="contact" ng-model="user.contact"
-                                   placeholder="Enter Contact Number"
-                                   maxlength="11" ng-minlength="10" ng-required="true"
-                                   ng-class="{ 'has-error' : userForm.contact.$invalid,
+                       for="pincode">
+                    </i>
+                    <div ng-if="userForm.pincode.$invalid"
+                         class="help-block"
+                         for="pincode">Pincode is mandatory
+                    </div>
+                </li>
+                <li>
+                    <div class="input-group">
+                        <label for="contact">Contact Number</label>
+                        <input type="text" numbers-only class="textbox" name="contact" id="contact" ng-model="user.contact"
+                               placeholder="Enter Contact Number"
+                               maxlength="11" ng-minlength="10" ng-required="true"
+                               ng-class="{ 'has-error' : userForm.contact.$invalid,
 										'has-success' : !(userForm.contact.$invalid),
 										'has-feedback' : userForm.contact.$invalid}">
-                        </div>
-                        <i class="form-control-feedback"
-                           ng-class="{ 'glyphicon glyphicon-remove' : userForm.contact.$invalid,
+                    </div>
+                    <i class="form-control-feedback"
+                       ng-class="{ 'glyphicon glyphicon-remove' : userForm.contact.$invalid,
 										'glyphicon glyphicon-ok' : !(userForm.contact.$invalid),
 										'has-feedback' : userForm.contact.$valid}"
-                           for="contact">
-                        </i>
-                        <div ng-if="userForm.contact.$invalid"
-                             class="help-block"
-                             for="contact">Contact Number is mandatory
-                        </div>
-            </li>
-            <li><button style="background:#006FD7; float:left;" class="buttons back-btn">Back</button></li>
-            <li><button style="background:#006FD7; float:right; display:none;" class="buttons submit-button" type="submit">Register</button></li>
-        </ul>
-            </div>
+                       for="contact">
+                    </i>
+                    <div ng-if="userForm.contact.$invalid"
+                         class="help-block"
+                         for="contact">Contact Number is mandatory
+                    </div>
+                </li>
+                <li><button style="background:#006FD7; float:left;" class="buttons back-btn">Back</button></li>
+                <li><button style="background:#006FD7; float:right; display:none;" class="buttons submit-button" type="submit">Register</button></li>
+            </ul>
+        </div>
         <label style="color:red; padding-left: 10px; font-size: 13px;" ng-show="userForm.$invalid">*  Please correct the errors to complete registration</label>
     </form>
 </div>
