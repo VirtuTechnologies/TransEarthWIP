@@ -2,7 +2,7 @@
 	<div class="mypostpane pagepane">
 		<div class="div-header">
 			<img class="pane-icon" src="images/posts.png" alt="" />
-			<h4>My Posts <span>(22)</span></h4>
+			<h4>My Posts <span>({{myTruckPostList.totalServerItems}})</span></h4>
 			<input type="textbox" class="searchbox" name="mytrucksearch" Value="" placeholder="Search" />
 			<button><img src="images/search-btn.png" alt="Search" /></button>
 		</div>
@@ -13,9 +13,9 @@
 				<li class="runtime-details">{{post.source}} - {{post.destination}}</li>
 				<li class="runtime-details">{{post.availableDateDisplay}}</li>
 				<li class="runtime-options">
-					<button><img class="edit-icon" src="images/add.png" alt="" />Add</button>
-					<button><img class="edit-icon" src="images/edit.png" alt="" />Edit</button>
-					<button><img class="edit-icon" src="images/delete.png" alt="" />Delete</button>
+					<!-- button><img class="edit-icon" src="images/add.png" alt="" />Add</button -->
+					<button><img class="edit-icon" src="images/edit.png" alt="" ng-click="editTruckPost(post.truck_id, post.post_id, post.availableDate)"/>Edit</button>
+					<button><img class="edit-icon" src="images/delete.png" alt="" ng-click="removeTruckPost(post.truck_id, post.post_id, post.regNo, post.capacity, post.availableDate)"/>Delete</button>
 				</li>
 			</ul>
 		</div>

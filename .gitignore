@@ -5,3 +5,7 @@
 app/views/index.ejs
 *.db
 *.db
+app/views/manage_truck.ejs
+*.ejs
+app/views/manage_truck.ejs
+app/views/index.ejs
