@@ -93,6 +93,9 @@ exports.getTruckPostSummary = function(req,res){
                     //year: { $year: "$posts.truck_post.availability.date" },
                     //month: { $month: "$posts.truck_post.availability.date" },
                     //date: { $dayOfMonth: "$posts.truck_post.availability.date" },
+                    _id: 0,
+                    truck_id: "$_id",
+                    post_id: "$posts._id",
                     source: "$posts.truck_post.availability.pickup_location",
                     destination: "$posts.truck_post.availability.delivery_location",
                     load : "$posts.truck_post.maximum_load.quantity",
@@ -118,6 +121,8 @@ exports.getTruckPostSummary = function(req,res){
             for(var i=0;i<data.length;i++){
                 var item = data[i];
                 truckPostList.push({
+                    truck_id: item.truck_id,
+                    post_id: item.post_id,
                     source : item.source,
                     destination : item.destination,
                     capacity : item.load + " " + item.unit,
@@ -271,7 +276,7 @@ exports.searchTruckPost = function(req,res){
                 res.json(500, jsonResponse);
             }
         }
-        if(typeof filters[4] != "undefined" && filters[4] != null) {
+        if(typeof filters[4] != "undefined" && filters[4] != null && filters[4] != '') {
             var truckType = filters[4];
             searchParams["truck_details.type"] = truckType;
         }
@@ -1095,6 +1100,45 @@ exports.getTruckPostById = function(req, res){
     }
 };
 
+exports.getTruckPostDetailById = function(req, res){
+
+    console.log("Inside getTruckPostDetailById");
+    var truckId = req.body.truckId;
+    var postId = req.body.postId;
+
+    if(typeof truckId == "undefined" || truckId == null){
+        return res.json(500, {"statusMsg" : "Cannot update truck with Id undefined"});
+    }else{
+        console.log("Inside getTruckPostDetailById - truck ID:"+truckId);
+        console.log("Inside getTruckPostDetailById - post ID :"+postId);
+        Truck.aggregate([
+            {
+                $match: {
+                    "_id": ObjectId.fromString(truckId)
+                }
+            },
+            {
+                $unwind: "$posts"
+            },
+            {
+                $match : {
+                    "posts._id" : ObjectId.fromString(postId)
+                }
+            }
+        ], subGetTruckPostDetailById);
+    }
+
+    function subGetTruckPostDetailById(err, data){
+        console.log("Inside subGetTruckPostDetailById:"+data+" Error: "+err);
+        if(err){
+            return res.json(500, {"statusMsg" : "Cannot find truck with Id :"+JSON.stringify(err)});
+        }else{
+            console.log("Truck Post found:"+JSON.stringify(data));
+            return res.json(200, data);
+        }
+    }
+};
+
 exports.editTruckPost = function(req, res){
 
     console.log("Edit Truck started for "+JSON.stringify(req.session.user_profile));
@@ -1157,7 +1201,7 @@ exports.editTruckPost = function(req, res){
         var truck_post = {
             availability : {
                 schedule : post.schedule.frequency,
-                date : (typeof post.pickup.date != "undefined" && post.pickup.date != null) ? post.pickup.date : post.pickup.endDate,
+                date : post.pickup.endDate,
                 start_date : post.pickup.startDate,
                 end_date : post.pickup.endDate,
                 pickup_location : post.source.place,

@@ -1,11 +1,11 @@
 //ng-grid Truck List
 function truckOwnerCtrl($scope, $http, $location, UserRequest, TruckRequest) {
-    console.log('Inside truckOwnerCtrl');
+    //console.log('Inside truckOwnerCtrl');
 
     clearAlert("truck_home_alert");
     TruckRequest.setSharedTruck(null);
     if(TruckRequest.isSharedTruckProcessed()){
-        console.log("Truck processed");
+        //console.log("Truck processed");
         TruckRequest.setSharedTruckProcessed(false);
         $scope.myTruckList.messageAvailable = true;
         succesAlert("Truck saved successfully", 'truck_home_alert');
@@ -18,8 +18,10 @@ function truckOwnerCtrl($scope, $http, $location, UserRequest, TruckRequest) {
 
     $scope.truckOwnerPage.showAlert = false;
 
+    $scope.truckOwnerPage.refresh = null;
+
     /*$scope.$watch('truckOwnerPage.showAlert', function (newVal, oldVal) {
-        console.log('truckOwnerPage.showAlert old value = '+oldVal+" and new value = "+newVal);
+        //console.log('truckOwnerPage.showAlert old value = '+oldVal+" and new value = "+newVal);
     }, true);*/
 
     $scope.myTruckList = {};
@@ -31,7 +33,7 @@ function truckOwnerCtrl($scope, $http, $location, UserRequest, TruckRequest) {
         managePost : "manage_post"
     };
     /*$scope.$watch('truckOwnerPage.showPostList', function (newVal, oldVal) {
-        console.log('truckOwnerPage.showPostList changed from '+oldVal+" to "+newVal);
+        //console.log('truckOwnerPage.showPostList changed from '+oldVal+" to "+newVal);
         //if (!oldVal && newVal) {
             $scope.template.truckPosts = '';
             $scope.template.truckPosts = 'truck_owner_posts';

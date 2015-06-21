@@ -18,8 +18,8 @@
 			</ul>
 		</div>
 		<ul class="button-opt">
-			<li class="find-more-btn"><input class="button-option" type="submit" name="findmore" ng-click="searchTrucks()" value="FIND MORE"></li>
-			<li class="view-more-btn"><input class="button-option" type="submit" name="viewthis" value="VIEW THIS TRUCK"></li>
+			<li class="find-more-btn"><input class="button-option" name="findmore" ng-click="searchTrucks()" value="FIND MORE"></li>
+			<li class="view-more-btn"><input class="button-option" name="viewthis" ng-click="getTruckPostDetailById(truckPosted.truck_id, truckPosted.post_id)" value="VIEW THIS POST"></li>
 		</ul>
 	</div>
 	<div class="loaddetails">
@@ -44,8 +44,8 @@
 			</ul>
 		</div>
 		<ul class="button-opt">
-			<li class="find-more-btn"><input class="button-option" type="submit" name="findmore" ng-click="searchLoad()" value="FIND MORE"></li>
-			<li class="view-more-btn"><input class="button-option" type="submit" name="viewthis" value="VIEW THIS LOAD"></li>
+			<li class="find-more-btn"><input class="button-option" name="findmore" ng-click="searchLoad()" value="FIND MORE"></li>
+			<li class="view-more-btn"><input class="button-option" name="viewthis" ng-click="viewLoad(loadPosted.load_id)" value="VIEW THIS LOAD"></li>
 		</ul>
 	</div>
 </div>

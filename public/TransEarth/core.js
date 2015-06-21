@@ -12,6 +12,28 @@ var TransEarthApp = angular.module('TransEarthApp',
         'ngTable'
     ]
 );
+
+TransEarthApp.factory('redirectInterceptor', function($q,$location,$window){
+    return  {
+        'response':function(response){
+            //console.log("Response Interceptor!!"+JSON.stringify(response));
+            if (typeof response.data === 'string' && response.data.indexOf("LOGIN")>-1) {
+                console.log("LOGIN Redirect!!");
+                //console.log(response.data);
+                $window.location.href = "/";
+                return $q.reject(response);
+            }else{
+                return response;
+            }
+        }
+    }
+
+});
+
+TransEarthApp.config(['$httpProvider',function($httpProvider) {
+    $httpProvider.interceptors.push('redirectInterceptor');
+}]);
+
 TransEarthApp.directive('customDatepicker',['$compile', function($compile){
     return {
         replace:true,
@@ -325,12 +347,12 @@ TransEarthApp.directive('formattedAddress', function(){
         require: 'ngModel',
         link: function(scope, element, attrs, controller) {
             controller.$parsers.push(function(value) {
-                //console.log("value: "+value);
+                console.log("value: "+value);
                 if(typeof value != "undefined"
                         && value != null
                         && typeof value["formatted-address"] != "undefined"
                         && value["formatted-address"] != null){
-                    //console.log("formatted value: "+value["formatted-address"]);
+                    console.log("formatted value: "+value["formatted-address"]);
                     return value["formatted-address"];
                 }else{
                     return ;
@@ -458,7 +480,7 @@ TransEarthApp.directive('googlePlacesBootStrap', ["$compile", function($compile)
                 var place = autocomplete.getPlace();
                 //$scope.city = {};
                 if(typeof place != "undefined" && place != null && typeof place.address_components != "undefined" && place.address_components != null){
-                    //console.log("place: "+JSON.stringify(place));
+                    console.log("place: "+JSON.stringify(place));
                     var result = getObjects(place.address_components, 'types', 'locality', null, null);
                     //console.log("result: "+JSON.stringify(result));
                     //$scope.city.place = place.address_components;
@@ -478,7 +500,7 @@ TransEarthApp.directive('googlePlacesBootStrap', ["$compile", function($compile)
                         //$scope.city.isSelected = true;
                     }
                 }else{
-                    //console.log("place not defined");
+                    console.log("place not defined");
                     if(requiredAttr){
                         $scope.location.isSelected = false;
                     }else{
@@ -486,7 +508,7 @@ TransEarthApp.directive('googlePlacesBootStrap', ["$compile", function($compile)
                     }
                 }
                 //console.log(JSON.stringify(place));
-                //console.log(JSON.stringify($scope.location));
+                console.log(JSON.stringify($scope.location));
                 $scope.$apply();
             });
         }
@@ -510,7 +532,7 @@ TransEarthApp.directive('googlePlaces', ["$compile", function($compile){
         //template: '<input id="hash" name="hash" type="text" class="input-block-level"/>',
         //template: '<div><input id="hash" name="hash" type="text" class="input-block-level"/>{{tagId}}</div>',
         link: function($scope, elm, attrs, ctrls){
-            //console.log(attrs);
+            console.log(attrs);
             var tagId = attrs.tagid;
             var tagName = attrs.tagname;
             var requiredAttr = attrs.required;
@@ -597,7 +619,7 @@ TransEarthApp.directive('googlePlaces', ["$compile", function($compile){
                 var place = autocomplete.getPlace();
                 //$scope.city = {};
                 if(typeof place != "undefined" && place != null && typeof place.address_components != "undefined" && place.address_components != null){
-                    //.log("place: "+JSON.stringify(place));
+                    console.log("place: "+JSON.stringify(place));
                     var result = getObjects(place.address_components, 'types', 'locality', null, null);
                     //console.log("result: "+JSON.stringify(result));
                     //$scope.city.place = place.address_components;
@@ -617,7 +639,7 @@ TransEarthApp.directive('googlePlaces', ["$compile", function($compile){
                         //$scope.city.isSelected = true;
                     }
                 }else{
-                    //console.log("place not defined");
+                    console.log("place not defined");
                     if(requiredAttr){
                         $scope.location.isSelected = false;
                     }else{
@@ -625,7 +647,7 @@ TransEarthApp.directive('googlePlaces', ["$compile", function($compile){
                     }
                 }
                 //console.log(JSON.stringify(place));
-                //console.log(JSON.stringify($scope.location));
+                console.log(JSON.stringify($scope.location));
                 $scope.$apply();
             });
         }
@@ -636,7 +658,7 @@ TransEarthApp.directive('myFocus', function () {
     return {
         restrict: 'A',
         link: function postLink(scope, element, attrs) {
-            //console.log("myFocus directive:"+attrs);
+            console.log("myFocus directive:"+attrs);
             if (attrs.myFocus == "") {
                 attrs.myFocus = "focusElement";
             }
@@ -852,12 +874,13 @@ function getObjects(obj, key, val, parentKey, parentObj) {
 }
 
 //Head controller to load page title
-function coreController($scope, $rootScope, $http, $location, UserRequest, TruckRequest) {
+function coreController($scope, $rootScope, $http, $location, $modal, UserRequest, TruckRequest) {
 //function coreController($scope, $route, $http, $location, UserRequest) {
     //alert('Inside coreController');
     $scope.siteTitle = 'Transport Earth';
     $scope.page = {};
     $scope.core = {};
+    $scope.core.menus = [];
     $scope.core.pageHeaders = {
         "home" : "Home",
         "login" : "Login",
@@ -893,9 +916,118 @@ function coreController($scope, $rootScope, $http, $location, UserRequest, Truck
         $scope.core.loggedIn = false;
         $scope.core.expired = true;
     } ;
+    $scope.core.menuInitLoad = function(){
+        $scope.core.menus = [];
+        $scope.core.menus.push({
+            isActive : !$scope.core.loggedIn,
+            home : false,
+            display_name : "Login",
+            func : $scope.loginClicked,
+            dropList : false
+        });
+        $scope.core.menus.push({
+            isActive : !$scope.core.loggedIn,
+            home : false,
+            display_name : "Search Load",
+            func : $scope.searchLoad,
+            dropList : false
+        });
+        $scope.core.menus.push({
+            isActive : !$scope.core.loggedIn,
+            home : false,
+            display_name : "Search Truck",
+            func : $scope.searchTrucks,
+            dropList : false
+        });
+        $scope.core.menus.push({
+            isActive : !$scope.core.loggedIn||$scope.core.loggedIn,
+            home : true,
+            display_name : "Home",
+            func : $scope.siteHome,
+            dropList : false
+        });
+    };
+    $scope.core.menuRefresh = function(){
+        $scope.core.menus = [];
+        if(!$scope.core.loggedIn){
+            $scope.core.menus.push({
+                isActive : !$scope.core.loggedIn,
+                home : false,
+                display_name : "Login",
+                func : $scope.loginClicked,
+                dropList : false
+            });
+        }else{
+            $scope.core.menus.push({
+                isActive : $scope.core.loggedIn,
+                home : false,
+                display_name : $scope.user.display_name,
+                //func : $scope.loginClicked,
+                dropList : true
+            });
+        }
+        $scope.core.menus.push({
+            isActive : !$scope.core.loggedIn||$scope.core.loggedIn,
+            home : false,
+            display_name : "Search Truck",
+            func : $scope.searchTrucks,
+            dropList : false
+        });
+        $scope.core.menus.push({
+            isActive : !$scope.core.loggedIn||$scope.core.loggedIn,
+            home : false,
+            display_name : "Search Load",
+            func : $scope.searchLoad,
+            dropList : false
+        });
+        if($scope.core.load_owner||$scope.core.agent||$scope.core.contractor){
+            $scope.core.menus.push({
+                isActive : $scope.core.loggedIn,
+                home : false,
+                display_name : "Add Load",
+                func : $scope.addLoad,
+                dropList : false
+            });
+        }
+        if($scope.core.truck_owner||$scope.core.agent||$scope.core.contractor){
+            $scope.core.menus.push({
+                isActive : $scope.core.loggedIn,
+                home : false,
+                display_name : "Add Truck",
+                func : $scope.gotoAddTrucksPage,
+                dropList : false
+            });
+        }
+        if($scope.core.load_owner||$scope.core.agent||$scope.core.contractor){
+            $scope.core.menus.push({
+                isActive : $scope.core.loggedIn,
+                home : false,
+                display_name : "My Loads",
+                func : $scope.loadMyLoads,
+                dropList : false
+            });
+        }
+        if($scope.core.truck_owner||$scope.core.agent||$scope.core.contractor){
+            $scope.core.menus.push({
+                isActive : $scope.core.loggedIn,
+                home : false,
+                display_name : "My Trucks",
+                func : $scope.loadMyTrucks,
+                dropList : false
+            });
+        }
+        $scope.core.menus.push({
+            isActive : !$scope.core.loggedIn||$scope.core.loggedIn,
+            home : true,
+            display_name : "Home",
+            func : $scope.siteHome,
+            dropList : false
+        });
+    };
 
     $scope.$watch('local', function(){
         //console.log("Core ng-init local: "+$scope.local);
+        $scope.loginRedirect = false;
         $scope.ifSessionInvalid = false;
         if(typeof $scope.local != "undefined" && $scope.local != null){
             $scope.session = JSON.parse($scope.local);
@@ -905,6 +1037,8 @@ function coreController($scope, $rootScope, $http, $location, UserRequest, Truck
                 $scope.serverAuth.messageAvailable = true;
                 $scope.serverAuth.message = $scope.session.loginError;
                 //console.log("Set $scope.serverAuth: "+JSON.stringify($scope.serverAuth));
+                $scope.core.menuInitLoad();
+                $scope.loginClicked();
             }
             if(typeof $scope.session.expired != "undefined" && $scope.session.expired != null && !$scope.local.expired){
                 //console.log("Session not valid: "+JSON.stringify($scope.session));
@@ -913,88 +1047,113 @@ function coreController($scope, $rootScope, $http, $location, UserRequest, Truck
                 //TruckPostRequest.resetSharedTruckPost();
                 $scope.ifSessionInvalid = true;
                 $scope.resetCore();
+                $scope.core.menuInitLoad();
                 $scope.siteHome();
                 $scope.$apply();
                 //window.location.reload(true);
             }
+            if(typeof $scope.session.validity != "undefined" && $scope.session.validity != null && !$scope.session.validity){
+                //console.log("Redirecting to Login: "+JSON.stringify($scope.session));
+                $scope.session.validity = null;
+                TruckRequest.resetSharedTruck();
+                UserRequest.resetUserProfile();
+                //TruckPostRequest.resetSharedTruckPost();
+                $scope.resetCore();
+                $scope.loginRedirect = true;
+                $scope.core.menuInitLoad();
+                $scope.loginClicked();
+                //$scope.$apply();
+                //window.location.reload(true);
+            }
+        }
+        //console.log("$scope.loginRedirect: "+$scope.loginRedirect);
+        //console.log("$scope.serverAuth.authFailed: "+$scope.serverAuth.authFailed);
+        if(!$scope.loginRedirect && !$scope.serverAuth.authFailed){
+            $scope.serverAuth.authFailed = null;
+            $scope.loginRedirect = false;
+            $http.get('/TransEarth/getLoggedInUserProfile')
+                .success(function(data){
+                    //console.log("Get User Profile: "+JSON.stringify(data));
+                    $scope.core.truck_owner = false;
+                    $scope.core.load_owner = false;
+                    $scope.core.agent = false;
+                    $scope.core.contractor = false;
+                    if(typeof data.user != 'undefined'){
+                        $scope.user = data.user;
+                        $scope.core.loggedIn = true;
+                        if(typeof $scope.user.user_type != "undefined"){
+
+                            if($scope.user.user_type == "truck_owner"){
+                                $scope.core.truck_owner = true;
+                            }else if($scope.user.user_type == "load_owner"){
+                                $scope.core.load_owner = true;
+                            }else if($scope.user.user_type == "agent"){
+                                $scope.core.agent = true;
+                            }else if($scope.user.user_type == "contractor"){
+                                $scope.core.contractor = true;
+                            }
+                            $scope.core.menuRefresh();
+                            /*else if(Array.isArray($scope.user.user_type)){
+                             //console.log("Array User type: "+$scope.user.user_type);
+                             for(var user_type in $scope.user.user_type){
+                             //console.log("User type item: "+$scope.user.user_type[user_type]);
+                             if($scope.user.user_type[user_type] == "truck_owner"){
+                             $scope.core.truck_owner = true;
+                             }
+                             if($scope.user.user_type[user_type] == "load_owner"){
+                             $scope.core.load_owner = true;
+                             }
+                             }
+                             }*/
+                            //console.log("$scope.core.truck_owner: "+$scope.core.truck_owner);
+                            //console.log("$scope.core.load_owner: "+$scope.core.load_owner);
+                            //console.log("$scope.core.agent: "+$scope.core.agent);
+                            //console.log("$scope.core.contractor: "+$scope.core.contractor);
+                        }
+                        //console.log("Core Profile: "+JSON.stringify($scope.core));
+                    }else{
+                        $scope.core.menuInitLoad();
+                        $scope.core.expired = true;
+                    }
+                    //console.log("$scope.serverAuth: "+JSON.stringify($scope.serverAuth));
+                    /*if($scope.core.truck_owner){
+                     $scope.page.template = "/TransEarth/truck_owner_home";
+                     $scope.page.scope = "Truck Owner Home";
+                     }else if($scope.core.load_owner){
+                     $scope.page.template = "/TransEarth/load_owner_home";
+                     $scope.page.scope = "Load Owner Home";
+                     }else if($scope.serverAuth.authFailed){
+                     $scope.page.template = ''+"/TransEarth/login";
+                     $scope.page.scope = "Login";
+                     }else{
+                     $scope.page.template = "/TransEarth/site_home";
+                     $scope.page.scope = "Site Base Home";
+                     }*/
+                    if($scope.serverAuth.authFailed || $scope.session.validity){
+                        //$scope.page.template = ''+"/TransEarth/login";
+                        //$scope.page.scope = "Login";
+                        //console.log("Login redirection");
+                        $scope.loginClicked();
+                    }else{
+                        $scope.siteHome();
+                    }
+
+                }).error(function(err){
+                    alert("Error accessing user profile:"+err);
+                });
         }
     });
 
-    $http.get('/TransEarth/getLoggedInUserProfile')
-        .success(function(data){
-            //console.log("Get User Profile: "+JSON.stringify(data));
-            $scope.core.truck_owner = false;
-            $scope.core.load_owner = false;
-            $scope.core.agent = false;
-            $scope.core.contractor = false;
-            if(typeof data.user != 'undefined'){
-                $scope.user = data.user;
-                $scope.core.loggedIn = true;
-                if(typeof $scope.user.user_type != "undefined"){
-                    if($scope.user.user_type == "truck_owner"){
-                        $scope.core.truck_owner = true;
-                    }else if($scope.user.user_type == "load_owner"){
-                        $scope.core.load_owner = true;
-                    }else if($scope.user.user_type == "agent"){
-                        $scope.core.agent = true;
-                    }else if($scope.user.user_type == "contractor"){
-                        $scope.core.contractor = true;
-                    }
-                    /*else if(Array.isArray($scope.user.user_type)){
-                        console.log("Array User type: "+$scope.user.user_type);
-                        for(var user_type in $scope.user.user_type){
-                            console.log("User type item: "+$scope.user.user_type[user_type]);
-                            if($scope.user.user_type[user_type] == "truck_owner"){
-                                $scope.core.truck_owner = true;
-                            }
-                            if($scope.user.user_type[user_type] == "load_owner"){
-                                $scope.core.load_owner = true;
-                            }
-                        }
-                    }*/
-                    //console.log("$scope.core.truck_owner: "+$scope.core.truck_owner);
-                    //console.log("$scope.core.load_owner: "+$scope.core.load_owner);
-                    //console.log("$scope.core.agent: "+$scope.core.agent);
-                    //console.log("$scope.core.contractor: "+$scope.core.contractor);
-                }
-                //console.log("Core Profile: "+JSON.stringify($scope.core));
-            }else{
-                $scope.core.expired = true;
-            }
-            //console.log("$scope.serverAuth: "+JSON.stringify($scope.serverAuth));
-            /*if($scope.core.truck_owner){
-                $scope.page.template = "/TransEarth/truck_owner_home";
-                $scope.page.scope = "Truck Owner Home";
-            }else if($scope.core.load_owner){
-                $scope.page.template = "/TransEarth/load_owner_home";
-                $scope.page.scope = "Load Owner Home";
-            }else if($scope.serverAuth.authFailed){
-                $scope.page.template = ''+"/TransEarth/login";
-                $scope.page.scope = "Login";
-            }else{
-                $scope.page.template = "/TransEarth/site_home";
-                $scope.page.scope = "Site Base Home";
-            }*/
-            if($scope.serverAuth.authFailed){
-                $scope.page.template = ''+"/TransEarth/login";
-                $scope.page.scope = "Login";
-            }else{
-                $scope.siteHome();
-            }
-
-        }).error(function(err){
-            alert("Error accessing user profile:"+err);
-        });
     //console.log("User: "+$scope.user);
 
     //console.log("User Details: "+$scope.user);
     /*$scope.$watch('pageTemplate', function(pageTemplate) {
-        console.log("pageTemplate: "+JSON.stringify(pageTemplate));
+        //console.log("pageTemplate: "+JSON.stringify(pageTemplate));
     }, true);*/
 
     /*$http.get('/TransEarth/getAuthMsg')
         .success(function(data){
-            console.log("Get Auth Message: "+JSON.stringify(data));
+            //console.log("Get Auth Message: "+JSON.stringify(data));
             $scope.login.messageAvailable = false;
             if(typeof data.initial != 'undefined'){
                 $scope.login.messageAvailable = false;
@@ -1060,11 +1219,6 @@ function coreController($scope, $rootScope, $http, $location, UserRequest, Truck
         $scope.page.scope = "Add Truck";
         //console.log("Search Truck clicked : "+$scope.pageTemplate);
     };
-    $scope.gotoAddTrucksPage = function(){
-        $scope.page.template = "/TransEarth/add_trucks";
-        $scope.page.scope = "Add Multiple Trucks";
-    };
-
     $scope.loadMyLoads = function(){
         //console.log("My Loads clicked");
         $scope.page.template = ''+"/TransEarth/load_owner_home";
@@ -1077,6 +1231,404 @@ function coreController($scope, $rootScope, $http, $location, UserRequest, Truck
         $scope.page.scope = "Add Load";
         //console.log("Search Truck clicked : "+$scope.pageTemplate);
     };
+
+    $scope.gotoAddTrucksPage = function(){
+        //$scope.page.template = "/TransEarth/add_trucks";
+        //$scope.page.scope = "Add Multiple Trucks";
+        $scope.newTrucks = {};
+        $scope.newTrucks.open = function (size) {
+            var modalInstance = $modal.open({
+                templateUrl: 'addTrucks.html',
+                controller: AddTrucksCtrl,
+                //windowClass: 'xx-dialog',
+                size: size,
+                resolve: {
+                    result : function () {
+                        //console.log("Modal $scope.newTrucks.result: "+JSON.stringify($scope.newTrucks.result));
+                        return $scope.newTrucks.result;
+                    }
+                }
+            });
+            modalInstance.result.then(function(result){
+                //on ok button press
+                if(result){
+                    $scope.loadMyTrucks();
+                }
+                //console.log("On ok button press");
+                //$scope.inActivateTruck(truckToRemove);
+            },function(){
+                //on cancel button press
+                //console.log("Modal Closed");
+                //$scope.getPagedDataAsync($scope.myTruckList.pagingOptions.pageSize, $scope.myTruckList.pagingOptions.currentPage);
+            });
+        };
+
+        var AddTrucksCtrl = function ($scope, $modalInstance, $http, $timeout, UserRequest, result) {
+
+            $scope.newTrucksModal = {};
+            $scope.newTrucksModal.result = {};
+
+            $scope.init = function(){
+                $scope.getTruckTypes();
+                $scope.getTruckMakes();
+            };
+            $scope.truckTypeList = [];
+            $scope.getTruckTypes = function(){
+                $http.get("/TransEarth/getTruckTypes")
+                    .success(function(truckTypes) {
+                        //console.log("Truck Types looked up:"+JSON.stringify(truckTypes));
+                        $scope.truckTypeList = truckTypes;
+                        //$scope.truck.details.type = "";
+                    }).error(function(err) {
+                        //console.log("truckType Lookup failed:"+JSON.stringify(err));
+                    });
+            };
+            //$scope.getTruckTypes();
+            $scope.makeList = [];
+            $scope.getTruckMakes = function(){
+                $http.get("/TransEarth/getTruckMakes")
+                    .success(function(truckMakes) {
+                        //console.log("Truck Makes looked up:"+truckMakes);
+                        $scope.makeList = truckMakes;
+                        //$scope.truck.details.make = "";
+                    }).error(function(err) {
+                        //console.log("Make Lookup failed:"+JSON.stringify(err));
+                    });
+            };
+
+            $scope.counter = 0;
+            $scope.newTrucksModal.trucks = [];
+            $scope.stopAdd = false;
+            $scope.addTruckRow = function(){
+                $scope.counter++;
+                if($scope.counter>9){
+                    $scope.stopAdd = true;
+                }
+                $scope.newTrucksModal.trucks.push(
+                    {
+                        "index" : $scope.counter,
+                        "$edit" : true,
+                        "details" : {
+                            "type" : "",
+                            "make" : "",
+                            "model" : "",
+                            "regno" : "",
+                            "load" : ""
+                        },
+                        haveMessage : false
+                    }
+                );
+
+                $scope.isError = true;
+                //$scope.tableParams.reload();
+            };
+
+            $scope.checkErrors = function(truck){
+
+                if(typeof truck != "undefined" && truck != null && typeof truck.details != "undefined" && truck.details != null){
+                    if(typeof truck.details.type != "undefined" && truck.details.type != null && truck.details.type != ""
+                        && typeof truck.details.make != "undefined" && truck.details.make != null && truck.details.make != ""
+                        && typeof truck.details.model != "undefined" && truck.details.model != null && truck.details.model != ""
+                        && typeof truck.details.regno != "undefined" && truck.details.regno != null && truck.details.regno != ""
+                        && typeof truck.details.load != "undefined" && truck.details.load != null && truck.details.load != ""){
+                        $scope.isError = false;
+                        return false;
+                    }else{
+                        return true;
+                    }
+                }else{
+                    return true;
+                }
+            };
+
+            $scope.disableSubmit = function(trucks){
+
+                var result = true;
+                for(var i in trucks){
+                    var truck = trucks[i];
+                    if(typeof truck != "undefined" && truck != null && typeof truck.details != "undefined" && truck.details != null){
+                        if(typeof truck.details.type != "undefined" && truck.details.type != null && truck.details.type != ""
+                            && typeof truck.details.make != "undefined" && truck.details.make != null && truck.details.make != ""
+                            && typeof truck.details.model != "undefined" && truck.details.model != null && truck.details.model != ""
+                            && typeof truck.details.regno != "undefined" && truck.details.regno != null && truck.details.regno != ""
+                            && typeof truck.details.load != "undefined" && truck.details.load != null && truck.details.load != ""){
+                            $scope.isError = false;
+                            result = false;
+                        }else{
+                            return true;
+                        }
+                    }else{
+                        return true;
+                    }
+                }
+                return result;
+            };
+
+            $scope.removeTruck = function(index){
+                $scope.newTrucksModal.trucks.splice(index, 1);
+                $scope.counter--;
+                if($scope.counter>9){
+                    $scope.stopAdd = true;
+                }else{
+                    $scope.stopAdd = false;
+                }
+                //$scope.tableParams.reload();
+            };
+
+            $scope.showMessages = function(list){
+                //console.log("Show Messages check: "+JSON.stringify(list));
+                for(var ind in list){
+                    var item = list[ind];
+                    //console.log("Show Messages check item: "+JSON.stringify(item));
+                    if(typeof list[ind]["haveMessage"] == "undefined" || list[ind]["haveMessage"] == null || !list[ind]["haveMessage"]){
+                        return false;
+                    }
+                }
+                return true;
+            };
+
+            $scope.addTrucks = function(trucks){
+                //console.log("Adding trucks");
+                if(typeof trucks != "undefined" && trucks != null && Array.isArray(trucks) && trucks.length > 0){
+                    //console.log(JSON.stringify(trucks));
+                    for(var i in trucks){
+                        //var truck = trucks[i];
+                        $scope.saveTrucks(trucks, i);
+                        //console.log(JSON.stringify(truck));
+                    }
+                }
+            };
+
+            $scope.closeOut = false;
+            $scope.saveTrucks = function(trucks, index){
+
+                $scope.closeOut = true;
+                if(typeof trucks[index] != "undefined" && trucks[index] != null && typeof trucks[index].details != "undefined" && trucks[index].details != null){
+                    if(typeof trucks[index].details.type != "undefined" && trucks[index].details.type != null && trucks[index].details.type != ""
+                        && typeof trucks[index].details.make != "undefined" && trucks[index].details.make != null && trucks[index].details.make != ""
+                        && typeof trucks[index].details.model != "undefined" && trucks[index].details.model != null && trucks[index].details.model != ""
+                        && typeof trucks[index].details.regno != "undefined" && trucks[index].details.regno != null && trucks[index].details.regno != ""
+                        && typeof trucks[index].details.load != "undefined" && trucks[index].details.load != null && trucks[index].details.load != ""){
+                        //console.log("Saving truck: "+JSON.stringify(trucks[index]));
+                        $http.post("/TransEarth/addTruck", {truck : trucks[index]})
+                            .success(function(result) {
+                                //console.log("Truck saved successfully: "+JSON.stringify(trucks[index]));
+                                trucks[index].haveMessage = true;
+                                trucks[index].hasError = false;
+                                trucks[index].message = "Saved";
+                                //$scope.data[i] = truck;
+                                $scope.newTrucksModal.trucks.splice($scope.newTrucksModal.trucks.indexOf(trucks[index].index),1, trucks[index]);
+                                //console.log("Spliced data with truck index: "+trucks[index].index+" replaced "+JSON.stringify($scope.newTrucksModal.trucks));
+                                if($scope.showMessages($scope.newTrucksModal.trucks)){
+                                    //console.log("Trucks with message "+index+" :"+JSON.stringify($scope.newTrucksModal.trucks));
+                                    //$scope.tableParams.reload();
+                                }
+                            }).error(function(err) {
+                                //console.log("Truck saved failed:"+err);
+                                trucks[index].haveMessage = true;
+                                trucks[index].hasError = true;
+                                trucks[index].message = JSON.stringify(err);
+                                //$scope.data[i] = truck;
+                                $scope.newTrucksModal.trucks.splice($scope.data.indexOf(trucks[index].index),1, trucks[index]);
+                                if($scope.showMessages($scope.newTrucksModal.trucks)){
+                                    //console.log("Trucks with Save Crashed "+index+" :"+JSON.stringify($scope.newTrucksModal.trucks));
+                                    //$scope.tableParams.reload();
+                                }
+                            });
+                    }else{
+                        trucks[index].haveMessage = true;
+                        trucks[index].message = "Something Crashed";
+                        //$scope.data[i] = truck;
+                        $scope.newTrucksModal.trucks.splice($scope.newTrucksModal.trucks.indexOf(trucks[index].index),1, trucks[index]);
+                        if($scope.showMessages($scope.newTrucksModal.trucks)){
+                            //console.log("Trucks with Something Crashed "+index+" :"+JSON.stringify($scope.newTrucksModal.trucks));
+                            //$scope.tableParams.reload();
+                        }
+                    }
+                }else{
+                    truck.haveMessage = true;
+                    truck.message = "Don't Crash";
+                    //$scope.data[i] = truck;
+                    $scope.newTrucksModal.trucks.splice($scope.newTrucksModal.trucks.indexOf(truck.index),1, truck);
+                    if($scope.showMessages($scope.newTrucksModal.trucks)){
+                        //console.log("Trucks with Don't Crash "+i+" :"+JSON.stringify($scope.newTrucksModal.trucks));
+                        //$scope.tableParams.reload();
+                    }
+                }
+
+            };
+
+            $scope.goToHome = function(){
+                $scope.newTrucksModal.result = true;
+                $scope.ok();
+            };
+            $scope.ok = function () {
+                $modalInstance.close($scope.newTrucksModal.result);
+            };
+
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        };
+
+        $scope.newTrucks.open('lg');
+    };
+
+    $scope.truckPostDetails = {};
+    $scope.truckPostDetails.post = {};
+    $scope.truckPostDetails.open = function (size) {
+        var modalInstance = $modal.open({
+            templateUrl: 'myTruckPostDetailModal.html',
+            controller: TruckPostDetailModalCtrl,
+            //windowClass: 'xx-dialog',
+            size: size,
+            resolve: {
+                post: function () {
+                    //console.log("Modal $scope.truckPostDetails.post: "+JSON.stringify($scope.truckPostDetails.post));
+                    return $scope.truckPostDetails.post;
+                }
+            }
+        });
+        modalInstance.result.then(function(post){
+            //on ok button press
+            //console.log("On ok button press");
+            //$scope.inActivateTruck(truckToRemove);
+        },function(){
+            //on cancel button press
+            //console.log("Modal Closed");
+            //$scope.getPagedDataAsync($scope.myTruckList.pagingOptions.pageSize, $scope.myTruckList.pagingOptions.currentPage);
+        });
+    };
+
+    var TruckPostDetailModalCtrl = function ($scope, $modalInstance, post) {
+
+        $scope.truckPostModal = post;
+        if(typeof $scope.truckPostModal != "undefined"){
+            $scope.truckPostModal.owner.name = $scope.truckPostModal.owner.last_name + " ," + $scope.truckPostModal.owner.first_name;
+        }
+        $scope.showClose = false;
+        //console.log("Inside TruckPostDetailModalCtrl: truckPostModal = "+JSON.stringify($scope.truckPostModal));
+
+        $scope.ok = function () {
+            $modalInstance.close($scope.truckPostModal);
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    };
+
+    $scope.getTruckPostDetailById = function(truckId, postId){
+        //console.log("Get truck post details: "+truckId);
+
+        $http.post("/TransEarth/getTruckPostDetailById", {truckId : truckId, postId : postId})
+            .success(function(data) {
+                // succesAlert(data.statusMsg, 'eaiSaveStatus');
+                //console.log(data);
+                if(typeof data != 'undefined' && data != null && data.length > 0){
+                    //console.log(JSON.stringify(data));
+                    var post = data[0];
+                    if(typeof post.posts != "undefined" && post.posts != null
+                        && typeof post.posts.truck_post != "undefined" && post.posts.truck_post != null
+                        && typeof post.posts.truck_post.availability != "undefined" && post.posts.truck_post.availability != null
+                        && typeof post.posts.truck_post.availability.start_date != "undefined" && post.posts.truck_post.availability.start_date != null){
+                        post.posts.truck_post.availability.start_date = moment(post.posts.truck_post.availability.start_date).format("Do MMM YYYY");
+                    }
+                    if(typeof post.posts != "undefined" && post.posts != null
+                        && typeof post.posts.truck_post != "undefined" && post.posts.truck_post != null
+                        && typeof post.posts.truck_post.availability != "undefined" && post.posts.truck_post.availability != null
+                        && typeof post.posts.truck_post.availability.end_date != "undefined" && post.posts.truck_post.availability.end_date != null){
+                        post.posts.truck_post.availability.end_date = moment(post.posts.truck_post.availability.end_date).format("Do MMM YYYY");
+                    }
+                    $scope.truckPostDetails.post = post;
+                    //TruckRequest.setSharedTruck(data);
+                    //console.log("Get Shared Truck Request: "+JSON.stringify(TruckRequest.getSharedTruck()));
+                    $scope.truckPostDetails.open('sm');
+                }else{
+                    //$scope.myTruckList.messageAvailable = true;
+                    //$scope.truckOwnerPage.showAlert = true;
+                    //succesError("Truck Details Not available", 'myTrucklist_alert');
+                    alert("No Post Detail Available");
+                }
+            }).error(function(err) {
+                //$scope.myTruckList.listShow = false;
+                //$scope.myTruckList.messageAvailable = true;
+                //$scope.truckOwnerPage.showAlert = true;
+                //succesError(err.statusMsg, 'myTrucklist_alert');
+                alert("Please Login");
+            });
+    };
+
+    $scope.loadPostDetails = {};
+    $scope.loadPostDetails.post = {};
+    $scope.loadPostDetails.open = function (size) {
+        var modalInstance = $modal.open({
+            templateUrl: 'myLoadPostDetailModal.html',
+            controller: LoadPostDetailModalCtrl,
+            //windowClass: 'xx-dialog',
+            size: size,
+            resolve: {
+                post: function () {
+                    //console.log("Modal $scope.loadPostDetails.post: "+JSON.stringify($scope.loadPostDetails.post));
+                    return $scope.loadPostDetails.post;
+                }
+            }
+        });
+        modalInstance.result.then(function(truck){
+            //on ok button press
+            //console.log("On ok button press");
+            //$scope.inActivateTruck(truckToRemove);
+        },function(){
+            //on cancel button press
+            //console.log("Modal Closed");
+            //$scope.getPagedDataAsync($scope.myTruckList.pagingOptions.pageSize, $scope.myTruckList.pagingOptions.currentPage);
+        });
+    };
+
+    var LoadPostDetailModalCtrl = function ($scope, $modalInstance, post) {
+
+        $scope.loadPostModal = post;
+        /*if(typeof $scope.loadPostModal != "undefined" && typeof $scope.loadPostModal.owner != "undefined"){
+            $scope.loadPostModal.owner.name = $scope.loadPostModal.owner.last_name + " ," + $scope.loadPostModal.owner.first_name;
+        }*/
+        $scope.showClose = false;
+        //console.log("Inside LoadPostDetailModalCtrl: loadPostModal = "+JSON.stringify($scope.loadPostModal));
+
+        $scope.ok = function () {
+            $modalInstance.close($scope.loadPostModal);
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    };
+
+    $scope.viewLoad = function(loadId){
+
+        //console.log("Get load post details: "+loadId);
+        $http.post("/TransEarth/getLoadById", {loadId : loadId})
+            .success(function(data) {
+                // succesAlert(data.statusMsg, 'eaiSaveStatus');
+                if(typeof data != 'undefined' && data != null){
+                    //console.log(JSON.stringify(data));
+                    $scope.loadPostDetails.post = data;
+                    //TruckRequest.setSharedTruck(data);
+                    //console.log("Get Shared Truck Request: "+JSON.stringify(TruckRequest.getSharedTruck()));
+                    $scope.loadPostDetails.open('sm');
+                }else{
+                    //$scope.loadPostList.messageAvailable = true;
+                    //$scope.loadPostList.message = "No data available";
+                    //succesWarning("Load details not found", 'loadlist_alert');
+                    alert("No Data Available");
+                    //console.log("No data available");
+                }
+            }).error(function(err) {
+                //$scope.loadPostList.messageAvailable = true;
+                //$scope.loadPostList.message = "No data available";
+                //succesError(err.statusMsg, 'myLoadList_alert');
+                alert(err.statusMsg);
+            });
+    };
+
     //$scope.$route = $route;
 }
-

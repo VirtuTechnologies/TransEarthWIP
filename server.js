@@ -210,7 +210,11 @@ function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }else{
-        return res.redirect('/TransEarth/sessionExpired');
+        console.log("Redirect to Session Expired");
+        req.session.invalid = true;
+        return res.send('LOGIN');
+        //return res.redirect('/TransEarth');
+        //return res.redirect('/TransEarth/sessionExpired');
     }
 
     /*if (req.isAuthenticated()) {
@@ -230,6 +234,7 @@ function clearSession(req){
         //req.session.auth = null;
         req.session.user_profile = null;
         req.session.auth = null;
+        req.session.invalid = null;
     }
 }
 
@@ -292,8 +297,9 @@ app.get('/TransEarth', function (req, res) {
         local.session.loginFailed = true;
         local.session.loginError = req.session.auth.message;
     }
-    if(typeof req.session.validity != "undefined" && req.session.validity != null && !req.session.validity){
-        console.log("User Session invalid: "+req.session.validity);
+    console.log("Session invalid Index page: "+JSON.stringify(req.session.invalid));
+    if(typeof req.session.invalid != "undefined" && req.session.invalid != null && req.session.invalid){
+        console.log("User Session invalid: "+req.session.invalid);
         local.session.validity = false;
         req.session.validity = null;
     }
@@ -390,6 +396,7 @@ app.post("/TransEarth/getMyLoadList", ensureAuthenticated, LoadRoute.getMyLoadLi
 
 app.post("/TransEarth/getTruckById", ensureAuthenticated, TruckRoute.getTruckById);
 app.post("/TransEarth/getTruckPostById", ensureAuthenticated, TruckRoute.getTruckPostById);
+app.post("/TransEarth/getTruckPostDetailById", ensureAuthenticated, TruckRoute.getTruckPostDetailById);
 
 app.post("/TransEarth/addTruck", ensureAuthenticated, TruckRoute.addTruck);
 app.post("/TransEarth/editTruck", ensureAuthenticated, TruckRoute.editTruck);

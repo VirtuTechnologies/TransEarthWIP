@@ -43,7 +43,15 @@
 				<p class="menu-icon">Menu<img src="images/menu-icon.png" alt=""></p>
 			</button>
 			<ul class="navmenu">
-                <li ng-if="core.loggedIn" class="username-place">
+				<li ng-repeat="menu in core.menus track by $index"
+					ng-if="menu.isActive" ng-class="{'username-place':menu.dropList, 'menu-align' : menu.home}">
+					<a ng-if="!menu.dropList" href="#" ng-click="menu.func()"> {{menu.display_name}}</a>
+					<a ng-if="menu.dropList" href="#"> {{menu.display_name}}</a>
+					<ul ng-if="menu.dropList" class="dropdown-menu">
+						<li><a href="/TransEarth/logout">Logout</a></li>
+					</ul>
+				</li>
+                <!-- li ng-if="core.loggedIn" class="username-place">
                     <a href="#"> {{user.display_name}}</a>
                     <ul class="dropdown-menu">
                         <li><a href="/TransEarth/logout">Logout</a></li>
@@ -74,7 +82,7 @@
 				</li>
                 <li class="menu-align">
 					<a href="#" ng-click="siteHome()">{{core.pageHeaders.home}}</a>
-				</li>
+				</li -->
 			</ul>
 		</header>
 		<div class="container">
@@ -120,7 +128,7 @@
         </script>
 		<script type="text/ng-template" id="addTrucks.html">
 			<div class="modal-header">
-				<h3 class="modal-title">Load Information</h3>
+				<!-- h3 class="modal-title">Load Information</h3 -->
 			</div>
 			<div class="modal-body">
 				<div class="add-truck-bg" id="addTrucksPage" ng-init="init()">
@@ -240,7 +248,7 @@
 											</td>
 											<td></td>
 											<td>
-												<button ng-click="addTruckRow()" class="add-row" ng-if="!closeOut">Add row</button>
+												<button ng-click="addTruckRow()" class="add-row" ng-if="!closeOut||stopAdd">Add row</button>
 											</td>
 											<td colspan="2">
 												<button ng-disabled="disableSubmit(newTrucksModal.trucks)" ng-if="!closeOut&&newTrucksModal.trucks.length>0" ng-click="addTrucks(newTrucksModal.trucks)" type="submit">Submit</button>
@@ -251,6 +259,108 @@
 							</form>
 						</div>
 					</div>
+				</div>
+			</div>
+		</script>
+		<!-- Truck Post Details Modal -->
+		<script type="text/ng-template" id="myTruckPostDetailModal.html">
+			<!-- div ng-controller="TruckDetailModalCtrl" -->
+			<!-- div class="modal-dialog">
+                <div class="modal-content" -->
+			<div class="modal-header">
+				<h3 class="modal-title">Truck Post Information</h3>
+			</div>
+			<div class="modal-body">
+				<div id="truck_detail_alert"></div>
+				<div class="row">
+					<!-- h4>Truck Details</h4 -->
+					<ul class="profile-details">
+						<li>
+							<p><b>Truck Type</b>&nbsp;&nbsp;
+								{{truckPostModal.truck_details.type}}</p>
+						</li>
+						<li>
+							<p><b>Truck Make</b>&nbsp;&nbsp;
+								{{truckPostModal.truck_details.make}}</p>
+						</li>
+						<li>
+							<p><b>Truck Model</b>&nbsp;&nbsp;
+								{{truckPostModal.truck_details.model}}</p>
+						</li>
+						<li>
+							<p><b>Truck Reg No</b>&nbsp;&nbsp;
+								{{truckPostModal.truck_details.reg_no}}</p>
+						</li>
+					</ul>
+				</div>
+				<div class="row">
+					<!-- h4>Truck Post Details</h4 -->
+					<ul class="profile-details">
+						<li>
+							<p><b>Post Frequency</b>&nbsp;
+								{{truckPostModal.posts.truck_post.availability.schedule}}</p>
+						</li>
+						<li>
+							<p><b>Post Picked at</b>&nbsp;
+								{{truckPostModal.posts.truck_post.availability.pickup_location}}</p>
+						</li>
+						<li>
+							<p><b>Post Delivered to</b>&nbsp;
+								{{truckPostModal.posts.truck_post.availability.delivery_location}}</p>
+						</li>
+						<li>
+							<p><b>Post Load Quantity</b>&nbsp;
+								{{truckPostModal.posts.truck_post.maximum_load.quantity}}&nbsp;
+								{{truckPostModal.posts.truck_post.maximum_load.unit}}
+							</p>
+						</li>
+						<li ng-if="truckPostModal.posts.truck_post.availability.schedule=='One Time'">
+							<p><b>Pickup Date</b>&nbsp;&nbsp;
+								{{truckPostModal.posts.truck_post.availability.end_date}}</p>
+						</li>
+						<li ng-if="truckPostModal.posts.truck_post.availability.schedule!='One Time'">
+							<p><b>Start Date</b>&nbsp;&nbsp;
+								{{truckPostModal.posts.truck_post.availability.start_date}}</p>
+						</li>
+						<li ng-if="truckPostModal.posts.truck_post.availability.schedule!='One Time'">
+							<p><b>End Date</b>&nbsp;&nbsp;
+								{{truckPostModal.posts.truck_post.availability.end_date}}</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</script>
+		<!-- Load Details Modal -->
+		<!-- Load Details Modal -->
+		<script type="text/ng-template" id="myLoadPostDetailModal.html">
+			<!-- div ng-controller="LoadDetailModalCtrl" -->
+			<!-- div class="modal-dialog">
+                <div class="modal-content" -->
+			<div class="modal-header">
+				<h3 class="modal-title">Load Information</h3>
+			</div>
+			<div class="modal-body">
+				<div id="load_detail_alert"></div>
+				<div class="row">
+					<!-- h4>Truck Details</h4 -->
+					<ul class="profile-details">
+						<li>
+							<p><b>Quantity/ Weight</b>&nbsp;&nbsp;
+								{{loadPostModal.load.quantity}}&nbsp; {{loadPostModal.load.unit}}</p>
+						</li>
+						<li>
+							<p><b>Material</b>&nbsp;&nbsp;
+								{{loadPostModal.load.material.type}}</p>
+						</li>
+						<li>
+							<p><b>Pickup City</b>&nbsp;&nbsp;
+								{{loadPostModal.load.pickup.address.city}}</p>
+						</li>
+						<li>
+							<p><b>Delivery City</b>&nbsp;&nbsp;
+								{{loadPostModal.load.delivery.address.city}}</p>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</script>

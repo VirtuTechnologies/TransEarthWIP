@@ -1,5 +1,5 @@
 function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, TruckRequest) {
-    console.log('Inside truckManageCtrl - '+$scope.page.scope);
+    //console.log('Inside truckManageCtrl - '+$scope.page.scope);
 
     clearAlert("manage_truck_alert");
     $scope.truckForm = {};
@@ -8,7 +8,7 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
     $scope.width = $scope.width + "%";
 
     $scope.truck = TruckRequest.getSharedTruck();
-    console.log("User details in Manage Truck:"+JSON.stringify($scope.user));
+    //console.log("User details in Manage Truck:"+JSON.stringify($scope.user));
 
     $scope.init = function(){
         $scope.getTruckTypes();
@@ -20,7 +20,7 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
     $scope.getTruckTypes = function(){
         $http.get("/TransEarth/getTruckTypes")
             .success(function(data) {
-                console.log("Truck Types looked up:"+JSON.stringify(data));
+                //console.log("Truck Types looked up:"+JSON.stringify(data));
                 $scope.truckTypeList = data;
                 //$scope.truck.details.type = "";
                 var options = '';
@@ -41,7 +41,7 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
                 applySelect("truck_type");
                 if(typeof $scope.truck.truck_details != "undefined"
                         && typeof $scope.truck.truck_details.type != "undefined" && $scope.truck.truck_details.type != null){
-                    console.log("Truck Types lookup selected:"+$scope.truck.truck_details.type);
+                    //console.log("Truck Types lookup selected:"+$scope.truck.truck_details.type);
                     //$('#truck_type').selectpicker('val', $scope.load.load.preferredTruck.type);
                     $('#truck_type').val($scope.truck.truck_details.type);
                     $('#truck_type').selectpicker('refresh');
@@ -51,7 +51,7 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
                     $scope.truck.details.typeDescription = $scope.truck.truck_details.typeDescription;
                 }
             }).error(function(err) {
-                console.log("truckType Lookup failed:"+JSON.stringify(err));
+                //console.log("truckType Lookup failed:"+JSON.stringify(err));
             });
     };
     //$scope.getTruckTypes();
@@ -59,7 +59,7 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
     $scope.getTruckMakes = function(){
         $http.get("/TransEarth/getTruckMakes")
             .success(function(data) {
-                console.log("Truck Makes looked up:"+data);
+                //console.log("Truck Makes looked up:"+data);
                 $scope.makeList = data;
                 //$scope.truck.details.make = "";
                 var options = '';
@@ -79,13 +79,13 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
                 applySelect("make");
                 if(typeof $scope.truck.truck_details != "undefined"
                         && typeof $scope.truck.truck_details.make != "undefined" && $scope.truck.truck_details.make != null){
-                    console.log("Truck Makes lookup selected:"+$scope.truck.truck_details.make);
+                    //console.log("Truck Makes lookup selected:"+$scope.truck.truck_details.make);
                     //$('#make').selectpicker('val', $scope.load.load.preferredTruck.make);
                     $('#make').val($scope.truck.truck_details.make);
                     $('#make').selectpicker('refresh');
                 }*/
             }).error(function(err) {
-                console.log("Make Lookup failed:"+JSON.stringify(err));
+                //console.log("Make Lookup failed:"+JSON.stringify(err));
             });
     };
     //$scope.getTruckMakes();
@@ -138,7 +138,7 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
         /*$scope.$watch('truck.details.regno', function() {
             $scope.truck.details.regno = $scope.truck.details.regno.replace(/\s+/g,'');
         });*/
-        console.log("Truck dumped: "+JSON.stringify( $scope.truck));
+        //console.log("Truck dumped: "+JSON.stringify( $scope.truck));
     };
 
     if(typeof $scope.truck == "undefined" || $scope.truck == null){
@@ -166,7 +166,7 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
         $scope.page.header = "Add Truck";
         $scope.addTruckInd = true;
         $scope.editTruckInd = false;
-        console.log("Truck to be added: "+JSON.stringify( $scope.truck));
+        //console.log("Truck to be added: "+JSON.stringify( $scope.truck));
         /*$scope.$watch('truck.details.regno', function() {
             $scope.truck.details.regno = $scope.truck.details.regno.replace(/\s+/g,'');
         });*/
@@ -178,19 +178,19 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
 
         $scope.truckShared = TruckRequest.getSharedTruck();
         $scope.dumpTruck();
-        console.log('Truck to be edited: '+JSON.stringify($scope.truck));
+        //console.log('Truck to be edited: '+JSON.stringify($scope.truck));
     }
     /*if($scope.page.scope == "Add Truck"){
         $scope.page.header = "Add Truck";
         $scope.addTruckInd = true;
         $scope.editTruckInd = false;
     }else if($scope.page.scope == "Edit Truck"){
-        console.log('Page scope - Edit Truck');
+        //console.log('Page scope - Edit Truck');
         $scope.page.header = "Edit Truck";
         $scope.editTruckInd = true;
         $scope.addTruckInd = false;
         $scope.truck = TruckRequest.getSharedTruck();
-        console.log('Truck to be editted: '+JSON.stringify($scope.truck));
+        //console.log('Truck to be editted: '+JSON.stringify($scope.truck));
         //$scope.fetchTruck();
     }*/
 
@@ -207,7 +207,7 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
     $scope.truckProcess.indicator.showOwnerDetails = true;
 
     $scope.canDisableOwnerDetails = function(){
-        console.log("canDisableOwnerDetails with user information: "+JSON.stringify($scope.user));
+        //console.log("canDisableOwnerDetails with user information: "+JSON.stringify($scope.user));
         if(typeof $scope.truck.owner == "undefined" && $scope.truck.owner == null){
             $scope.truck.owner = {};
         }
@@ -240,7 +240,7 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
             if($scope.truck.owner.details_same_as_user && typeof $scope.user.user_information != "undefined"){
                 $scope.truck.company.name = $scope.user.user_information.company_name;
             }
-            console.log("canDisableOwnerDetails "+JSON.stringify($scope.truck.owner));
+            //console.log("canDisableOwnerDetails "+JSON.stringify($scope.truck.owner));
             //$scope.company.address_same_as_owner = true;
         }else{
             if(typeof $scope.truck.owner != "undefined" && typeof $scope.truck.owner.address != "undefined" && typeof $scope.truck.owner.address.mapLocation != "undefined"
@@ -264,11 +264,11 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
                 $scope.truck.company = {};
             }
             $scope.truck.company.name = "";
-            console.log("canDisableOwnerDetails "+JSON.stringify($scope.truck.owner));*/
+            //console.log("canDisableOwnerDetails "+JSON.stringify($scope.truck.owner));*/
         }
     };
     $scope.canDisableCompanyDetails = function(){
-        console.log("canDisableCompanyDetails with user information: "+JSON.stringify($scope.user));
+        //console.log("canDisableCompanyDetails with user information: "+JSON.stringify($scope.user));
         if(typeof $scope.truck.company == "undefined" && $scope.truck.company == null){
             $scope.truck.company = {};
         }
@@ -294,7 +294,7 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
             $scope.truck.company.address.pincode = $scope.user.user_information.address.pincode.toString();
             $scope.truck.company.contact = $scope.user.user_information.contact[0].toString();
             $scope.truck.company.address_same_as_owner = false;
-            console.log("canDisableCompanyDetails "+JSON.stringify($scope.truck.company));
+            //console.log("canDisableCompanyDetails "+JSON.stringify($scope.truck.company));
             //$scope.company.address_same_as_owner = true;
         }else{
             if(typeof $scope.truck.company != "undefined" && typeof $scope.truck.company.address != "undefined" && typeof $scope.truck.company.address.mapLocation != "undefined"
@@ -314,11 +314,11 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
             $scope.truck.company.address.pincode = "";
             $scope.truck.company.contact = "";
             $scope.truck.company.address_same_as_owner = false;
-            console.log("canDisableCompanyDetails "+JSON.stringify($scope.truck.company));*/
+            //console.log("canDisableCompanyDetails "+JSON.stringify($scope.truck.company));*/
         }
     };
     $scope.canDisableSameAddress = function(){
-        console.log("canDisableSameAddress owner with "+$scope.truck.company.address_same_as_owner+" as "+JSON.stringify($scope.truck.owner));
+        //console.log("canDisableSameAddress owner with "+$scope.truck.company.address_same_as_owner+" as "+JSON.stringify($scope.truck.owner));
         if(typeof $scope.truck.company == "undefined" && $scope.truck.company == null){
             $scope.truck.company = {};
         }
@@ -361,10 +361,10 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
             };
             //console.log("canDisableSameAddress owner 4 "+JSON.stringify($scope.truck.owner));
             $scope.truck.company.address.pincode = "";
-            console.log("canDisableSameAddress owner 5 "+JSON.stringify($scope.truck.owner));*/
+            //console.log("canDisableSameAddress owner 5 "+JSON.stringify($scope.truck.owner));*/
         }
         //console.log("canDisableSameAddress owner "+JSON.stringify($scope.truck.owner));
-        console.log("canDisableSameAddress company "+JSON.stringify($scope.truck.company));
+        //console.log("canDisableSameAddress company "+JSON.stringify($scope.truck.company));
     };
     $scope.canDisableSameContact = function(){
         //console.log("canDisableSameContact "+JSON.stringify($scope.truck.company));
@@ -430,7 +430,7 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
         $scope.truckProcess.indicator.showAlert = false;
 
         if ($scope.truckForm.$valid) {
-            console.log("Form is valid! "+JSON.stringify($scope.truck));
+            //console.log("Form is valid! "+JSON.stringify($scope.truck));
 
             /*if($scope.truck.owner.details_same_as_user){
                 $scope.truck.owner.details_same_as_user = true;
@@ -460,13 +460,14 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
             }
             $http.post(url, {truck : $scope.truck})
                 .success(function(data) {
-                    console.log("Truck saved successfully");
+                    //console.log("Truck saved successfully");
                     $scope.truckProcess.indicator.saved = true;
                     TruckRequest.setSharedTruck(null);
                     TruckRequest.setSharedTruckProcessed(true);
 
                     $scope.myTruckList.messageAvailable = true;
                     succesAlert("Truck updated successfully", 'truck_home_alert');
+                    $scope.truckOwnerPage.refresh = ($scope.truckOwnerPage.refresh != null) ? !$scope.truckOwnerPage.refresh : true;
                     $location.hash('truck_home_alert');
 
                     $scope.truckOwnerPage.showManageTruck = false;
@@ -507,7 +508,7 @@ function truckManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, T
 
                     }*/
                 }).error(function(data) {
-                    console.log("Truck saved failed:"+data);
+                    //console.log("Truck saved failed:"+data);
                     $scope.truckProcess.indicator.saved = false;
                     $scope.truckProcess.indicator.showAlert = true;
                     succesError(data.statusMsg, 'truck_home_alert');

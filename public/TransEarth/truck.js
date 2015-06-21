@@ -143,6 +143,17 @@ function truckListCtrl($scope, $http, $location, $modal, $filter, UserRequest) {
                             //console.log(JSON.stringify(data.truckPostList.details));
                             var filteredData = data.truckPostList.details;
                             $scope.truckPostList.columnDefs = data.truckPostList.headers;
+                            var reminder = filteredData.length % $scope.truckPostList.pagingOptions.pageSize;
+                            var floor = Math.floor(filteredData.length / $scope.truckPostList.pagingOptions.pageSize);
+                            if(reminder>0){
+                                $scope.truckPostList.pagingOptions.lastPage = floor + 1;
+                            }else{
+                                $scope.truckPostList.pagingOptions.lastPage = floor;
+                            }
+
+                            $scope.truckPostList.pagingOptions.currentPage = page;
+                            console.log("Current Page: "+$scope.truckPostList.pagingOptions.currentPage);
+                            console.log("Last Page: "+$scope.truckPostList.pagingOptions.lastPage);
                             $scope.setPagingData(filteredData,page,pageSize);
                             $scope.truckPostList.listShow = true;
                             $scope.truckPostList.messageAvailable = false;
@@ -168,7 +179,7 @@ function truckListCtrl($scope, $http, $location, $modal, $filter, UserRequest) {
     };
     //$scope.getPagedDataAsync($scope.truckPostList.pagingOptions.pageSize, $scope.truckPostList.pagingOptions.currentPage);
 
-    $scope.$watch('truckPostList.pagingOptions', function (newVal, oldVal) {
+    /*$scope.$watch('truckPostList.pagingOptions', function (newVal, oldVal) {
         if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
             $scope.getPagedDataAsync($scope.truckPostList.pagingOptions.pageSize, $scope.truckPostList.pagingOptions.currentPage, $scope.truckPostList.filterOptions.filterText);
         }
@@ -177,7 +188,7 @@ function truckListCtrl($scope, $http, $location, $modal, $filter, UserRequest) {
         if (newVal !== oldVal) {
             $scope.getPagedDataAsync($scope.truckPostList.pagingOptions.pageSize, $scope.truckPostList.pagingOptions.currentPage, $scope.truckPostList.filterOptions.filterText);
         }
-    }, true);
+    }, true);*/
 
     $scope.truckPostList.columnDefs = [];
     $scope.truckPostList.gridOptions = {
@@ -207,7 +218,7 @@ function truckListCtrl($scope, $http, $location, $modal, $filter, UserRequest) {
     $scope.searchTrucks = function(){
         $scope.truckPostList.list = [];
         $scope.truckPostList.searchTriggered = true;
-        $scope.getPagedDataAsync($scope.truckPostList.pagingOptions.pageSize, $scope.truckPostList.pagingOptions.currentPage);
+        $scope.getPagedDataAsync($scope.truckPostList.pagingOptions.pageSize, 1);
     };
     $scope.searchTrucks();
 
@@ -220,11 +231,11 @@ function truckListCtrl($scope, $http, $location, $modal, $filter, UserRequest) {
     $scope.getTruckTypes = function(){
         $http.get("/TransEarth/getTruckTypes")
             .success(function(data) {
-                console.log("Truck Types looked up:"+JSON.stringify(data));
+                //console.log("Truck Types looked up:"+JSON.stringify(data));
                 $scope.truckTypeList = data;
                 $scope.truckPostList.filter.type = "";
             }).error(function(err) {
-                console.log("truckType Lookup failed:"+JSON.stringify(err));
+                //console.log("truckType Lookup failed:"+JSON.stringify(err));
             });
     };
 
@@ -242,7 +253,7 @@ function truckListCtrl($scope, $http, $location, $modal, $filter, UserRequest) {
                 if(typeof data != 'undefined' && data != null){
                     //console.log(JSON.stringify(data));
                     data.posts = $filter('filter')(data.posts, {_id:postId})[0];
-                    console.log(JSON.stringify(data));
+                    //console.log(JSON.stringify(data));
                     if(typeof data.posts != "undefined" && typeof data.posts.truck_post != "undefined"
                         && typeof data.posts.truck_post.availability != "undefined" && typeof data.posts.truck_post.availability.date != "undefined"){
                         //data.posts.availability.date = moment(data.posts.availability.date).format("dd MMM yyyy");
@@ -252,16 +263,16 @@ function truckListCtrl($scope, $http, $location, $modal, $filter, UserRequest) {
                             + data.posts.truck_post.availability.date.getMonth()+ "/"
                             + data.posts.truck_post.availability.date.getDate();*/
                         data.posts.truck_post.availability.date = moment(data.posts.truck_post.availability.date).format('MMM DD, YYYY');
-                        console.log("Formatted Date: "+data.posts.truck_post.availability.date);
+                        //console.log("Formatted Date: "+data.posts.truck_post.availability.date);
                     }
-                    console.log("Formatted: "+JSON.stringify(data));
+                    //console.log("Formatted: "+JSON.stringify(data));
                     $scope.truckPostInfo = data;
                     $scope.truckPostDetails.open('sm');
                     $scope.truckPostDetails.messageAvailable = false;
                 }else{
                     $scope.truckPostDetails.messageAvailable = true;
                     succesError("Truck Post Details Not found", 'trucklist_alert');
-                    console.log("No Post data available");
+                    //console.log("No Post data available");
                 }
             }).error(function(err) {
                 $scope.truckPostDetails.messageAvailable = true;
@@ -285,10 +296,10 @@ function truckListCtrl($scope, $http, $location, $modal, $filter, UserRequest) {
         });
         modalInstance.result.then(function(post){
             //on ok button press
-            console.log("On ok button press");
+            //console.log("On ok button press");
         },function(){
             //on cancel button press
-            console.log("Modal Closed");
+            //console.log("Modal Closed");
         });
     };
 
@@ -314,7 +325,7 @@ function truckListCtrl($scope, $http, $location, $modal, $filter, UserRequest) {
 
 //ng-table driven
 function truckListCtrlInvalid($scope, $http, $location, UserRequest, $filter,  $q, ngTableParams, $sce) {
-    console.log('Inside truckListCtrl');
+    //console.log('Inside truckListCtrl');
 
     $scope.truckList = {};
     $scope.truckList.filter = {};
@@ -331,7 +342,7 @@ function truckListCtrlInvalid($scope, $http, $location, UserRequest, $filter,  $
     $scope.open = function($event) {
         $event.preventDefault();
         $event.stopPropagation();
-        console.log("Opened");
+        //console.log("Opened");
         $scope.opened = true;
     };
 
@@ -369,8 +380,8 @@ function truckListCtrlInvalid($scope, $http, $location, UserRequest, $filter,  $
                 $filter('orderBy')(filteredData, params.orderBy()) :
                 data;
 
-            console.log("filteredData: "+JSON.stringify(filteredData));
-            console.log("orderedData: "+JSON.stringify(orderedData));
+            //console.log("filteredData: "+JSON.stringify(filteredData));
+            //console.log("orderedData: "+JSON.stringify(orderedData));
 
             $scope.trucks = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
 
@@ -406,13 +417,13 @@ function truckListCtrlInvalid($scope, $http, $location, UserRequest, $filter,  $
         if(typeof $scope.truckList.filter.dt != "undefined" && $scope.truckList.filter.dt != null){
             filters.availableDate = $scope.truckList.filter.dt;
         }
-        console.log("Truck List Filters: "+JSON.stringify(filters));
+        //console.log("Truck List Filters: "+JSON.stringify(filters));
         $http.post("/TransEarth.getTruckPostingsSummary", {filters : filters})
             .success(function(data) {
                 if(typeof data != 'undefined' && data != null
                     && typeof data.truckList != 'undefined' && data.truckList != null
                     && typeof data.truckList.details != "undefined" && data.truckList.details != null){
-                    console.log(JSON.stringify(data));
+                    //console.log(JSON.stringify(data));
                     /*$scope.index.truckList = data.truckList.details;
                     $scope.index.truckListColumnDefs = data.truckList.headers;
                     $scope.index.truckListOptions = {

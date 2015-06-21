@@ -1,5 +1,5 @@
 function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, LoadRequest) {
-    console.log('Inside loadManageCtrl - ');
+    //console.log('Inside loadManageCtrl - ');
 
     $scope.init = function(){
         $scope.getTruckTypes();
@@ -22,7 +22,7 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
         $http.get("/TransEarth/getMaterialTypes")
             .success(function(data) {
                 $scope.materialTypeList = data;
-                console.log("Materials looked up:"+JSON.stringify($scope.materialTypeList));
+                //console.log("Materials looked up:"+JSON.stringify($scope.materialTypeList));
                 var options = '';
                 options += '<option data-hidden="true">'+$scope.chooseOne+'</option>';
                 $.each(data, function (i, row) {
@@ -41,14 +41,14 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
                 //console.log("Materials assigned: "+$scope.load.load.material.type);
                 //$('#materialType').selectpicker('refresh');
             }).error(function(err) {
-                console.log("Materials Lookup failed:"+JSON.stringify(err));
+                //console.log("Materials Lookup failed:"+JSON.stringify(err));
             });
     };
 
     $scope.getTruckTypes = function(){
         $http.get("/TransEarth/getTruckTypes")
             .success(function(data) {
-                console.log("Truck Types looked up:"+JSON.stringify(data));
+                //console.log("Truck Types looked up:"+JSON.stringify(data));
                 $scope.truckTypeList = data;
                 var options = '';
                 options += '<option data-hidden="true">'+$scope.chooseOne+'</option>';
@@ -66,7 +66,7 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
                     $('#truckType').selectpicker('refresh');
                 }
             }).error(function(err) {
-                console.log("truckType Lookup failed:"+JSON.stringify(err));
+                //console.log("truckType Lookup failed:"+JSON.stringify(err));
             });
     };
 
@@ -80,7 +80,7 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
     var sharedLoad = LoadRequest.getSharedLoad();
     var userDetails = UserRequest.getUserProfile();
     if(typeof sharedLoad != "undefined" && sharedLoad != null){
-        console.log("Shared Load in memory: "+JSON.stringify(sharedLoad));
+        //console.log("Shared Load in memory: "+JSON.stringify(sharedLoad));
         $scope.page_header = "Edit Load";
         $scope.editLoadInd = true;
         $scope.addLoadInd = false;
@@ -138,7 +138,7 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
         sharedLoad.load.quantity  = sharedLoad.load.quantity.toString();
         $scope.load = sharedLoad;
 
-        console.log("Shared Load: "+JSON.stringify($scope.load));
+        //console.log("Shared Load: "+JSON.stringify($scope.load));
         //$scope.disableAddress = $scope.load.company.address_same_as_owner;
         //$scope.disableContact = $scope.load.company.contact_same_as_owner;
         $scope.loadProcess.indicator.showCompanyDetails = true;
@@ -154,7 +154,7 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
         $scope.load.company = {};
         $scope.load.company.address = {};
         $scope.$watch("load.company.contact", function(){
-            console.log("watching contact:"+$scope.load.company.contact);
+            //console.log("watching contact:"+$scope.load.company.contact);
         });
         $scope.load.owner.address.mapLocation = {
             place : "",
@@ -250,7 +250,7 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
     };
 
     $scope.canDisableOwnerDetails = function(){
-        console.log("canDisableOwnerDetails with user information: "+JSON.stringify($scope.user));
+        //console.log("canDisableOwnerDetails with user information: "+JSON.stringify($scope.user));
         if(typeof $scope.load.owner == "undefined" && $scope.load.owner == null){
             $scope.load.owner = {};
         }
@@ -284,7 +284,7 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
             if($scope.load.owner.details_same_as_user && typeof $scope.user.user_information != "undefined"){
                 $scope.load.company.name = $scope.user.user_information.company_name;
             }
-            console.log("canDisableOwnerDetails "+JSON.stringify($scope.load.owner));
+            //console.log("canDisableOwnerDetails "+JSON.stringify($scope.load.owner));
             //$scope.company.address_same_as_owner = true;
         }else{
             if(typeof $scope.load.owner != "undefined" && typeof $scope.load.owner.address != "undefined" && typeof $scope.load.owner.address.mapLocation != "undefined"
@@ -311,11 +311,11 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
             if($scope.load.owner.details_same_as_user && typeof $scope.user.user_information != "undefined"){
                 $scope.load.company.name = "";
             }
-            console.log("canDisableOwnerDetails "+JSON.stringify($scope.load.owner));*/
+            //console.log("canDisableOwnerDetails "+JSON.stringify($scope.load.owner));*/
         }
     };
     $scope.canDisableCompanyDetails = function(){
-        console.log("canDisableCompanyDetails with user information: "+JSON.stringify($scope.user));
+        //console.log("canDisableCompanyDetails with user information: "+JSON.stringify($scope.user));
         if(typeof $scope.load.company == "undefined" && $scope.load.company == null){
             $scope.load.company = {};
         }
@@ -343,7 +343,7 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
             //$("#company_contact").val($scope.user.user_information.contact[0].toString());
             $scope.load.company.address_same_as_owner = false;
             $scope.load.company.contact_same_as_owner = false;
-            console.log("canDisableCompanyDetails "+JSON.stringify($scope.load.company));
+            //console.log("canDisableCompanyDetails "+JSON.stringify($scope.load.company));
             //$scope.company.address_same_as_owner = true;
         }else{
             if(typeof $scope.load.company != "undefined" && typeof $scope.load.company.address != "undefined" && typeof $scope.load.company.address.mapLocation != "undefined"
@@ -363,7 +363,7 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
             $scope.load.company.address.pincode = "";
             $scope.load.company.contact = "";
             $scope.load.company.address_same_as_owner = false;
-            console.log("canDisableCompanyDetails empty "+JSON.stringify($scope.load.company));*/
+            //console.log("canDisableCompanyDetails empty "+JSON.stringify($scope.load.company));*/
         }
     };
     $scope.canDisableSameAddress = function(){
@@ -410,18 +410,18 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
                 disable : false
             };
             $scope.load.company.address.pincode = "";
-            console.log("canDisableSameAddress owner: "+JSON.stringify($scope.load.owner));*/
+            //console.log("canDisableSameAddress owner: "+JSON.stringify($scope.load.owner));*/
         }
     };
     $scope.canDisableSameContact = function(){
-        console.log("canDisableSameContact "+JSON.stringify($scope.load.company));
+        //console.log("canDisableSameContact "+JSON.stringify($scope.load.company));
         if(typeof $scope.load.company == "undefined" && $scope.load.company == null){
             $scope.load.company = {};
         }
 
         if($scope.load.company.contact_same_as_owner && typeof $scope.load.owner != "undefined"
             && typeof $scope.load.owner.contact != "undefined" && typeof $scope.load.owner.contact != null){
-            console.log("canDisableSameContact "+JSON.stringify($scope.load.owner));
+            //console.log("canDisableSameContact "+JSON.stringify($scope.load.owner));
             $scope.load.company.contact = $scope.load.owner.contact.toString();
             //$scope.disableContact = true;
         }else{
@@ -470,7 +470,7 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
                 disable : false
             };
             $scope.load.load.pickup.address.pincode = "";
-            console.log("canDisablePickupAddress owner: "+JSON.stringify($scope.load.pickup));*/
+            //console.log("canDisablePickupAddress owner: "+JSON.stringify($scope.load.pickup));*/
         }
     };
     $scope.canDisableDeliveryAddress = function(){
@@ -513,7 +513,7 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
                 disable : false
             };
             $scope.load.load.delivery.address.pincode = "";
-            console.log("canDisableDeliveryAddress owner: "+JSON.stringify($scope.load.delivery));*/
+            //console.log("canDisableDeliveryAddress owner: "+JSON.stringify($scope.load.delivery));*/
         }
     };
 
@@ -603,10 +603,10 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
                 url = "/TransEarth/editLoad";
             }
             //$scope.loadProcess.indicator.showAlert = false;
-            console.log("AJAX URL to be posted to "+url+" with input: "+JSON.stringify($scope.load));
+            //console.log("AJAX URL to be posted to "+url+" with input: "+JSON.stringify($scope.load));
             $http.post(url, {load : $scope.load})
                 .success(function(data) {
-                    console.log("Load saved successfully");
+                    //console.log("Load saved successfully");
                     $scope.loadProcess.indicator.saved = true;
                     $scope.load = {};
                     $scope.loadProcess.indicator.showAlert = true;
@@ -624,7 +624,7 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
                     // call $anchorScroll()
                     //$anchorScroll();
                 }).error(function(data) {
-                    console.log("Load saved failed:"+data);
+                    //console.log("Load saved failed:"+data);
                     $scope.loadProcess.indicator.saved = false;
                     $scope.loadProcess.indicator.showAlert = true;
                     succesError(data.statusMsg, 'manage_load_alert');
