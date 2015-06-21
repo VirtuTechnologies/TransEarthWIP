@@ -2,20 +2,20 @@
 	<div class="mypostpane pagepane">
 		<div class="div-header">
 			<img class="pane-icon" src="images/posts.png" alt="" />
-			<h4>My Posts <span>(({{myTruckPostList.totalServerItems}}))</span></h4>
+			<h4>My Posts <span>({{myTruckPostList.totalServerItems}})</span></h4>
 			<input type="textbox" class="searchbox" name="mytrucksearch" Value="" placeholder="Search" />
-			<button><img src="images/search-btn.png" alt="Search" /></button>
+			<button><img src="images/search-btn-white.png" alt="Search" /></button>
 		</div>
 		<div class="posts">
 			<ul ng-repeat="post in myTruckPostList.list" class="runtime-div">
-				<img class="runtime-icon" src="images/mytruck.png" alt="" />
-				<li class="runtime-details"><b>{{post.regNo}}</b></li>
+				<img class="runtime-icon" src="images/truck-posts.png" alt="" />
+				<li class="runtime-details"><a href="#"><b>{{post.regNo}}</b></a></li>
 				<li class="runtime-details">{{post.source}} - {{post.destination}}</li>
 				<li class="runtime-details">{{post.availableDateDisplay}}</li>
 				<li class="runtime-options">
 					<!-- button><img class="edit-icon" src="images/add.png" alt="" />Add</button -->
-					<button><img class="edit-icon" src="images/edit.png" alt="" ng-click="editTruckPost(post.truck_id, post.post_id, post.availableDate)"/>Edit</button>
-					<button><img class="edit-icon" src="images/delete.png" alt="" ng-click="removeTruckPost(post.truck_id, post.post_id, post.regNo, post.capacity, post.availableDate)"/>Delete</button>
+					<button><img class="edit-icon" src="images/edit-w.png" alt="" ng-click="editTruckPost(post.truck_id, post.post_id, post.availableDate)"/>Edit</button>
+					<button><img class="edit-icon" src="images/delete-w.png" alt="" ng-click="removeTruckPost(post.truck_id, post.post_id, post.regNo, post.capacity, post.availableDate)"/>Delete</button>
 				</li>
 			</ul>
 		</div>

@@ -1,17 +1,20 @@
 <div ng-controller="loadListCtrl" ng-init="init()">
 	<form id="searchLoadForm" name="searchLoadForm" role="form">
 		<div class="search-bar">
-			<div class="location"><img src="images/location.png" >
+            <div class="location">
+                <label>From</label>
 				<google-places className="search-bar-input" holder="From Location"
 							   tagId="from_city" tagName="from_city"
 							   location=loadPostList.filter.from></google-places>
 			</div>
-			<div class="location"><img src="images/location.png" >
+            <div class="location">
+                <label>To</label>
 				<google-places className="search-bar-input" holder="To Location"
 							   tagId="to_city" tagName="to_city"
 							   location=loadPostList.filter.to></google-places>
 			</div>
-			<div class="location"><img src="images/mytruck.png" >
+            <div class="location">
+                <label>Material</label>
 				<select selectpicker id="material" name="material"
 						ng-model="loadPostList.filter.material"
 						ng-options="material for material in materialList"
@@ -19,8 +22,9 @@
 					<option value="">Choose one</option>
 				</select>
 			</div>
-			<div class="location"><img src="images/location.png" >
-				<input class="textbox" type="text" ng-required="true" placeholder="Available Date" name="daterange"
+            <div class="location">
+                <label>Date</label>
+				<input class="custom-dp" type="text" ng-required="true" placeholder="Available Date" name="daterange"
 					   ui-date-format="yy-mm-dd" ng-model="loadPostList.filter.dt" ui-date="loadPostList.filter.dateRangeOptions"
 					   ng-class="{ 'has-error' : searchLoadForm.daterange.$invalid,
 										'has-success' : !(searchLoadForm.daterange.$invalid),
@@ -30,11 +34,11 @@
 				<input type="radio" ng-change="resetSearchCategory()"
 					   ng-model="loadPostList.filter.dateRange"
 					   name="optionsRadios" id="optionsRadios1" value=1>
-				<label for="date-option"><span>ON</span></label></br>
+				<label for="date-option">ON</label></br>
 				<input type="radio" ng-change="resetSearchCategory()"
 					   ng-model="loadPostList.filter.dateRange"
 					   name="optionsRadios" id="optionsRadios2" value=2 selected>
-				<label for="date-option"><span>AFTER</span></label>
+				<label for="date-option">AFTER</label>
 			</div>
 			<button class="submit-search" ng-click="searchLoads()" id="search"><img src="images/search-btn-white.png" alt="" /></button>
 		</div>

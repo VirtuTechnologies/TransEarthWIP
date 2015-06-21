@@ -1,7 +1,7 @@
 <div ng-controller="indexCtrl">
 	<div class="truckdetails">
 		<div class="slider">
-			<p class="nameplace trucks"><img id="profilepic" src="images/truck.png" alt=""><a href="#">Trucks Posts</a></p>
+			<p class="nameplace trucks"><img id="profilepic" src="images/truck.png" alt=""><a href="#" ng-click="searchTrucks()">Trucks Posts</a></p>
 			<ul class="truckdetailpane"  ng-repeat="post in truckPosts" class="infos" ng-class="truckPosting.animation" ng-show="1==1">
 				<li>
 					From: &nbsp; {{post.source}}
@@ -24,7 +24,7 @@
 	</div>
 	<div class="loaddetails">
 		<div class="slider">
-			<p class="nameplace"><img id="profilepic" src="images/load.png" alt=""><a href="#">Load Posts</a></p>
+			<p class="nameplace"><img id="profilepic" src="images/load.png" alt=""><a href="#" ng-click="searchLoad()">Load Posts</a></p>
 			<ul class="loaddetailpane" ng-repeat="post in loadPosts" ng-class="loadPosting.animation" class="infos" ng-show="1==1">
 				<li>
 					From: &nbsp; {{post.source}}

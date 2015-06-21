@@ -850,7 +850,7 @@ body .ui-tooltip {
 	color: #222222;
 }
 .ui-widget-header {
-	background: rgb(0, 141, 249);
+	background: linear-gradient(rgb(255, 74, 0),rgb(157, 55, 19));
 	color: #FFFFFF;
 	font-weight: bold;
 }
@@ -974,10 +974,10 @@ body .ui-tooltip {
 }
 .ui-icon,
 .ui-widget-content .ui-icon {
-	background-image: url("images/ui-icons_222222_256x240.png");
+	background-image: url("../images/ui-icons_ffffff_256x240.png");
 }
 .ui-widget-header .ui-icon {
-	background-image: url("images/ui-icons_222222_256x240.png");
+	background-image: url("../images/ui-icons_ffffff_256x240.png");
 }
 .ui-state-default .ui-icon {
 	background-image: url("images/ui-icons_888888_256x240.png");

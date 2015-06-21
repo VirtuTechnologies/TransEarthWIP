@@ -1,12 +1,11 @@
 <div id="truckPostManagePage" ng-controller="truckPostManageCtrl">
-	<!-- FORM : YOU CAN DISABLE, HTML5 VALIDATION BY USING "novalidate" ATTRIBUTE-->
-	<div id="truckManagePanel" class="add-post">
-        <label class="close-label">Close</label><h3>{{truckOwnerPage.managePostTitle}}</h3>
-		<form name="truckPostForm" ng-submit="submitForm()" novalidate>
-			<ul style="overflow-y: hidden;">
-                <li style="font-weight:bold;">{{truckToPost.details.reg_no}}</li>
-                <!--<li style="float:left; width:130px;">{{truckToPost.details.make}}</li>
-                <li style="float:left; width:130px;">{{truckToPost.details.model}}</li> -->
+
+    <!-- FORM : YOU CAN DISABLE, HTML5 VALIDATION BY USING "novalidate" ATTRIBUTE-->
+    <div id="truckManagePanel" class="add-post">
+        <label class="close-label" ng-click="cancelPost()">Close</label><h4>{{truckOwnerPage.managePostTitle}}</h4>
+        <form name="truckPostForm" ng-submit="submitForm()" novalidate>
+            <ul style="overflow-y: hidden;">
+                <li style="font-weight:bold; color:#F9FF02;">{{truckToPost.details.reg_no}}</li>
                 <li style="float:left;  width:130px;">{{truckToPost.details.load}}</li>
                 <li style="float:left; width:130px;">{{truckToPost.details.type}}</li>
             </ul>
@@ -22,6 +21,7 @@
 										'has-success' : !(truckPostForm.post_frequency.$invalid),
 										'has-feedback' : truckPostForm.post_frequency.$invalid}"
                             class="dropdown">
+                        <option value="" default disabled>Choose one</option>
                     </select>
                 </li>
 
@@ -50,13 +50,13 @@
 										'has-feedback' : truckPostForm.weight.$invalid}">
                     </li>
                     <li ng-if="truckToPost.post.schedule.frequency!=undefined&&truckToPost.post.schedule.frequency!=null&&truckToPost.post.schedule.frequency=='One Time'">
-                        <label for="pickup_date">Pickup Date</label>
-                    <!-- input type="text" custom-datepicker  placeholder="Available Pickup Date" name="pickup_date"
-                               ng-model="truckToPost.post.pickup.date"
-                               ng-required="true" date-options="dateOptions" required
-                                ng-class="{ 'has-error' : truckPostForm.pickup_date.$invalid,
-										'has-success' : !(truckPostForm.pickup_date.$invalid),
-										'has-feedback' : truckPostForm.pickup_date.$invalid}" -->
+                        <label for="pickup_date">Available Date</label>
+                        <!-- input type="text" custom-datepicker  placeholder="Available Pickup Date" name="pickup_date"
+                                   ng-model="truckToPost.post.pickup.date"
+                                   ng-required="true" date-options="dateOptions" required
+                                    ng-class="{ 'has-error' : truckPostForm.pickup_date.$invalid,
+                                            'has-success' : !(truckPostForm.pickup_date.$invalid),
+                                            'has-feedback' : truckPostForm.pickup_date.$invalid}" -->
                         <input class="textbox" type="text" ng-required="true" placeholder="Available Pickup Date" name="pickup_date"
                                ui-date-format ng-model="truckToPost.post.pickup.endDate" ui-date="pickup.dateRangeOptions"
                                ng-class="{ 'has-error' : truckPostForm.pickup_date.$invalid,

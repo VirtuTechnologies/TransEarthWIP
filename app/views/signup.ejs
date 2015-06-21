@@ -8,7 +8,8 @@
                 <p class="steps step-note3">3</p></li>
         </ul>
     <form name="userForm" ng-submit="submitForm()" novalidate>
-        <ul class="step1 steps-list">
+        <div class="signup-list">
+        <ul class="step1 scroll-alignment">
             <li>
                         <div class="input-group" id="user_role">
                             <label for="user_type">User Type</label>
@@ -21,7 +22,7 @@
                                     ng-class="{ 'has-error' : userForm.user_type.$invalid,
 									'has-success' : !(userForm.user_type.$invalid),
 									'has-feedback' : userForm.user_type.$invalid}">
-                                <option value="">Please Choose One</option>
+                                <option default disabled value="">Please Choose One</option>
                             </select>
                         </div>
                         <!-- i class="form-control-feedback"
@@ -37,9 +38,9 @@
                     <!-- pre>{{userForm.user_type.$valid}}</pre -->
                     <!-- a class="btn btn-primary btn-sm pull-right next" href="#" ng-disabled="!register.showAccountDetails">Continue</a -->
                 </li>
-            <li><button style="background:#006FD7; float:right;" ng-disabled="!register.showAccountDetails && passwordMismatch" class="buttons next-btn">Next</button></li>
+            <li><button style="background:#006FD7; float:right;" ng-disabled="userForm.user_type.$invalid" class="buttons next-btn">Next</button></li>
             </ul>
-        <ul class="step2 steps-list">
+        <ul class="step2 scroll-alignment">
             <li>
                         <div class="input-group">
                             <label for="username">Email ID</label>
@@ -114,7 +115,7 @@
             <li><button style="background:#006FD7; float:left;" class="buttons back-btn">Back</button></li>
             <li><button style="background:#006FD7; float:right;" ng-disabled="passwordMismatch" class="buttons next-btn">Next</button></li>
             </ul>
-        <ul class="step3 steps-list">
+        <ul class="step3 scroll-alignment">
             <li>
                         <div class="input-group">
                             <label for="first_name">First Name</label>
@@ -289,6 +290,8 @@
             <li><button style="background:#006FD7; float:left;" class="buttons back-btn">Back</button></li>
             <li><button style="background:#006FD7; float:right; display:none;" class="buttons submit-button" type="submit">Register</button></li>
         </ul>
+            </div>
+        <label style="color:red; padding-left: 10px; font-size: 13px;" ng-show="userForm.$invalid">*  Please correct the errors to complete registration</label>
     </form>
 </div>
     </div>
