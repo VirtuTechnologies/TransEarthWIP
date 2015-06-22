@@ -37,6 +37,12 @@
 
 	</head>
 	<body ng-controller="coreController" ng-init="local='<%= JSON.stringify(session)%>'" class=" pace-done">
+		<div id="loadingWidget" class="overlay" loader>
+			<div class="loadingGif">
+				<strong class="text">Please Wait....</strong>
+				<img alt="Loading Content" src="images/ajax-loader-mini.gif"/>
+			</div>
+		</div>
 		<header>
 			<a href="../"><img id="logo" src="images/logo.png" alt=""></a>
 			<button class="menu-btn">

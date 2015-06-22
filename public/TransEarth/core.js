@@ -30,39 +30,6 @@ TransEarthApp.factory('redirectInterceptor', function($q,$location,$window){
 
 });
 
-TransEarthApp.config(['$httpProvider',function($httpProvider) {
-    $httpProvider.interceptors.push('redirectInterceptor');
-}]);
-
-TransEarthApp.directive('customDatepicker',['$compile', function($compile){
-    return {
-        replace:true,
-        //templateUrl:'custom-datepicker.html',
-        //template : '<input type="text" ui-date-format="yy-mm-dd" ng-model="ngModel" ui-date="dateOptions"/>',
-        scope: {
-            ngModel: '=',
-            dateOptions: '='
-        },
-        link: function($scope, $element, $attrs, $controller){
-            var html = [];
-            html.push('<input type="text" ui-date-format="yy-mm-dd" ng-model="ngModel" ui-date="dateOptions"/>');
-            $element.html(html.join(''));
-            $compile($element.contents())($scope);
-
-            var $button = $element.find('button');
-            var $input = $element.find('input');
-            $button.on('click',function(){
-                if($input.is(':focus')){
-                    $input.trigger('blur');
-                } else {
-                    $input.trigger('focus');
-                }
-            });
-        }
-    };
-}
-]);
-
 TransEarthApp.factory('httpInterceptor', function ($q, $rootScope, $log) {
 
     var numLoadings = 0;
@@ -99,9 +66,53 @@ TransEarthApp.factory('httpInterceptor', function ($q, $rootScope, $log) {
     };
 });
 
-TransEarthApp.config(function ($httpProvider) {
+TransEarthApp.config(['$httpProvider',function($httpProvider) {
+    $httpProvider.interceptors.push('redirectInterceptor');
     $httpProvider.interceptors.push('httpInterceptor');
-});
+    //$httpProvider.defaults.cache = false;
+    //initialize get if not there
+    if (!$httpProvider.defaults.headers.get) {
+        $httpProvider.defaults.headers.get = {};
+    }
+
+    // Answer edited to include suggestions from comments
+    // because previous version of code introduced browser-related errors
+
+    //disable IE ajax request caching
+    $httpProvider.defaults.headers.get['If-Modified-Since'] = new Date();
+    // extra
+    $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
+    $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
+}]);
+
+TransEarthApp.directive('customDatepicker',['$compile', function($compile){
+    return {
+        replace:true,
+        //templateUrl:'custom-datepicker.html',
+        //template : '<input type="text" ui-date-format="yy-mm-dd" ng-model="ngModel" ui-date="dateOptions"/>',
+        scope: {
+            ngModel: '=',
+            dateOptions: '='
+        },
+        link: function($scope, $element, $attrs, $controller){
+            var html = [];
+            html.push('<input type="text" ui-date-format="yy-mm-dd" ng-model="ngModel" ui-date="dateOptions"/>');
+            $element.html(html.join(''));
+            $compile($element.contents())($scope);
+
+            var $button = $element.find('button');
+            var $input = $element.find('input');
+            $button.on('click',function(){
+                if($input.is(':focus')){
+                    $input.trigger('blur');
+                } else {
+                    $input.trigger('focus');
+                }
+            });
+        }
+    };
+}
+]);
 
 TransEarthApp.directive("loader", function ($rootScope) {
     return function ($scope, element, attrs) {
