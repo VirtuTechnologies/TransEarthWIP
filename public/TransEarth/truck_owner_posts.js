@@ -163,6 +163,7 @@ function truckOwnerPostsCtrl($scope, $http, $location, $modal, UserRequest, Truc
     $scope.editTruckPost = function(truckId, postId, availableDate){
         //console.log("Editing truck : "+truckId+" Post:"+postId+" Date: "+new Date(availableDate)+" Current Date: " +new Date());
         //console.log("Get Shared Truck Request: "+TruckRequest.getSharedTruckId());
+        $scope.truckOwnerPage.showManagePost = false;
         TruckPostRequest.setSharedTruck(null);
         if(new Date(availableDate) < new Date((new Date()).getFullYear(), (new Date()).getMonth(), (new Date()).getDate())){
             $scope.myTruckPostList.messageAvailable = true;

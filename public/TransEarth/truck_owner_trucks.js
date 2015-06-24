@@ -170,6 +170,7 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
 
     $scope.addTruckPost = function(truckId){
         //console.log("Add post to truck: "+truckId);
+        $scope.truckOwnerPage.showManagePost = false;
         TruckPostRequest.setSharedTruck(null);
         $scope.myTruckList.showAddPostError = false;
         $http.post("/TransEarth/getTruckById", {truckId : truckId})
