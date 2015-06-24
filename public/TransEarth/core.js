@@ -891,6 +891,7 @@ function coreController($scope, $rootScope, $http, $location, $modal, UserReques
     $scope.siteTitle = 'Transport Earth';
     $scope.page = {};
     $scope.core = {};
+    $scope.truckOwnerPage = {};
     $scope.core.menus = [];
     $scope.core.pageHeaders = {
         "home" : "Home",
@@ -1005,7 +1006,8 @@ function coreController($scope, $rootScope, $http, $location, $modal, UserReques
                 isActive : $scope.core.loggedIn,
                 home : false,
                 display_name : "Add Truck",
-                func : $scope.gotoAddTrucksPage,
+                //func : $scope.gotoAddTrucksPage,
+                func : $scope.addTruck,
                 dropList : false
             });
         }
@@ -1225,8 +1227,9 @@ function coreController($scope, $rootScope, $http, $location, $modal, UserReques
     $scope.addTruck = function(){
         //console.log("Add Truck clicked");
         TruckRequest.setSharedTruck(null);
-        $scope.page.template = null;
-        $scope.page.template = ''+"/TransEarth/manage_truck?test=1";
+        //$scope.page.template = null;
+        //$scope.page.template = ''+"/TransEarth/manage_truck?test=1";
+        $scope.page.template = ''+"/TransEarth/add_trucks";
         $scope.page.scope = "Add Truck";
         //console.log("Search Truck clicked : "+$scope.pageTemplate);
     };
@@ -1241,248 +1244,6 @@ function coreController($scope, $rootScope, $http, $location, $modal, UserReques
         $scope.page.template = ''+"/TransEarth/manage_load";
         $scope.page.scope = "Add Load";
         //console.log("Search Truck clicked : "+$scope.pageTemplate);
-    };
-
-    $scope.gotoAddTrucksPage = function(){
-        //$scope.page.template = "/TransEarth/add_trucks";
-        //$scope.page.scope = "Add Multiple Trucks";
-        $scope.newTrucks = {};
-        $scope.newTrucks.open = function (size) {
-            var modalInstance = $modal.open({
-                templateUrl: 'addTrucks.html',
-                controller: AddTrucksCtrl,
-                //windowClass: 'xx-dialog',
-                size: size,
-                resolve: {
-                    result : function () {
-                        //console.log("Modal $scope.newTrucks.result: "+JSON.stringify($scope.newTrucks.result));
-                        return $scope.newTrucks.result;
-                    }
-                }
-            });
-            modalInstance.result.then(function(result){
-                //on ok button press
-                if(result){
-                    $scope.loadMyTrucks();
-                }
-                //console.log("On ok button press");
-                //$scope.inActivateTruck(truckToRemove);
-            },function(){
-                //on cancel button press
-                //console.log("Modal Closed");
-                //$scope.getPagedDataAsync($scope.myTruckList.pagingOptions.pageSize, $scope.myTruckList.pagingOptions.currentPage);
-            });
-        };
-
-        var AddTrucksCtrl = function ($scope, $modalInstance, $http, $timeout, UserRequest, result) {
-
-            $scope.newTrucksModal = {};
-            $scope.newTrucksModal.result = {};
-
-            $scope.init = function(){
-                $scope.getTruckTypes();
-                $scope.getTruckMakes();
-            };
-            $scope.truckTypeList = [];
-            $scope.getTruckTypes = function(){
-                $http.get("/TransEarth/getTruckTypes")
-                    .success(function(truckTypes) {
-                        //console.log("Truck Types looked up:"+JSON.stringify(truckTypes));
-                        $scope.truckTypeList = truckTypes;
-                        //$scope.truck.details.type = "";
-                    }).error(function(err) {
-                        //console.log("truckType Lookup failed:"+JSON.stringify(err));
-                    });
-            };
-            //$scope.getTruckTypes();
-            $scope.makeList = [];
-            $scope.getTruckMakes = function(){
-                $http.get("/TransEarth/getTruckMakes")
-                    .success(function(truckMakes) {
-                        //console.log("Truck Makes looked up:"+truckMakes);
-                        $scope.makeList = truckMakes;
-                        //$scope.truck.details.make = "";
-                    }).error(function(err) {
-                        //console.log("Make Lookup failed:"+JSON.stringify(err));
-                    });
-            };
-
-            $scope.counter = 0;
-            $scope.newTrucksModal.trucks = [];
-            $scope.stopAdd = false;
-            $scope.addTruckRow = function(){
-                $scope.counter++;
-                if($scope.counter>9){
-                    $scope.stopAdd = true;
-                }
-                $scope.newTrucksModal.trucks.push(
-                    {
-                        "index" : $scope.counter,
-                        "$edit" : true,
-                        "details" : {
-                            "type" : "",
-                            "make" : "",
-                            "model" : "",
-                            "regno" : "",
-                            "load" : ""
-                        },
-                        haveMessage : false
-                    }
-                );
-
-                $scope.isError = true;
-                //$scope.tableParams.reload();
-            };
-
-            $scope.checkErrors = function(truck){
-
-                if(typeof truck != "undefined" && truck != null && typeof truck.details != "undefined" && truck.details != null){
-                    if(typeof truck.details.type != "undefined" && truck.details.type != null && truck.details.type != ""
-                        && typeof truck.details.make != "undefined" && truck.details.make != null && truck.details.make != ""
-                        && typeof truck.details.model != "undefined" && truck.details.model != null && truck.details.model != ""
-                        && typeof truck.details.regno != "undefined" && truck.details.regno != null && truck.details.regno != ""
-                        && typeof truck.details.load != "undefined" && truck.details.load != null && truck.details.load != ""){
-                        $scope.isError = false;
-                        return false;
-                    }else{
-                        return true;
-                    }
-                }else{
-                    return true;
-                }
-            };
-
-            $scope.disableSubmit = function(trucks){
-
-                var result = true;
-                for(var i in trucks){
-                    var truck = trucks[i];
-                    if(typeof truck != "undefined" && truck != null && typeof truck.details != "undefined" && truck.details != null){
-                        if(typeof truck.details.type != "undefined" && truck.details.type != null && truck.details.type != ""
-                            && typeof truck.details.make != "undefined" && truck.details.make != null && truck.details.make != ""
-                            && typeof truck.details.model != "undefined" && truck.details.model != null && truck.details.model != ""
-                            && typeof truck.details.regno != "undefined" && truck.details.regno != null && truck.details.regno != ""
-                            && typeof truck.details.load != "undefined" && truck.details.load != null && truck.details.load != ""){
-                            $scope.isError = false;
-                            result = false;
-                        }else{
-                            return true;
-                        }
-                    }else{
-                        return true;
-                    }
-                }
-                return result;
-            };
-
-            $scope.removeTruck = function(index){
-                $scope.newTrucksModal.trucks.splice(index, 1);
-                $scope.counter--;
-                if($scope.counter>9){
-                    $scope.stopAdd = true;
-                }else{
-                    $scope.stopAdd = false;
-                }
-                //$scope.tableParams.reload();
-            };
-
-            $scope.showMessages = function(list){
-                //console.log("Show Messages check: "+JSON.stringify(list));
-                for(var ind in list){
-                    var item = list[ind];
-                    //console.log("Show Messages check item: "+JSON.stringify(item));
-                    if(typeof list[ind]["haveMessage"] == "undefined" || list[ind]["haveMessage"] == null || !list[ind]["haveMessage"]){
-                        return false;
-                    }
-                }
-                return true;
-            };
-
-            $scope.addTrucks = function(trucks){
-                //console.log("Adding trucks");
-                if(typeof trucks != "undefined" && trucks != null && Array.isArray(trucks) && trucks.length > 0){
-                    //console.log(JSON.stringify(trucks));
-                    for(var i in trucks){
-                        //var truck = trucks[i];
-                        $scope.saveTrucks(trucks, i);
-                        //console.log(JSON.stringify(truck));
-                    }
-                }
-            };
-
-            $scope.closeOut = false;
-            $scope.saveTrucks = function(trucks, index){
-
-                $scope.closeOut = true;
-                if(typeof trucks[index] != "undefined" && trucks[index] != null && typeof trucks[index].details != "undefined" && trucks[index].details != null){
-                    if(typeof trucks[index].details.type != "undefined" && trucks[index].details.type != null && trucks[index].details.type != ""
-                        && typeof trucks[index].details.make != "undefined" && trucks[index].details.make != null && trucks[index].details.make != ""
-                        && typeof trucks[index].details.model != "undefined" && trucks[index].details.model != null && trucks[index].details.model != ""
-                        && typeof trucks[index].details.regno != "undefined" && trucks[index].details.regno != null && trucks[index].details.regno != ""
-                        && typeof trucks[index].details.load != "undefined" && trucks[index].details.load != null && trucks[index].details.load != ""){
-                        //console.log("Saving truck: "+JSON.stringify(trucks[index]));
-                        $http.post("/TransEarth/addTruck", {truck : trucks[index]})
-                            .success(function(result) {
-                                //console.log("Truck saved successfully: "+JSON.stringify(trucks[index]));
-                                trucks[index].haveMessage = true;
-                                trucks[index].hasError = false;
-                                trucks[index].message = "Saved";
-                                //$scope.data[i] = truck;
-                                $scope.newTrucksModal.trucks.splice($scope.newTrucksModal.trucks.indexOf(trucks[index].index),1, trucks[index]);
-                                //console.log("Spliced data with truck index: "+trucks[index].index+" replaced "+JSON.stringify($scope.newTrucksModal.trucks));
-                                if($scope.showMessages($scope.newTrucksModal.trucks)){
-                                    //console.log("Trucks with message "+index+" :"+JSON.stringify($scope.newTrucksModal.trucks));
-                                    //$scope.tableParams.reload();
-                                }
-                            }).error(function(err) {
-                                //console.log("Truck saved failed:"+err);
-                                trucks[index].haveMessage = true;
-                                trucks[index].hasError = true;
-                                trucks[index].message = JSON.stringify(err);
-                                //$scope.data[i] = truck;
-                                $scope.newTrucksModal.trucks.splice($scope.data.indexOf(trucks[index].index),1, trucks[index]);
-                                if($scope.showMessages($scope.newTrucksModal.trucks)){
-                                    //console.log("Trucks with Save Crashed "+index+" :"+JSON.stringify($scope.newTrucksModal.trucks));
-                                    //$scope.tableParams.reload();
-                                }
-                            });
-                    }else{
-                        trucks[index].haveMessage = true;
-                        trucks[index].message = "Something Crashed";
-                        //$scope.data[i] = truck;
-                        $scope.newTrucksModal.trucks.splice($scope.newTrucksModal.trucks.indexOf(trucks[index].index),1, trucks[index]);
-                        if($scope.showMessages($scope.newTrucksModal.trucks)){
-                            //console.log("Trucks with Something Crashed "+index+" :"+JSON.stringify($scope.newTrucksModal.trucks));
-                            //$scope.tableParams.reload();
-                        }
-                    }
-                }else{
-                    truck.haveMessage = true;
-                    truck.message = "Don't Crash";
-                    //$scope.data[i] = truck;
-                    $scope.newTrucksModal.trucks.splice($scope.newTrucksModal.trucks.indexOf(truck.index),1, truck);
-                    if($scope.showMessages($scope.newTrucksModal.trucks)){
-                        //console.log("Trucks with Don't Crash "+i+" :"+JSON.stringify($scope.newTrucksModal.trucks));
-                        //$scope.tableParams.reload();
-                    }
-                }
-
-            };
-
-            $scope.goToHome = function(){
-                $scope.newTrucksModal.result = true;
-                $scope.ok();
-            };
-            $scope.ok = function () {
-                $modalInstance.close($scope.newTrucksModal.result);
-            };
-
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-        };
-
-        $scope.newTrucks.open('lg');
     };
 
     $scope.truckPostDetails = {};

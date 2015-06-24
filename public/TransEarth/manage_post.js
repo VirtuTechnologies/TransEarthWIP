@@ -92,7 +92,7 @@ function truckPostManageCtrl($scope, $http, $location, $anchorScroll, $filter, U
     $scope.addTruckPostInd = false;
     $scope.editTruckPostInd = false;
     if(typeof $scope.truckPostToUpdate != "undefined" && $scope.truckPostToUpdate != null){
-        //console.log("truckPostToUpdate data: "+JSON.stringify($scope.truckPostToUpdate));
+        console.log("truckPostToUpdate data: "+JSON.stringify($scope.truckPostToUpdate));
         $scope.addTruckPostInd = false;
         $scope.editTruckPostInd = true;
         $scope.page.header = "Update Post";

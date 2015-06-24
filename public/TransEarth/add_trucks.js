@@ -1,19 +1,18 @@
-function addTrucksCtrl($scope, $http, $location, $anchorScroll, $timeout, ngTableParams, UserRequest) {
-    //console.log('Inside addTrucksCtrl');
-    var data = [];
-    $scope.data = [];
-    $scope.closeOut = false;
+function addTrucksCtrl($scope, $http, $location, $anchorScroll, $timeout, UserRequest) {
+    console.log('Inside addTrucksCtrl');
+    $scope.addTruckModel = {};
+    $scope.addTruckModel.trucks = [];
 
-    $scope.gotoHome = function(){
-        $scope.page.template = "/TransEarth/truck_owner_home";
-        $scope.page.scope = "Truck Owner Home";
-    };
-
-    $scope.isError = true;
     $scope.init = function(){
         $scope.getTruckTypes();
         $scope.getTruckMakes();
     };
+
+    $scope.goToHome = function(){
+        $scope.page.template = "/TransEarth/truck_owner_home";
+        $scope.page.scope = "Truck Owner Home";
+    };
+
     $scope.truckTypeList = [];
     $scope.getTruckTypes = function(){
         $http.get("/TransEarth/getTruckTypes")
@@ -39,9 +38,14 @@ function addTrucksCtrl($scope, $http, $location, $anchorScroll, $timeout, ngTabl
     };
 
     $scope.counter = 0;
+    $scope.stopAdd = false;
     $scope.addTruckRow = function(){
         $scope.counter++;
-        $scope.data.push(
+        if($scope.counter>9){
+            $scope.stopAdd = true;
+        }
+        console.log('$scope.addTruckModel.trucks: '+$scope.addTruckModel.trucks);
+        $scope.addTruckModel.trucks.push(
             {
                 "index" : $scope.counter,
                 "$edit" : true,
@@ -58,36 +62,6 @@ function addTrucksCtrl($scope, $http, $location, $anchorScroll, $timeout, ngTabl
 
         $scope.isError = true;
         //$scope.tableParams.reload();
-    };
-    $scope.editRow = function(index){
-        //console.log("Editing row with index "+index);
-        /* var options = '';
-        options += '<option data-hidden="true">Choose one</option>';
-        $.each($scope.truckTypeList, function (i, row) {
-            //console.log(JSON.stringify(row));
-            options += '<option>' + row + '</option>';
-        });
-        //alert(id+' - '+options);
-        //Apply html with option
-        //console.log("Applying options for truck_type"+index);
-        applyHtml("truck_type"+index, options);
-        applySelect("truck_type"+index);
-        options = '';
-        options += '<option data-hidden="true">Choose one</option>';
-        $.each($scope.truckTypeList, function (i, row) {
-            //console.log(JSON.stringify(row));
-            options += '<option>' + row + '</option>';
-        });
-        //alert(id+' - '+options);
-        //Apply html with option
-        //console.log("Applying options for truck_make"+index);
-        applyHtml("truck_make"+index, options);
-        applySelect("truck_make"+index);*/
-
-        //$("#truck_type"+index).selectpicker.val("");
-        //$("#truck_type"+index).selectpicker("refresh");
-        //$("#truck_make"+index).selectpicker.val("");
-        //$("#truck_make"+index).selectpicker("refresh");
     };
 
     $scope.checkErrors = function(truck){
@@ -132,8 +106,14 @@ function addTrucksCtrl($scope, $http, $location, $anchorScroll, $timeout, ngTabl
     };
 
     $scope.removeTruck = function(index){
-        $scope.data.splice(index, 1);
-        $scope.tableParams.reload();
+        $scope.addTruckModel.trucks.splice(index, 1);
+        $scope.counter--;
+        if($scope.counter>9){
+            $scope.stopAdd = true;
+        }else{
+            $scope.stopAdd = false;
+        }
+        //$scope.tableParams.reload();
     };
 
     $scope.showMessages = function(list){
@@ -160,73 +140,63 @@ function addTrucksCtrl($scope, $http, $location, $anchorScroll, $timeout, ngTabl
         }
     };
 
+    $scope.closeOut = false;
     $scope.saveTrucks = function(trucks, index){
 
         $scope.closeOut = true;
-        if(typeof trucks[index] != "undefined" && trucks[index] != null && typeof trucks[index].details != "undefined" && trucks[index].details != null){
-            if(typeof trucks[index].details.type != "undefined" && trucks[index].details.type != null && trucks[index].details.type != ""
-                && typeof trucks[index].details.make != "undefined" && trucks[index].details.make != null && trucks[index].details.make != ""
-                && typeof trucks[index].details.model != "undefined" && trucks[index].details.model != null && trucks[index].details.model != ""
-                && typeof trucks[index].details.regno != "undefined" && trucks[index].details.regno != null && trucks[index].details.regno != ""
-                && typeof trucks[index].details.load != "undefined" && trucks[index].details.load != null && trucks[index].details.load != ""){
+        var newTruck = trucks[index];
+        if(typeof newTruck != "undefined" && newTruck != null && typeof newTruck.details != "undefined" && newTruck.details != null){
+            if(typeof newTruck.details.type != "undefined" && newTruck.details.type != null && newTruck.details.type != ""
+                && typeof newTruck.details.make != "undefined" && newTruck.details.make != null && newTruck.details.make != ""
+                && typeof newTruck.details.model != "undefined" && newTruck.details.model != null && newTruck.details.model != ""
+                && typeof newTruck.details.regno != "undefined" && newTruck.details.regno != null && newTruck.details.regno != ""
+                && typeof newTruck.details.load != "undefined" && newTruck.details.load != null && newTruck.details.load != ""){
                 //console.log("Saving truck: "+JSON.stringify(trucks[index]));
-                $http.post("/TransEarth/addTruck", {truck : trucks[index]})
+                $http.post("/TransEarth/addTruck", {truck : newTruck})
                     .success(function(result) {
                         //console.log("Truck saved successfully: "+JSON.stringify(trucks[index]));
-                        trucks[index].haveMessage = true;
-                        trucks[index].message = "Saved";
+                        newTruck.haveMessage = true;
+                        newTruck.hasError = false;
+                        newTruck.message = "Saved";
                         //$scope.data[i] = truck;
-                        $scope.data.splice($scope.data.indexOf(trucks[index].index),1, trucks[index]);
-                        //console.log("Spliced data with truck index: "+trucks[index].index+" replaced "+JSON.stringify($scope.data));
-                        if($scope.showMessages($scope.data)){
-                            //console.log("Trucks with message "+index+" :"+JSON.stringify($scope.data));
-                            $scope.tableParams.reload();
+                        $scope.addTruckModel.trucks.splice($scope.addTruckModel.trucks.indexOf(newTruck.index),1, newTruck);
+                        //console.log("Spliced data with truck index: "+trucks[index].index+" replaced "+JSON.stringify($scope.addTruckModel.trucks));
+                        if($scope.showMessages($scope.addTruckModel.trucks)){
+                            //console.log("Trucks with message "+index+" :"+JSON.stringify($scope.addTruckModel.trucks));
+                            //$scope.tableParams.reload();
                         }
                     }).error(function(err) {
                         //console.log("Truck saved failed:"+err);
-                        trucks[index].haveMessage = true;
-                        trucks[index].message = "Save Crashed";
+                        newTruck.haveMessage = true;
+                        newTruck.hasError = true;
+                        newTruck.message = JSON.stringify(err);
                         //$scope.data[i] = truck;
-                        $scope.data.splice($scope.data.indexOf(trucks[index].index),1, trucks[index]);
-                        if($scope.showMessages($scope.data)){
-                            //console.log("Trucks with Save Crashed "+index+" :"+JSON.stringify($scope.data));
-                            $scope.tableParams.reload();
+                        $scope.addTruckModel.trucks.splice($scope.data.indexOf(newTruck.index),1, newTruck);
+                        if($scope.showMessages($scope.addTruckModel.trucks)){
+                            //console.log("Trucks with Save Crashed "+index+" :"+JSON.stringify($scope.addTruckModel.trucks));
+                            //$scope.tableParams.reload();
                         }
                     });
             }else{
-                trucks[index].haveMessage = true;
-                trucks[index].message = "Something Crashed";
+                newTruck.haveMessage = true;
+                newTruck.message = "Something Crashed";
                 //$scope.data[i] = truck;
-                $scope.data.splice($scope.data.indexOf(trucks[index].index),1, trucks[index]);
-                if($scope.showMessages($scope.data)){
-                    //console.log("Trucks with Something Crashed "+index+" :"+JSON.stringify($scope.data));
-                    $scope.tableParams.reload();
+                $scope.addTruckModel.trucks.splice($scope.addTruckModel.trucks.indexOf(newTruck.index),1, newTruck);
+                if($scope.showMessages($scope.addTruckModel.trucks)){
+                    //console.log("Trucks with Something Crashed "+index+" :"+JSON.stringify($scope.addTruckModel.trucks));
+                    //$scope.tableParams.reload();
                 }
             }
         }else{
             truck.haveMessage = true;
             truck.message = "Don't Crash";
             //$scope.data[i] = truck;
-            $scope.data.splice($scope.data.indexOf(truck.index),1, truck);
-            if($scope.showMessages($scope.data)){
-                //console.log("Trucks with Don't Crash "+i+" :"+JSON.stringify($scope.data));
-                $scope.tableParams.reload();
+            $scope.addTruckModel.trucks.splice($scope.addTruckModel.trucks.indexOf(truck.index),1, truck);
+            if($scope.showMessages($scope.addTruckModel.trucks)){
+                //console.log("Trucks with Don't Crash "+i+" :"+JSON.stringify($scope.addTruckModel.trucks));
+                //$scope.tableParams.reload();
             }
         }
 
     };
-
-    $scope.tableParams = new ngTableParams({
-        page: 1,   // show first page
-        total: 1,  // value less than count hide pagination
-        count: 10  // count per page
-    }, {
-        counts: [], // hide page counts control
-        //total: data.length, // length of data
-        getData: function ($defer, params) {
-            var pageData = $scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count());
-            $defer.resolve(pageData);
-        }
-    });
-
 }

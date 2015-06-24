@@ -95,6 +95,7 @@
 				<tfoot>
 				<tr>
 					<td>
+						Total Posts: {{loadPostList.totalServerItems}}
 					</td>
 					<td>
 					</td>
@@ -102,18 +103,17 @@
 					</td>
 					<td colspan="3">
 						<a href="#"
-						   ng-disabled="loadPostList.pagingOptions.currentPage==1||loadPostList.totalServerItems<truckPostList.pagingOptions.pageSize"
+						   ng-if="!(loadPostList.pagingOptions.currentPage==1||loadPostList.totalServerItems<loadPostList.pagingOptions.pageSize)"
 						   ng-click="getPagedDataAsync(loadPostList.pagingOptions.pageSize, 1)">First Page<img src="images/first.png" alt="" /></a>
 						<a href="#"
-						   ng-disabled="loadPostList.pagingOptions.currentPage==1"
+						   ng-if="!(loadPostList.pagingOptions.currentPage==1)"
 						   ng-click="getPagedDataAsync(loadPostList.pagingOptions.pageSize, loadPostList.pagingOptions.currentPage - 1)">Previous<img src="images/back.png" alt="" /></a>
-						{{loadPostList.totalServerItems}}
 						<a href="#"
-						   ng-disabled="loadPostList.pagingOptions.currentPage==loadPostList.pagingOptions.lastPage"
+						   ng-if="!(loadPostList.pagingOptions.currentPage==loadPostList.pagingOptions.lastPage)"
 						   ng-click="getPagedDataAsync(loadPostList.pagingOptions.pageSize, loadPostList.pagingOptions.currentPage + 1)"><img src="images/nextp.png" alt="" />Next</a>
 						<a href="#"
-						   ng-disabled="loadPostList.pagingOptions.currentPage==loadPostList.pagingOptions.lastPage"
-						   ng-click="getPagedDataAsync(loadPostList.pagingOptions.pageSize, loadPostList.pagingOptions.lastPage - 1)"><img src="images/last.png" alt="" />Last Page</a>
+						   ng-if="!(loadPostList.pagingOptions.currentPage==loadPostList.pagingOptions.lastPage)"
+						   ng-click="getPagedDataAsync(loadPostList.pagingOptions.pageSize, loadPostList.pagingOptions.lastPage)"><img src="images/last.png" alt="" />Last Page</a>
 					</td>
 					<!-- td colspan="3">
                         <a href="#">First Page<img src="images/first.png" alt="" /></a>
