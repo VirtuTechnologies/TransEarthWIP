@@ -1,9 +1,9 @@
 <div id="load_owner" ng-controller="loadOwnerCtrl">
     <form id="myLoadForm" name="myLoadForm" role="form">
-        <input type="textbox" class="searchbox" name="myloadsearch"
+        <div class="load-search">
+        <input type="textbox" class="" name="myloadsearch"
                ng-model="myLoadList.myLoads_filter"
-               value="" placeholder="Search" />
-        <img class="shadow1" src="images/shadow1.png" alt="" />
+               value="" placeholder="Search" /></div>
         <div class="results">
             <div ng-show="myLoadList.messageAvailable">
                 <div id="myLoadList_alert"></div>
