@@ -170,6 +170,7 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
 
     $scope.addTruckPost = function(truckId){
         //console.log("Add post to truck: "+truckId);
+        TruckPostRequest.setSharedTruck(null);
         $scope.myTruckList.showAddPostError = false;
         $http.post("/TransEarth/getTruckById", {truckId : truckId})
             .success(function(data) {
@@ -178,7 +179,7 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
                 if(typeof data != 'undefined' && data != null){
                     //console.log(JSON.stringify(data));
                     TruckRequest.setSharedTruck(data);
-                    TruckPostRequest.getSharedTruckPostId(null);
+                    //TruckPostRequest.getSharedTruckPostId(null);
                     //console.log("Get Shared Truck Request: "+JSON.stringify(TruckRequest.getSharedTruck()));
                     $scope.myTruckList.showAddPostError = false;
                     //$scope.truckOwnerPage.showPostList = false;
