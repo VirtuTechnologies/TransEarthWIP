@@ -1,9 +1,10 @@
 //ng-grid Truck List
-function truckOwnerCtrl($scope, $http, $location, UserRequest, TruckRequest) {
+function truckOwnerCtrl($scope, $http, $location, UserRequest, TruckRequest, TruckPostRequest) {
     //console.log('Inside truckOwnerCtrl');
 
     clearAlert("truck_home_alert");
     TruckRequest.setSharedTruck(null);
+    TruckPostRequest.setSharedTruck(null);
     if(TruckRequest.isSharedTruckProcessed()){
         //console.log("Truck processed");
         TruckRequest.setSharedTruckProcessed(false);
