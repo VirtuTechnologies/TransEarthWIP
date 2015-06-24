@@ -3,11 +3,13 @@
 		<div class="div-header">
 			<img class="pane-icon" src="images/posts.png" alt="" />
 			<h4>My Posts <span>({{myTruckPostList.totalServerItems}})</span></h4>
-			<input type="textbox" class="searchbox" name="mytrucksearch" Value="" placeholder="Search" />
+			<input type="textbox" class="searchbox" name="mypostsearch"
+				   ng-model="myPosts_filter"
+				   value="" placeholder="Search" />
 			<button><img src="images/search-btn-white.png" alt="Search" /></button>
 		</div>
 		<div class="posts">
-			<ul ng-repeat="post in myTruckPostList.list" class="runtime-div slide-left">
+			<ul ng-repeat="post in myTruckPostList.list | filter:myPosts_filter" class="runtime-div slide-left">
 				<img class="runtime-icon" src="images/truck-posts.png" alt="" />
 				<li class="runtime-details"><a href="#" ng-click="getTruckPostDetailById(post.truck_id, post.post_id)"><b>{{post.regNo}}</b></a></li>
 				<li class="runtime-details">{{post.source}} - {{post.destination}}</li>

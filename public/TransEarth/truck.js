@@ -61,10 +61,11 @@ function truckListCtrl($scope, $http, $location, $modal, $filter, UserRequest) {
     $scope.setPagingData = function(data, page, pageSize){
         var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
         //console.log(JSON.stringify(pagedData));
-        $scope.truckPostList.list = pagedData;
-
         $scope.truckPostList.totalServerItems = data.length;
+        $scope.truckPostList.list = pagedData;
         console.log("truckPostList.totalServerItems: "+$scope.truckPostList.totalServerItems);
+        console.log("truckPostList.pagingOptions.currentPage: "+$scope.truckPostList.pagingOptions.currentPage);
+        console.log("truckPostList.pagingOptions.currentPage: "+$scope.truckPostList.pagingOptions.currentPage);
         $scope.truckPostList.gridOptions = {
             data: 'truckPostList.list',
             /*beforeSelectionChange: function() {

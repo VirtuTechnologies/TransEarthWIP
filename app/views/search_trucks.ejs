@@ -94,6 +94,7 @@
 				<tfoot>
 				<tr>
 					<td>
+						Total Posts: {{truckPostList.totalServerItems}}
 					</td>
 					<td>
 					</td>
@@ -101,18 +102,17 @@
 					</td>
 					<td colspan="2">
 						<a href="#"
-						   ng-disabled="truckPostList.pagingOptions.currentPage==1||truckPostList.totalServerItems<truckPostList.pagingOptions.pageSize"
+						   ng-if="!(truckPostList.pagingOptions.currentPage==1||truckPostList.totalServerItems<truckPostList.pagingOptions.pageSize)"
 						   ng-click="getPagedDataAsync(truckPostList.pagingOptions.pageSize, 1)">First Page<img src="images/first.png" alt="" /></a>
 						<a href="#"
-						   ng-disabled="truckPostList.pagingOptions.currentPage==1"
+						   ng-if="!(truckPostList.pagingOptions.currentPage==1)"
 						   ng-click="getPagedDataAsync(truckPostList.pagingOptions.pageSize, truckPostList.pagingOptions.currentPage - 1)">Previous<img src="images/back.png" alt="" /></a>
-						{{truckPostList.totalServerItems}}
 						<a href="#"
-						   ng-disabled="truckPostList.pagingOptions.currentPage==truckPostList.pagingOptions.lastPage"
+						   ng-if="!(truckPostList.pagingOptions.currentPage==truckPostList.pagingOptions.lastPage)"
 						   ng-click="getPagedDataAsync(truckPostList.pagingOptions.pageSize, truckPostList.pagingOptions.currentPage + 1)"><img src="images/nextp.png" alt="" />Next</a>
 						<a href="#"
-						   ng-disabled="truckPostList.pagingOptions.currentPage==truckPostList.pagingOptions.lastPage"
-						   ng-click="getPagedDataAsync(truckPostList.pagingOptions.pageSize, truckPostList.pagingOptions.lastPage - 1)"><img src="images/last.png" alt="" />Last Page</a>
+						   ng-if="!(truckPostList.pagingOptions.currentPage==truckPostList.pagingOptions.lastPage)"
+						   ng-click="getPagedDataAsync(truckPostList.pagingOptions.pageSize, truckPostList.pagingOptions.lastPage)"><img src="images/last.png" alt="" />Last Page</a>
 					</td>
 				</tr>
 				</tfoot>

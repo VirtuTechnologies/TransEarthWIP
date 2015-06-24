@@ -48,7 +48,7 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
         //}
     };
     $scope.$watch('truckOwnerPage.refresh', function (newVal, oldVal) {
-        //console.log(' My Truck Posts refresh '+JSON.stringify(newVal));
+        console.log(' My Truck Posts refresh '+JSON.stringify(newVal));
         if(typeof newVal != "undefined" && newVal != null){
             $scope.getPagedDataAsync();
         }
@@ -86,6 +86,9 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
 
     $scope.truckToRemove = {};
     $scope.open = function (size) {
+        if(typeof $scope.truckOwnerPage == "undefined" || $scope.truckOwnerPage== null ){
+            $scope.truckOwnerPage = {};
+        }
         var modalInstance = $modal.open({
             templateUrl: 'myTruckRemoveModal.html',
             controller: TruckRemoveModalCtrl,
@@ -102,10 +105,15 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
             //on ok button press
             //console.log("On ok button press");
             //$scope.inActivateTruck(truckToRemove);
+            if(typeof $scope.truckToRemove.status != "undefined" && $scope.truckToRemove.status != null){
+                console.log("On ok button press");
+                $scope.truckOwnerPage.refresh = ($scope.truckOwnerPage.refresh != null) ? !$scope.truckOwnerPage.refresh : true;
+                $scope.truckToRemove.status = null;
+            }
         },function(){
             //on cancel button press
-            //console.log("Modal Closed");
-            $scope.getPagedDataAsync($scope.myTruckList.pagingOptions.pageSize, $scope.myTruckList.pagingOptions.currentPage);
+            console.log("Modal Closed");
+            //$scope.getPagedDataAsync($scope.myTruckList.pagingOptions.pageSize, $scope.myTruckList.pagingOptions.currentPage);
         });
     };
 
@@ -124,7 +132,10 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
                 .success(function(data) {
                     $scope.showClose = true;
                     // succesAlert(data.statusMsg, 'eaiSaveStatus');
+                    //$scope.truckOwnerPage.refresh = ($scope.truckOwnerPage.refresh != null) ? !$scope.truckOwnerPage.refresh : true;
+
                     successInfo(data.statusMsg, 'remove_truck_alert');
+                    $scope.truckToInactivate.status = "success";
                     /*if(typeof data != 'undefined' && data != null){
                         //console.log(JSON.stringify(data));
                         TruckRequest.setSharedTruck(data);
@@ -144,7 +155,8 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
         };
 
         $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
+            //$modalInstance.dismiss('cancel');
+            $modalInstance.close($scope.truckToRemove);
         };
     };
 
@@ -166,7 +178,7 @@ function truckOwnerTrucksCtrl($scope, $http, $location, $modal, UserRequest, Tru
                 if(typeof data != 'undefined' && data != null){
                     //console.log(JSON.stringify(data));
                     TruckRequest.setSharedTruck(data);
-                    //TruckPostRequest.setSharedTruck(null);
+                    TruckPostRequest.getSharedTruckPostId(null);
                     //console.log("Get Shared Truck Request: "+JSON.stringify(TruckRequest.getSharedTruck()));
                     $scope.myTruckList.showAddPostError = false;
                     //$scope.truckOwnerPage.showPostList = false;

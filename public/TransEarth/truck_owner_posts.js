@@ -42,12 +42,12 @@ function truckOwnerPostsCtrl($scope, $http, $location, $modal, UserRequest, Truc
             $scope.$apply();
         }
     };
-    $scope.myTruckPostList.getPagedDataAsync = function (pageSize, page, searchText) {
+    $scope.myTruckPostList.getPagedDataAsync = function () {
         //if($scope.myTruckList.searchTriggered){
         setTimeout(function () {
             var data;
             //console.log("Search Text: "+searchText);
-            if (searchText) {
+            if (0==1) {
                 var ft = searchText.toLowerCase();
                 $http.post("/TransEarth/getMyTruckPosts", {filters : []})
                     .success(function(data) {
@@ -60,12 +60,12 @@ function truckOwnerPostsCtrl($scope, $http, $location, $modal, UserRequest, Truc
                             $scope.myTruckPostList.totalServerItems = data.length;
                             $scope.myTruckPostList.list = data.myTruckPostList.details;
                             $scope.myTruckPostList.totalServerItems = $scope.myTruckPostList.list.length;
-                            var filteredData = data.myTruckPostList.details.filter(function(item) {
+                            /*var filteredData = data.myTruckPostList.details.filter(function(item) {
                                 return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
-                            });
+                            });*/
                             //console.log("Filtered Data:"+JSON.stringify(filteredData));
                             $scope.myTruckPostList.columnDefs = data.myTruckPostList.headers;
-                            $scope.myTruckPostList.setPagingData(filteredData,page,pageSize);
+                            //$scope.myTruckPostList.setPagingData(filteredData,page,pageSize);
                             $scope.myTruckPostList.listShow = true;
                             $scope.myTruckPostList.searchButtonName = "Review TruckList";
                         }else{
@@ -97,15 +97,17 @@ function truckOwnerPostsCtrl($scope, $http, $location, $modal, UserRequest, Truc
                             && data.myTruckPostList.details.length > 0){
                             //console.log(JSON.stringify(data.myTruckPostList.details));
                             $scope.myTruckPostList.totalServerItems = data.length;
-                            var filteredData = data.myTruckPostList.details;
+                            //var filteredData = data.myTruckPostList.details;
                             $scope.myTruckPostList.list = data.myTruckPostList.details;
+
                             $scope.myTruckPostList.totalServerItems = $scope.myTruckPostList.list.length;
                             $scope.myTruckPostList.columnDefs = data.myTruckPostList.headers;
-                            $scope.myTruckPostList.setPagingData(filteredData,page,pageSize);
+                            //$scope.myTruckPostList.setPagingData(filteredData,page,pageSize);
                             $scope.myTruckPostList.listShow = true;
                             $scope.myTruckPostList.searchButtonName = "Review TruckList";
                         }else{
                             //console.log("No data available");
+                            $scope.myTruckPostList.list = [];
                             $scope.myTruckPostList.messageAvailable = true;
                             $scope.myTruckPostList.listShow = false;
                             $scope.myTruckPostList.message = "No data available";
@@ -148,10 +150,12 @@ function truckOwnerPostsCtrl($scope, $http, $location, $modal, UserRequest, Truc
     $scope.$watch('truckOwnerPage.refresh', function (newVal, oldVal) {
         //console.log(' My Truck Posts refresh '+JSON.stringify(newVal));
         if(typeof newVal != "undefined" && newVal != null){
-            $scope.myTruckPostList.getPagedDataAsync($scope.myTruckPostList.pagingOptions.pageSize, $scope.myTruckPostList.pagingOptions.currentPage);
+            //$scope.myTruckPostList.getPagedDataAsync($scope.myTruckPostList.pagingOptions.pageSize, $scope.myTruckPostList.pagingOptions.currentPage);
+            $scope.myTruckPostList.getPagedDataAsync();
         }
     });
-    $scope.myTruckPostList.getPagedDataAsync($scope.myTruckPostList.pagingOptions.pageSize, $scope.myTruckPostList.pagingOptions.currentPage);
+    //$scope.myTruckPostList.getPagedDataAsync($scope.myTruckPostList.pagingOptions.pageSize, $scope.myTruckPostList.pagingOptions.currentPage);
+    $scope.myTruckPostList.getPagedDataAsync();
 
     //};
 
@@ -196,6 +200,9 @@ function truckOwnerPostsCtrl($scope, $http, $location, $modal, UserRequest, Truc
 
     $scope.truckPostToRemove = {};
     $scope.open = function (size) {
+        if(typeof $scope.truckOwnerPage == "undefined" || $scope.truckOwnerPage== null ){
+            $scope.truckOwnerPage = {};
+        }
         var modalInstance = $modal.open({
             templateUrl: 'myTruckPostRemoveModal.html',
             controller: TruckPostRemoveModalCtrl,
@@ -212,6 +219,10 @@ function truckOwnerPostsCtrl($scope, $http, $location, $modal, UserRequest, Truc
             //on ok button press
             //console.log("On ok button press");
             //$scope.inActivateTruck(truckPostToInactivate);
+            if(typeof $scope.truckPostToRemove.status != "undefined" && $scope.truckPostToRemove.status != null){
+                console.log("On ok button press");
+                $scope.truckOwnerPage.refresh = ($scope.truckOwnerPage.refresh != null) ? !$scope.truckOwnerPage.refresh : true;
+            }
         },function(){
             //on cancel button press
             //console.log("Modal Closed");
@@ -240,6 +251,8 @@ function truckOwnerPostsCtrl($scope, $http, $location, $modal, UserRequest, Truc
                 $scope.showClose = true;
                 // succesAlert(data.statusMsg, 'eaiSaveStatus');
                 successInfo(data.statusMsg, 'remove_truck_post_alert');
+                $scope.truckPostToInactivate.status = "success";
+
                 /*if(typeof data != 'undefined' && data != null){
                  //console.log(JSON.stringify(data));
                  TruckRequest.setSharedTruck(data);
@@ -259,7 +272,8 @@ function truckOwnerPostsCtrl($scope, $http, $location, $modal, UserRequest, Truc
         };
 
         $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
+            $modalInstance.close($scope.truckPostToRemove);
+            //$modalInstance.dismiss('cancel');
         };
     };
 
