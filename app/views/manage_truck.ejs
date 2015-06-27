@@ -2,7 +2,7 @@
     <div id="manage_truck_alert" ng-show="truckProcess.indicator.showAlert"></div>
     <div id="truckManagePanel" class="edit-truck-details">
         <!-- a href="#" ng-click="gotoAddTrucksPage()" class="pull-right" ><span class="badge">Add Multiple Trucks</span></a -->
-        <label class="close-label">Close</label><h3>Manage Truck</h3>
+        <label class="close-label" ng-click="cancelTruckUpdate()">Close</label><h4>Manage Truck</h4>
         <form id="truckForm" name="truckForm" ng-submit="submitForm()" novalidate>
             <div id="truck_alert"></div>
             <ul>

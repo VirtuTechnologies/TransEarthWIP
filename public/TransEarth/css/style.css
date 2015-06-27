@@ -111,7 +111,7 @@ textarea{
     z-index: 150;
     position: absolute;
     width: 100%;
-    margin-top: 2px;
+    margin-top: 200px;
     box-shadow: 0 0 41px #242424;
     color: rgb(52, 52, 52);
 }
@@ -392,17 +392,23 @@ header {
     margin-top:0;
 }
 .button-opt li {
-    float:left;
     padding:0 25px;
 }
+.find-more-btn{
+    float:left;
+}
+.view-more-btn{
+    float:right;
+}
 .button-option {
-    padding:4px 15px;
+    padding:4px 10px;
     font-size:13px;
     font-weight:700;
     background:transparent;
     outline:none;
     border:2px solid white;
     color:white;
+    width:150px;
 }
 .button-option:hover {
     background:#ffffff;
@@ -691,6 +697,7 @@ header {
     width: 350px;
     margin-top: 20px;
     color:white;
+    margin-left: 6.5%;
 }
 .add-post  h4 {
     padding:15px;
@@ -730,6 +737,7 @@ header {
     width: 350px;
     margin-top: 20px;
     color:white;
+    margin-left: 6.5%;
 }
 .edit-truck-details  ul {
     padding:15px;
@@ -822,6 +830,16 @@ header {
 }
 .location label{
     font-size: 13px;
+}
+.load-search{
+    width:200px;
+    margin:0 auto;
+}
+.load-search input{
+    padding:10px;
+    width:200px;
+    outline:none;
+    border:1px solid #0040D0;
 }
 .radio-group {
     width: 75px;

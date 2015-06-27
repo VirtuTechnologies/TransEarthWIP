@@ -9,3 +9,5 @@ app/views/manage_truck.ejs
 *.ejs
 app/views/manage_truck.ejs
 app/views/index.ejs
+app/views/index.ejs
+*.ejs
