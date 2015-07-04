@@ -117,10 +117,13 @@ TransEarthApp.directive('customDatepicker',['$compile', function($compile){
 TransEarthApp.directive("loader", function ($rootScope) {
     return function ($scope, element, attrs) {
         $scope.$on("loader_show", function () {
+            //console.log("Loader Showing");
             return element.show();
         });
         return $scope.$on("loader_hide", function () {
+            //console.log("Loader Hiding"+new Date());
             return element.hide();
+            //setTimeout(function () {console.log("Loader Hiding close - "+new Date());return element.hide();}, 2000);
         });
     };
 });
