@@ -39,7 +39,7 @@
 	<body ng-controller="coreController" ng-init="local='<%= JSON.stringify(session)%>'" class=" pace-done">
 		<div id="loadingWidget" class="overlay" loader>
 			<div class="loadingGif">
-				<strong class="text">Please Wait....</strong>
+				<!-- strong class="text">Please Wait....</strong -->
 				<img alt="Loading Content" src="images/ajax-loader-mini.gif"/>
 			</div>
 		</div>
@@ -280,27 +280,66 @@
 				<div id="truck_detail_alert"></div>
 				<div class="row">
 					<!-- h4>Truck Details</h4 -->
-					<ul class="profile-details">
-						<li>
-							<p><b>Truck Type</b>&nbsp;&nbsp;
-								{{truckPostModal.truck_details.type}}</p>
-						</li>
-						<li>
-							<p><b>Truck Make</b>&nbsp;&nbsp;
-								{{truckPostModal.truck_details.make}}</p>
-						</li>
-						<li>
-							<p><b>Truck Model</b>&nbsp;&nbsp;
-								{{truckPostModal.truck_details.model}}</p>
-						</li>
-						<li>
-							<p><b>Truck Reg No</b>&nbsp;&nbsp;
-								{{truckPostModal.truck_details.reg_no}}</p>
-						</li>
-					</ul>
+                    <div class="col-md-6">
+                        <ul class="profile-details">
+                            <li>
+                                <p><b>Truck Type</b>&nbsp;&nbsp;
+                                    {{truckPostModal.truck_details.type}}</p>
+                            </li>
+                            <li>
+                                <p><b>Truck Make</b>&nbsp;&nbsp;
+                                    {{truckPostModal.truck_details.make}}</p>
+                            </li>
+                            <li>
+                                <p><b>Truck Model</b>&nbsp;&nbsp;
+                                    {{truckPostModal.truck_details.model}}</p>
+                            </li>
+                            <li>
+                                <p><b>Truck Reg No</b>&nbsp;&nbsp;
+                                    {{truckPostModal.truck_details.reg_no}}</p>
+                            </li>
+                            <li>
+                                <p><b>Contact</b>&nbsp;&nbsp;
+                                    {{truckPostModal.current_tracker.user.contact[0]}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="profile-details">
+                            <li>
+                                <p><b>Post Frequency</b>&nbsp;
+                                    {{truckPostModal.posts.truck_post.availability.schedule}}</p>
+                            </li>
+                            <li>
+                                <p><b>Post Picked at</b>&nbsp;
+                                    {{truckPostModal.posts.truck_post.availability.pickup_location}}</p>
+                            </li>
+                            <li>
+                                <p><b>Post Delivered to</b>&nbsp;
+                                    {{truckPostModal.posts.truck_post.availability.delivery_location}}</p>
+                            </li>
+                            <li>
+                                <p><b>Post Load Quantity</b>&nbsp;
+                                    {{truckPostModal.posts.truck_post.maximum_load.quantity}}&nbsp;
+                                    {{truckPostModal.posts.truck_post.maximum_load.unit}}
+                                </p>
+                            </li>
+                            <li ng-if="truckPostModal.posts.truck_post.availability.schedule=='One Time'">
+                                <p><b>Pickup Date</b>&nbsp;&nbsp;
+                                    {{truckPostModal.posts.truck_post.availability.end_date}}</p>
+                            </li>
+                            <li ng-if="truckPostModal.posts.truck_post.availability.schedule!='One Time'">
+                                <p><b>Start Date</b>&nbsp;&nbsp;
+                                    {{truckPostModal.posts.truck_post.availability.start_date}}</p>
+                            </li>
+                            <li ng-if="truckPostModal.posts.truck_post.availability.schedule!='One Time'">
+                                <p><b>End Date</b>&nbsp;&nbsp;
+                                    {{truckPostModal.posts.truck_post.availability.end_date}}</p>
+                            </li>
+                        </ul>
+                    </div>
 				</div>
-				<div class="row">
-					<!-- h4>Truck Post Details</h4 -->
+				<!-- div class="row">
 					<ul class="profile-details">
 						<li>
 							<p><b>Post Frequency</b>&nbsp;
@@ -333,7 +372,7 @@
 								{{truckPostModal.posts.truck_post.availability.end_date}}</p>
 						</li>
 					</ul>
-				</div>
+				</div -->
 			</div>
 		</script>
 		<!-- Load Details Modal -->

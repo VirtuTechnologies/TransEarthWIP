@@ -115,9 +115,12 @@
                     </div>
                 </li>
                 <li>
-                    <input type="submit" style="background:#242424; color:white;" class="buttons" name="Post" />
+                    <input type="submit" ng-disabled="truckForm.$invalid" style="background:#242424; color:white;" class="buttons" name="Post" />
                     &nbsp;
                     <input type="button" ng-click="cancelTruckUpdate()" style="background:#242424; color:white;" class="buttons" value="Cancel" name="Cancel" />
+                </li>
+                <li ng-if="truckForm.$invalid">
+                    <p style="color:red;" >Please correct errors</p>
                 </li>
             </ul>
         </form>

@@ -4,7 +4,7 @@ function indexCtrl($scope, $http, $location, $timeout, $route, $modal, UserReque
     //$scope.user = window.user_name;
     clearAlert("indexTruckPostListMessage");
     clearAlert("indexLoadPostListMessage");
-    $scope.itemDuration = 3000;
+    $scope.itemDuration = 6000;
     $scope.itemLeaveDelay = 1500;
 
     if(typeof $scope.user == "undefined"){
