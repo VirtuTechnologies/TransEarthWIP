@@ -256,7 +256,7 @@ function truckPostManageCtrl($scope, $http, $location, $anchorScroll, $filter, U
         $scope.truckPostProcess.indicator.showAlert = false;
 
         if ($scope.truckPostForm.$valid) {
-            //console.log("truckPostForm Form is valid! "+JSON.stringify($scope.truckToPost));
+            console.log("truckPostForm Form is valid! "+JSON.stringify($scope.truckToPost));
 
             if($scope.addTruckPostInd){
                 $http.post("/TransEarth/addTruckPost", {

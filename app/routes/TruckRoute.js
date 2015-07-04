@@ -5,7 +5,9 @@ var Post = require('../models/Post').Post;
 var Truck = require('../models/Truck').Truck;
 
 var _ = require("lodash");
-var moment = require("moment");
+//var moment = require("moment");
+var moment = require('moment-timezone');
+moment().tz("Asia/Kolkata").format();
 
 exports.getTruckPostSummary = function(req,res){
 
@@ -522,7 +524,7 @@ exports.getMyTrucks = function(req,res){
 
 exports.getMyTruckPosts = function(req,res){
 
-    console.log("getMyTruckPosts started");
+    console.log("getMyTruckPosts started at "+moment());
     var myTruckPostList = [];
     var returnData = {
         myTruckPostList : {
@@ -689,6 +691,7 @@ exports.getMyTruckPosts = function(req,res){
 exports.addTruck = function(req, res){
 
     console.log("Add Truck started for "+JSON.stringify(req.body.truck));
+    console.log(new Date());
 
     var input = req.body.truck;
 
@@ -989,7 +992,7 @@ exports.removeTruck = function(req, res){
 
 exports.addTruckPost = function(req, res){
 
-    console.log("Add Truck started for "+JSON.stringify(req.session.user_profile));
+    console.log("Add Truck Post started for user "+JSON.stringify(req.session.user_profile));
 
     var truckId = req.body.truckId;
     var new_post = req.body.post;
@@ -1009,7 +1012,7 @@ exports.addTruckPost = function(req, res){
         return res.json(500, {statusMsg:'Truck Post Destination Details invalid'});
     }
 
-    console.log("Add Truck started for "+JSON.stringify(new_post));
+    console.log("Add Truck Post started to post "+JSON.stringify(new_post));
 
     var post = {
         status : "ADDED",
