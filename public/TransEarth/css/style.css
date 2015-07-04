@@ -141,12 +141,12 @@ textarea{
     border-bottom: 2px solid #0074D2;
     padding: 4px;
 }
-.has-error {
+/*.has-error {
     border:1px solid red;
 }
 .has-success {
     border:1px solid green;
-}
+}*/
 .line-error {
     color: red;
 }
@@ -697,7 +697,7 @@ header {
     width: 350px;
     margin-top: 20px;
     color:white;
-    margin-left: 6.5%;
+    margin-left: 3.5%;
 }
 .add-post  h4 {
     padding:15px;
@@ -737,7 +737,7 @@ header {
     width: 350px;
     margin-top: 20px;
     color:white;
-    margin-left: 6.5%;
+    margin-left: 3.5%;
 }
 .edit-truck-details  ul {
     padding:15px;

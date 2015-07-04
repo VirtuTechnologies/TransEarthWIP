@@ -12,11 +12,11 @@
 	<div ng-if="truckOwnerPage.showManageTruck">
 		<div ng-include src="template.editTruck"></div>
 	</div>
+    <div ng-if="truckOwnerPage.showManagePost">
+        <div ng-include src="template.managePost"></div>
+    </div>
 	<div ng-if="truckOwnerPage.showPostList">
 		<div ng-include src="template.truckPosts"></div>
-	</div>
-	<div ng-if="truckOwnerPage.showManagePost">
-		<div ng-include src="template.managePost"></div>
 	</div>
 </div>
 <script src="truck_owner.js"></script>

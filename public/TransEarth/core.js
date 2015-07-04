@@ -585,7 +585,7 @@ TransEarthApp.directive('googlePlaces', ["$compile", function($compile){
 
             var template =
                     '<input class="'+className+'" id="'+tagId+'" name="'+tagName + '" ' +
-                        'ng-class="{\'has-error\': form.'+tagName+'.$error.required && !location.isSelected, ' +
+                        'ng-class="{\'has-error\': form.'+tagName+'.$error.required || !location.isSelected, ' +
                         '\'has-success\' : !(form.'+tagName+'.$error.required) && location.isSelected, '+
                         '\'has-feedback\' : form.'+tagName+'.$error.required && !location.isSelected}" ' +
                         'ng-disabled="location.disable" type="text" '+
