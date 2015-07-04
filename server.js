@@ -19,6 +19,7 @@ var mongoose = require('mongoose');
 var ejs = require('ejs');
 var passport = require('passport');
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+process.env.TZ="Asia/Calcutta";
 //var authentication = require('./config/authentication');
 var User = require('./app/models/User');
 var config = require('./config/config');
