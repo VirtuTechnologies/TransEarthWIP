@@ -7,6 +7,9 @@ body {
 li {
     list-style:none;
 }
+textarea{
+    font-family:'Maven Pro',sans-serif;
+}
 a {
     text-decoration:none;
     color:black;
@@ -223,6 +226,10 @@ header {
 .username-place:hover .dropdown-menu{
     display: block;
 }
+.username-place a{
+    color:#D07046;
+    text-transform: capitalize;
+}
 #logo {
     height:40px;
     float:left;
@@ -230,7 +237,7 @@ header {
     margin-left:4%;
 }
 .navmenu {
-    width: 650px;
+    width: 750px;
     height: 100%;
     float: right;
     font-size: 15px;
@@ -241,31 +248,38 @@ header {
     color:#0040D0;
     font-weight: 500;
     font-size: 17px;
-    margin-top: -3px;
 }
 
 .dropdown-menu {
     display:none;
     background-color: rgb(5, 101, 200);
     width: 125px;
-    height: 50px;
+    height: auto;
     position: absolute;
-    margin-top: 14px;
+    margin-top: 11px;
     margin-left: -53px;
     border-radius: 0 0 4px 4px;
     box-shadow: 0 2px 6px #424242;
 }
+.dropdown-menu li{
+    padding:10px 14px;
+    float:right;
+    font-size: 15px;
+}
 .dropdown-menu a {
     color:white;
+}
+.dropdown-menu a:hover{
+    color:#D07046;
 }
 .menu-btn{
     display:none;
 }
-.navmenu  li {
+.navmenu>li {
     float:right;
     padding: 14px 12px;
 }
-.navmenu  li  a:hover {
+.navmenu>li>a:hover {
     color:#006FD7;
 }
 
@@ -543,8 +557,59 @@ header {
 .runtime-options button img {
     padding-bottom:3px;;
 }
+/* My load */
+.myloadpane {
+    background:rgb(0, 108, 219);
+    float:left;
+}
 
-
+.runtime-load-div {
+    width:auto;
+    height:75px;
+    margin-bottom: 10px;
+}
+.runtime-load-details{
+    float:left;
+    font-size:14px;
+    padding:2px;
+    width: 245px;
+    color:#f5f5f5;
+}
+.posts-load {
+    height:400px;
+    width:1000px;
+    padding:10px;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+.runtime-load-details a{
+    color:#F9FF02;
+}
+.runtime-load-icon {
+    height:55px;
+    padding:10px;
+    float:left;
+}
+.runtime-load-options {
+    float:right;
+    width: 125px;
+    height: 75px;
+    margin-top: -63px;
+}
+.runtime-load-options button {
+    outline: none;
+    background-color: transparent;
+    border: none;
+    float: left;
+    height: 45px;
+    margin: 17px 3px;
+    font-size: 11px;
+    width: 32px;
+    color: #f5f5f5;
+}
+.runtime-load-options button img {
+    padding-bottom:3px;;
+}
 /* Slider Css */
 
 .slide-frame {
@@ -761,7 +826,7 @@ header {
 .add-truck-div {
     background:#f5f5f5;
     width:900px;
-    height:500px;
+    height:auto;
     margin:4% auto;
 }
 .add-truck-head {
@@ -887,7 +952,6 @@ header {
 }
 .results {
     width: 1139px;
-    height: 450px;
     margin: 0px auto;
     margin-top:25px;
     padding: 8px;
