@@ -237,7 +237,6 @@ header {
     margin-left:4%;
 }
 .navmenu {
-    width: 750px;
     height: 100%;
     float: right;
     font-size: 15px;
@@ -257,7 +256,6 @@ header {
     height: auto;
     position: absolute;
     margin-top: 11px;
-    margin-left: -53px;
     border-radius: 0 0 4px 4px;
     box-shadow: 0 2px 6px #424242;
 }
@@ -560,9 +558,29 @@ header {
 /* My load */
 .myloadpane {
     background:rgb(0, 108, 219);
-    float:left;
+    /* float:left; */
 }
-
+.myloadpane>.div-header>h4{
+    padding:20px 4px;
+}
+.myloadpane>.div-header>.pane-icon{
+    padding:4px;
+}
+.myloadpane>.div-header>.searchbox{
+    margin-top:5px;
+}
+.myloadpane>.div-header>button>img{
+    margin-top:0px;
+}
+.myloadpane>.div-header>button{
+    margin-top:10px;
+    height:30px;
+}
+.loadpagepane{
+    height:500px;
+    margin-top:20px;
+    box-shadow:0 0 12px #848484;
+}
 .runtime-load-div {
     width:auto;
     height:75px;
@@ -571,13 +589,13 @@ header {
 .runtime-load-details{
     float:left;
     font-size:14px;
-    padding:2px;
-    width: 245px;
+    padding:2px 25px;
+    margin-top: 27px;
     color:#f5f5f5;
 }
 .posts-load {
     height:400px;
-    width:1000px;
+    /* width:1000px; */
     padding:10px;
     overflow-y:scroll;
     overflow-x:hidden;
@@ -591,10 +609,10 @@ header {
     float:left;
 }
 .runtime-load-options {
-    float:right;
-    width: 125px;
+    /* float:right; */
+    /* width: 125px; */
     height: 75px;
-    margin-top: -63px;
+    /* margin-top: -63px; */
 }
 .runtime-load-options button {
     outline: none;

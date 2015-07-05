@@ -6,10 +6,10 @@
                ng-model="myLoadList.myLoads_filter"
                value="" placeholder="Search" /></div -->
 <div ng-show="myLoadList.messageAvailable"></div>
-        <div class="myloadpane pagepane" >
+        <div class="myloadpane loadpagepane" >
             <div class="div-header">
                 <img class="pane-icon" src="images/truck.png" alt="" />
-                <h4>My Trucks <span>({{myLoadList.totalServerItems}})</span></h4>
+                <h4>My Trucks ({{myLoadList.totalServerItems}})</h4>
                 <input type="textbox" class="searchbox" name="mytrucksearch"
                        ng-model="myTrucks_filter"
                        value="" placeholder="Search" />
@@ -19,13 +19,12 @@
                 <ul ng-show="myLoadList.list" ng-repeat="load in myLoadList.list  | filter:myLoadList.myLoads_filter"
                     class="runtime-load-div slide-right">
                     <img class="runtime-icon" src="images/truck.png" alt="" />
-                    <li class="runtime-load-details"><b><a href="#" ng-click="getTruckDetails(truck.truck_id)">{{load.source}}</a></b></li>
-                    <li class="runtime-load-details">{{load.destination}}</li>
-                    <li class="runtime-load-details">{{load.load}}</li>
-                    <li class="runtime-load-details">{{load.materialType}}</li>
-                    <li class="runtime-load-details">{{load.pickupDate}}</li>
+                    <li class="runtime-load-details"><b><a href="#" ng-click="getTruckDetails(truck.truck_id)">From: {{load.source}}</a></b></li>
+                    <li class="runtime-load-details">To: {{load.destination}}</li>
+                    <li class="runtime-load-details">Load: {{load.load}}</li>
+                    <li class="runtime-load-details">Material: {{load.materialType}}</li>
+                    <li class="runtime-load-details">Pickup: {{load.pickupDate}}</li>
                     <li class="runtime-load-options">
-                        <button ng-click="addTruckPost(truck.truck_id)"><img class="edit-icon" src="images/add-w.png" alt="" />Post</button>
                         <button ng-click="editTruck(truck.truck_id)"><img class="edit-icon" src="images/edit-w.png" alt="" />Edit</button>
                         <button ng-click="removeTruck(truck.truck_id, truck.regNo)"><img class="edit-icon" src="images/delete-w.png" alt="" />Delete</button>
                     </li>
