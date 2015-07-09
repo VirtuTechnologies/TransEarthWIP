@@ -257,7 +257,7 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
         clearAlert("remove_load_alert");
         $scope.loadToInactivate = loadToInactivate;
         $scope.showClose = false;
-        //console.log("Inside LoadRemoveModalCtrl: loadToRemove = "+JSON.stringify($scope.loadToInactivate));
+        console.log("Inside LoadRemoveModalCtrl: loadToRemove = "+JSON.stringify($scope.loadToInactivate));
 
         $scope.inActivateLoad = function(load){
             //console.log("Removing load: "+load._id);
@@ -291,6 +291,7 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
     };
 
     $scope.removeLoad = function(load_id, source, destination, load, material, pickupDate){
+        console.log("Remove load "+load_id);
         $scope.loadToRemove = {
             _id : load_id,
             source : source,
@@ -302,7 +303,7 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
         $scope.open('sm');
     };
 
-    $scope.loadDetails = {};
+    /*$scope.loadDetails = {};
     $scope.loadInfo = {};
     $scope.loadDetails.open = function (size) {
         var modalInstance = $modal.open({
@@ -370,7 +371,7 @@ function loadOwnerCtrl($scope, $http, $location, $modal, UserRequest, LoadReques
                 $scope.loadOwnerPage.showAlert = true;
                 succesError(err.statusMsg, 'myLoadList_alert');
             });
-    };
+    };*/
 
     $scope.gotoHome = function(){
         LoadRequest.setSharedLoad(null);

@@ -14,6 +14,9 @@ function loginCtrl($scope, $http, $location, $anchorScroll, UserRequest) {
     if($scope.serverAuth.authFailed){
         //console.log('Inside loginCtrl serverAuth failed - '+JSON.stringify($scope.serverAuth));
         succesError($scope.serverAuth.message, "login_alert");
+    }else if($scope.serverAuth.messageAvailable){
+        //console.log('Inside loginCtrl serverAuth failed - '+JSON.stringify($scope.serverAuth));
+        succesAlert($scope.serverAuth.message, "login_alert");
     }else{
         clearAlert("login_alert");
     }
@@ -140,13 +143,16 @@ function loginCtrl($scope, $http, $location, $anchorScroll, UserRequest) {
                     $scope.register.showPersonalDetails = false;
                     $scope.passwordMismatch = true;
                     $scope.user = {};
-                    succesAlert("User registered successfully", 'signup_alert');
+                    //succesAlert("User registered successfully", 'signup_alert');
                     // set the location.hash to the id of
                     // the element you wish to scroll to.
-                    $location.hash('registerForm');
+                    //$location.hash('registerForm');
 
                     // call $anchorScroll()
-                    $anchorScroll();
+                    //$anchorScroll();
+                    $scope.serverAuth.messageAvailable = true;
+                    $scope.serverAuth.message = "User registered successfully. Please login";
+                    $scope.loginClicked();
                 }).error(function(err) {
                     //console.log("User saved failed:"+err.statusMsg);
                     $scope.saved = false;

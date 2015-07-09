@@ -968,13 +968,13 @@ section {
 }
 ul.profile-details{
     margin-top:10px;
-    padding:0 5px;
+    padding:5px 5px;
     list-style:none;
     color:#7c848d;
 }
 ul.profile-details li{
     position:relative;
-    margin:0 0 20px 0;
+    margin:0 0 2px 0;
     padding-left:22px;
 }
 ul.profile-details li div{
@@ -1041,3 +1041,20 @@ td.w200 {width:200px;}
 td.w280 {width:280px;}
 td.w300 {width:300px;}
 
+/*Loader Starts*/
+.overlay{
+    position: fixed;top: 0;left: 0;width: 100%;height: 100%;z-index: 10;background-color: rgba(221,221,221,0.7);display: none;
+}
+.overlay .loadingGif{
+    position: absolute;top: 50%;left: 50%;display: block;
+}
+.overlay .loadingGif .text{
+    position: absolute;
+    top: 125%;
+    left: -100%;
+    display: block;
+    color: rgb(43, 149, 190);
+    font-size: 22px;
+    width: 200px;
+}
+/*Loader Ends*/

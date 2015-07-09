@@ -3,18 +3,20 @@
     <div class="addload" >
         <ul class="addload-head">
             <li><h3>Add Load</h3></li>
-            <li><p class="steps" style="background : url('images/current.png');background-size : cover;color : #000000;">1</p>
-                <p class="steps step-note2">2</p>
-                <p class="steps step-note3">3</p></li>
+            <li>
+                <p class="steps" ng-style="styleStep1">1</p>
+                <p class="steps" ng-style="styleStep2">2</p>
+                <p class="steps" ng-style="styleStep3">3</p>
+            </li>
             <li class="page-name">
-                <p style="display:block;" class="ld-step-1">Load Details</p>
-                <p style="display:none;" class="ld-step-2">Pickup Address</p>
-                <p style="display:none;" class="ld-step-3">Delivery Address</p>
+                <p ng-if="showStep1">Load Details</p>
+                <p ng-if="showStep2">Pickup Details</p>
+                <p ng-if="showStep3">Delivery Details</p>
             </li>
         </ul>
-        <form role="form" name="loadForm" id="loadForm" action="" method="post" ng-submit="submitForm()">
+        <form novalidate role="form" name="loadForm" id="loadForm" action="" method="post">
             <div class="steps-list">
-                <ul class="step1 scroll-alignment">
+                <ul ng-show="showStep1" class="step1 scroll-alignment">
                     <li>
                         <div class="input-group">
                             <label for="load_quantity">Quantity/ Weight</label>
@@ -37,13 +39,15 @@
                     <li>
                         <label class="col-lg-3 control-label">Material</label>
                         <div class="input-group" id="material" >
-                            <select selectpicker id="materialType" name="materialType"
+                            <select id="materialType" name="materialType"
+                                    ng-options="material for material in materialTypeList"
                                     ng-class="{ 'has-error' : loadForm.materialType.$invalid,
 							 										'has-success' : !(loadForm.materialType.$invalid),
 					 												'has-feedback' : loadForm.materialType.$invalid}"
                                     ng-model="load.load.material.type"  ng-required="true"
                                     class="dropdown"
                                     data-dropup-auto="false">
+                                <option value="" default disabled>Choose one</option>
                             </select>
                         </div>
 
@@ -72,18 +76,18 @@
                             </div>
                         </div>
                     </li>
-
                     <li>
-
                         <div class="input-group" id="truckTypeId" >
                             <label for="truckType">Preferred Truck Type</label>
-                            <select selectpicker id="truckType" name="truckType"
+                            <select id="truckType" name="truckType"
                                     ng-model="load.load.preferredTruck.type"  ng-required="true"
+                                    ng-options="truck for truck in truckTypeList"
                                     class="dropdown"
                                     ng-class="{ 'has-error' : loadForm.truckType.$invalid,
 							 				'has-success' : !(loadForm.truckType.$invalid),
 					 						'has-feedback' : loadForm.truckType.$invalid}"
                                     data-dropup-auto="false">
+                                <option value="" default disabled>Choose one</option>
                             </select>
                         </div>
                         <div ng-if="loadForm.truckType.$invalid"
@@ -113,12 +117,86 @@
                             </div>
                         </div>
                     </li>
+                    <li style="padding-top:10px;">
+                        <label for="load_frequency">Load Frequency</label>
+                        <select id="load_frequency" name="load_frequency"
+                                ng-model="load.load.schedule.frequency"
+                                ng-options="freq for freq in frequency"
+                                ng-required="true"
+                                ng-change="trackDays()"
+                                ng-class="{ 'has-error' : loadForm.load_frequency.$invalid,
+										'has-success' : !(loadForm.load_frequency.$invalid),
+										'has-feedback' : loadForm.load_frequency.$invalid}"
+                                class="dropdown">
+                            <option value="" default disabled>Choose one</option>
+                        </select>
+                    </li>
+                    <div ng-if="showLoadDetails">
+                        <li ng-if="load.load.schedule.frequency!=undefined&&load.load.schedule.frequency!=null&&load.load.schedule.frequency=='One Time'">
+                            <div class="input-group">
+                                <label for="pickup_date">Pickup Date</label>
+                                <input class="textbox" type="text" ng-required="load.load.schedule.frequency=='One Time'"
+                                       placeholder="Pickup Date" id="pickup_date" name="pickup_date"
+                                       ui-date-format="yy-mm-dd" ng-model="load.load.end_date" ui-date="pickup.dateRangeOptions"
+                                       ng-class="{ 'has-error' : loadForm.pickup_date.$invalid || load.load.end_date==null,
+															'has-success' : !(loadForm.pickup_date.$invalid || load.load.pickup.end_date==null),
+															'has-feedback' : loadForm.pickup_date.$invalid || load.load.pickup.end_date==null}"
+                                       close-text="Close" />
+                            </div>
+                            <div ng-if="loadForm.pickup_date.$invalid"
+                                 class="help-block pull-right"
+                                 ng-class="{ 'line-error' : loadForm.pickup_date.$invalid || load.load.end_date==null,
+															'line-success' : !(loadForm.pickup_date.$invalid || load.load.end_date==null),
+															'line-feedback' : loadForm.pickup_date.$invalid || load.load.end_date==null}"
+                                 for="pickup_date">Pickup Date is mandatory
+                            </div>
+                        </li>
+                        <li ng-if="load.load.schedule.frequency!=undefined&&load.load.schedule.frequency!=null&&load.load.schedule.frequency!='One Time'">
+                            <div class="input-group">
+                                <label for="pickup_start_date">Pickup Start Date</label>
+                                <input class="textbox" type="text" ng-required="load.load.schedule.frequency!='One Time'"
+                                       placeholder="Pickup Start Date" id="pickup_start_date" name="pickup_start_date"
+                                       ui-date-format="yy-mm-dd" ng-model="load.load.start_date" ui-date="pickup.start_dateOptions"
+                                       ng-class="{ 'has-error' : loadForm.pickup_start_date.$invalid || load.load.start_date==null,
+															'has-success' : !(loadForm.pickup_start_date.$invalid || load.load.start_date==null),
+															'has-feedback' : loadForm.pickup_start_date.$invalid || load.load.start_date==null}"
+                                       close-text="Close" />
+                            </div>
+                            <div ng-if="loadForm.pickup_start_date.$invalid"
+                                 class="help-block pull-right"
+                                 ng-class="{ 'line-error' : loadForm.pickup_start_date.$invalid || load.load.start_date==null,
+															'line-success' : !(loadForm.pickup_start_date.$invalid || load.load.start_date==null),
+															'line-feedback' : loadForm.pickup_start_date.$invalid || load.load.start_date==null}"
+                                 for="pickup_start_date">Pickup Start Date is mandatory
+                            </div>
+                        </li>
+                        <li ng-if="load.load.schedule.frequency!=undefined&&load.load.schedule.frequency!=null&&load.load.schedule.frequency!='One Time'">
+                            <div class="input-group">
+                                <label for="pickup_end_date">Pickup Date</label>
+                                <input class="textbox" type="text" ng-required="load.load.schedule.frequency!='One Time'"
+                                       placeholder="Pickup Date" id="pickup_end_date" name="pickup_end_date"
+                                       ui-date-format="yy-mm-dd" ng-model="load.load.end_date" ui-date="pickup.end_dateOptions"
+                                       ng-class="{ 'has-error' : loadForm.pickup_end_date.$invalid || load.load.end_date==null,
+															'has-success' : !(loadForm.pickup_end_date.$invalid || load.load.end_date==null),
+															'has-feedback' : loadForm.pickup_end_date.$invalid || load.load.end_date==null}"
+                                       close-text="Close" />
+                            </div>
+                            <div ng-if="loadForm.pickup_date.$invalid"
+                                 class="help-block pull-right"
+                                 ng-class="{ 'line-error' : loadForm.pickup_end_date.$invalid || load.load.end_date==null,
+															'line-success' : !(loadForm.pickup_end_date.$invalid || load.load.end_date==null),
+															'line-feedback' : loadForm.pickup_end_date.$invalid || load.load.end_date==null}"
+                                 for="pickup_end_date">Pickup Date is mandatory
+                            </div>
+                        </li>
 
-                    <li><button style="background:#013669; float:right;" ng-disabled="!register.showAccountDetails && passwordMismatch" class="buttons next-btn">Next</button></li>
+                        <li><button style="background:#013669; float:right;"
+                                    ng-if="showPickupSection()" ng-click="showStep(2)"
+                                    class="buttons next-btn">Next</button></li>
+                    </div>
                 </ul>
-                <ul class="step2 scroll-alignment">
+                <ul ng-show="showStep2" class="step2 scroll-alignment">
                     <li>
-
                         <div class="input-group">
                             <label>Contact Number</label>
                             <input type="text" numbers-only class="textbox" name="pickup_contact"
@@ -136,33 +214,38 @@
                              for="pickup_contactno">Contact Number is mandatory
                         </div>
                     </li>
-                    <li>
-
+                    <!-- li>
                         <div class="input-group">
                             <label >Date</label>
-                            <input class="textbox" type="text" placeholder="Pickup Date" id="pickupDaterange"
-                                   name="pickupDaterange"  ui-date-format="yy-mm-dd"
+                            <input class="textbox" type="text" placeholder="Pickup Date" id="pickupDateRange"
+                                   name="pickupDateRange"  ui-date-format="yy-mm-dd"
                                    ng-model="load.load.pickup.date" is-open="pickup.opened" ui-date="pickup.dateRangeOptions"
                                    ng-required="true"
-                                   ng-class="{ 'has-error' : loadForm.pickupDaterange.$invalid || load.load.pickup.date==null,
-															'has-success' : !(loadForm.pickupDaterange.$invalid || load.load.pickup.date==null),
-															'has-feedback' : loadForm.pickupDaterange.$invalid || load.load.pickup.date==null}"
+                                   ng-class="{ 'has-error' : loadForm.pickupDateRange.$invalid || load.load.pickup.date==null,
+															'has-success' : !(loadForm.pickupDateRange.$invalid || load.load.pickup.date==null),
+															'has-feedback' : loadForm.pickupDateRange.$invalid || load.load.pickup.date==null}"
                                    close-text="Close" />
                         </div>
-                        <div ng-if="loadForm.pickupDaterange.$invalid"
+                        <div ng-if="loadForm.pickupDateRange.$invalid"
                              class="help-block pull-right"
-                             ng-class="{ 'line-error' : loadForm.pickupDaterange.$invalid || load.load.pickup.date==null,
-															'line-success' : !(loadForm.pickupDaterange.$invalid || load.load.pickup.date==null),
-															'line-feedback' : loadForm.pickupDaterange.$invalid || load.load.pickup.date==null}"
+                             ng-class="{ 'line-error' : loadForm.pickupDateRange.$invalid || load.load.pickup.date==null,
+															'line-success' : !(loadForm.pickupDateRange.$invalid || load.load.pickup.date==null),
+															'line-feedback' : loadForm.pickupDateRange.$invalid || load.load.pickup.date==null}"
                              for="pickup_date">Pickup Date is mandatory
                         </div>
-
-                    </li>
+                    </li -->
                     <li>
                         <label>City</label>
                         <google-places required
                                        tagId="pickup_city" tagName="pickup_city"
                                        location=load.load.pickup.address.mapLocation></google-places>
+                        <div ng-if="!load.load.pickup.address.mapLocation.isSelected"
+                             class="help-block pull-right"
+                             ng-class="{ 'line-error' : !load.load.pickup.address.mapLocation.isSelected,
+															'line-success' : load.load.pickup.address.mapLocation.isSelected,
+															'line-feedback' : !load.load.pickup.address.mapLocation.isSelected}"
+                             for="pickup_date">Pickup Location is mandatory
+                        </div>
                     </li>
                     <li>
                         <label>Address </label>
@@ -176,10 +259,13 @@
                                                       placeholder="Enter Pickup Address">
 											</textarea>
                         </div>
-                        <div class="help-block pull-right"
+                        <!-- div class="help-block pull-right"
                              ng-class="{ 'line-error' : loadForm.pickup_address.$invalid,
 													'line-success' : !(loadForm.pickup_address.$invalid),
 													'line-feedback' : loadForm.pickup_address.$invalid}"
+                             for="pickup_address">Address is optional
+                        </div -->
+                        <div class="pull-right"
                              for="pickup_address">Address is optional
                         </div>
                     </li>
@@ -202,10 +288,10 @@
                              for="pickup_pincode">Pincode is mandatory with address
                         </div>
                     </li>
-                    <li><button style="background:#0C4173; float:left;" class="buttons back-btn">Back</button></li>
-                    <li><button style="background:#0C4173; float:right;" ng-disabled="passwordMismatch" class="buttons next-btn">Next</button></li>
+                    <li><button style="background:#0C4173; float:left;" class="buttons back-btn" ng-click="showStep(1)">Back</button></li>
+                    <li><button style="background:#0C4173; float:right;" ng-click="showStep(3)" class="buttons next-btn">Next</button></li>
                 </ul>
-                <ul class="step3 scroll-alignment">
+                <ul ng-show="showStep3" class="step3 scroll-alignment">
                     <li>
                         <label>Contact Number</label>
                         <div class="input-group">
@@ -230,6 +316,13 @@
                         <google-places required
                                        tagId="delivery_city" tagName="delivery_city"
                                        location=load.load.delivery.address.mapLocation></google-places>
+                        <div ng-if="!load.load.delivery.address.mapLocation.isSelected"
+                             class="help-block pull-right"
+                             ng-class="{ 'line-error' : !load.load.delivery.address.mapLocation.isSelected,
+															'line-success' : load.load.delivery.address.mapLocation.isSelected,
+															'line-feedback' : !load.load.delivery.address.mapLocation.isSelected}"
+                             for="pickup_date">Delivery Location is mandatory
+                        </div>
                     </li>
                     <li>
                         <label >Address </label>
@@ -244,15 +337,19 @@
 											</textarea>
                         </div>
 
-                        <div ng-if="loadForm.delivery_address.$invalid"
+                        <!-- div ng-if="loadForm.delivery_address.$invalid"
                              class="help-block pull-right"
                              ng-class="{ 'line-error' : loadForm.delivery_address.$invalid,
 													'line-success' : !(loadForm.delivery_address.$invalid),
 													'line-feedback' : loadForm.delivery_address.$invalid}"
                              for="delivery_address">Address is mandatory
+                        </div -->
+                        <div class="pull-right"
+                             for="delivery_address">Address is optional
                         </div>
+
                     </li>
-                    <li ng-if="load.load.delivery_address.address.line1">
+                    <li ng-if="load.load.delivery.address.line1">
                         <label>PIN</label>
                         <div class="input-group">
                             <input type="text" numbers-only class="textbox" name="delivery_pincode"
@@ -271,30 +368,32 @@
                              for="delivery_pincode">Pincode is mandatory
                         </div>
                     </li>
-                    <li><button style="background:#013669; float:left;" class="buttons back-btn">Back</button></li>
-                    <li><button style="background:#013669; float:right; display:none;" class="buttons submit-button" type="submit">Register</button></li>
+                    <li><button style="background:#013669; float:left;" class="buttons back-btn" ng-click="showStep(2)">Back</button></li>
+                    <li><button style="background:#013669; float:right;" class="buttons submit-button"
+                                ng-disabled="loadForm.$invalid" ng-click="submitForm()">{{page_header}}</button></li>
                 </ul>
             </div>
             <label style="color:red; padding-left: 10px; font-size: 13px;" ng-show="loadForm.$invalid">*Please correct errors to proceed</label>
+            <!--label style="color:red; padding-left: 10px; font-size: 13px;" >{{loadForm.$error}}</label -->
         </form>
     </div>
 </div>
-<script>
+<!-- script>
     $('.next-btn, .back-btn').click(function( event ) {
         event.preventDefault();});
 
     $('.next-btn').click(function() {
         if($('.step1').is(':visible')){
-            $('.step1, .ld-step-1').hide();
-            $('.step2, .ld-step-2').show();
+            //$('.step1, .ld-step-1').hide();
+            //$('.step2, .ld-step-2').show();
             $('.step-note2').css({"background" : "url('images/current.png')",'background-size' : 'cover','color' : '#000000'});
         }
         else{
             if($('.step2').is(':visible')){
-                $('.step2, .ld-step-2').hide();
-                $('.step3, .ld-step-3').show();
-                $('.next-btn').hide();
-                $('.submit-button').show();
+                //$('.step2, .ld-step-2').hide();
+                //$('.step3, .ld-step-3').show();
+                //$('.next-btn').hide();
+                //$('.submit-button').show();
                 $('.step-note3').css({"background" : "url('images/current.png')",'background-size' : 'cover','color' : '#000000'});
             }
         }
@@ -302,32 +401,20 @@
 
     $('.back-btn').click(function() {
         if($('.step3').is(':visible')){
-            $('.step3, .ld-step-3').hide();
-            $('.step2, .ld-step-2').show();
+            //$('.step3, .ld-step-3').hide();
+            //$('.step2, .ld-step-2').show();
             $('.step-note3').css({"background" : "url('images/next.png')",'background-size' : 'cover','color' : '#ffffff'});
-            $('.submit-button').hide();
-            $('.next-btn').show();
+            //$('.submit-button').hide();
+            //$('.next-btn').show();
         }
         else{
             if($('.step2').is(':visible')){
-                $('.step2, .ld-step-2').hide();
-                $('.step1, .ld-step-1').show();
+                //$('.step2, .ld-step-2').hide();
+                //$('.step1, .ld-step-1').show();
                 $('.step-note2').css({"background" : "url('images/next.png')",'background-size' : 'cover','color' : '#ffffff'});
             }
         }
     });
-</script>
-<script src="login.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
+</script -->
+<!-- script src="login.js"></script -->
 <script src="manage_load.js"></script>

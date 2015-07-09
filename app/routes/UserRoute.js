@@ -6,24 +6,36 @@ var User = require("../models/User").User;
 var _ = require("lodash");
 var moment = require("moment");
 
-exports.createUser = function(req, res){
+exports.createUser = function(req, res, callback){
 
     console.log('Create User Started:'+JSON.stringify(req.body.user));
     var jsonObj = req.body.user;
     //var user = req.session.user_profile;
 
     if(typeof jsonObj == "undefined" || jsonObj == null){
+        /*callback(req, res, {
+            status: false,
+            statusMsg: "Empty User details passed"
+        });*/
         return res.json(500, {statusMsg : "Empty User details passed"});
     }
 
     User.findOne({username : jsonObj.username}, function (err, user) {
         if(err){
+            /*callback(req, res, {
+                status: false,
+                statusMsg: 'User registration failed - '+err
+            });*/
             return res.json(500, {statusMsg:'User registration failed - '+err});
         }
         if(!user){
             saveUser();
         }else{
             console.log("User already exists and force fail registration: "+JSON.stringify(user));
+            /*callback(req, res, {
+                status: false,
+                statusMsg: 'Username already exists'
+            });*/
             return res.json(500, {statusMsg:'Username already exists'});
         }
     });
@@ -32,6 +44,10 @@ exports.createUser = function(req, res){
 
         if(typeof jsonObj.mapLocation == "undefined" || jsonObj.mapLocation == null
             || jsonObj.mapLocation.place == "" || jsonObj.mapLocation.state == "" || jsonObj.mapLocation.country == "" ){
+            /*callback(req, res, {
+                status: false,
+                statusMsg: "Location is not valid. Please correct"
+            });*/
             return res.json(500, {statusMsg : "Location is not valid. Please correct"});
         }
 
@@ -69,9 +85,19 @@ exports.createUser = function(req, res){
     function subSaveUser(err1){
         if(err1){
             console.log('USer save failed - '+err1);
-            res.json(500, {statusMsg:'User save failed - '+err1});
+            /*callback(req, res, {
+                status: false,
+                statusMsg: 'User save failed - '+err1
+            });*/
+            return res.json(500, {statusMsg:'User save failed - '+err1});
         }else{
-            res.json(200, {statusMsg:'User save Success'});
+            //res.json(200, {statusMsg:'User save Success'});
+            /*callback(req, res, {
+                status: true
+            });*/
+            req.session.registered = true;
+            res.redirect("/TransEarth");
+            //res.json(200, {statusMsg:'User save Success'});
         }
     }
 };
@@ -83,17 +109,21 @@ exports.findUser = function(req, res){
     //var user = req.session.user_profile;
 
     if(typeof jsonObj == "undefined" || jsonObj == null){
+        res.success = false;
         return res.json(500, {statusMsg : "Empty User details passed"});
     }
 
     User.findOne({username : jsonObj.username}, function (err, user) {
         if(err){
-            return res.json(500, {statusMsg:'Chekcing User existence failed - '+err});
+            res.success = false;
+            return res.json(500, {statusMsg:'Checking User existence failed - '+err});
         }
         if(!user){
-            saveUser();
+            res.success = true;
+            res.json(200, {statusMsg:'Username does not exists'});
         }else{
             console.log("User already exists and force fail registration: "+JSON.stringify(user));
+            res.success = false;
             return res.json(500, {statusMsg:'Username already exists'});
         }
     });

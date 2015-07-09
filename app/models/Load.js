@@ -56,6 +56,10 @@ var loadSchema = new Schema({
         contact : { type: Number, trim : true}
     },
     load : {
+        "schedule" : { type: String, required: true, trim : true},
+        date : {type: Date, trim: true},
+        "start_date" : {type: Date, trim: true},
+        "end_date" : {type: Date, trim: true},
         quantity : {type: Number, required: true, trim: true},
         unit : {type: String, required: true, trim: true},
         material :{

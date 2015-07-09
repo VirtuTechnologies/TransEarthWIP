@@ -603,6 +603,10 @@ exports.addLoad = function(req, res){
             contact : input.company.contact
         },*/
         load : {
+            schedule : input.load.schedule.frequency,
+            date : input.load.end_date,
+            start_date : input.load.start_date,
+            end_date : input.load.end_date,
             quantity : input.load.quantity,
             unit : "Tons",
             material :{
@@ -615,7 +619,7 @@ exports.addLoad = function(req, res){
             },
             status : "OPEN",
             pickup : {
-                date : input.load.pickup.date,
+                date : input.load.end_date,
                 //address_same_as_owner : input.load.pickup.address_same_as_owner,
                 address : {
                     line1 : input.load.pickup.address.line1,
@@ -796,6 +800,10 @@ exports.editLoad = function(req, res){
                         contact : input.company.contact
                     },*/
                     load : {
+                        schedule : input.load.schedule.frequency,
+                        date : input.load.end_date,
+                        start_date : input.load.start_date,
+                        end_date : input.load.end_date,
                         quantity : input.load.quantity,
                         unit : "Tons",
                         material :{
@@ -808,7 +816,7 @@ exports.editLoad = function(req, res){
                         },
                         status : "OPEN",
                         pickup : {
-                            date : input.load.pickup.date,
+                            date : input.load.end_date,
                             //address_same_as_owner : input.load.pickup.address_same_as_owner,
                             address : {
                                 line1 : input.load.pickup.address.line1,
@@ -816,7 +824,8 @@ exports.editLoad = function(req, res){
                                 city : input.load.pickup.address.mapLocation.place,
                                 state : input.load.pickup.address.mapLocation.state,
                                 country : input.load.pickup.address.mapLocation.country,
-                                pincode : input.load.pickup.address.pincode
+                                pincode : (input.load.pickup.address.pincode != "undefined" && input.load.pickup.address.pincode != null)
+                                    ? input.load.pickup.address.pincode : null
                             },
                             contact : input.load.pickup.contact,
                             alt_address : {
@@ -826,7 +835,8 @@ exports.editLoad = function(req, res){
                                 city : input.load.pickup.address.mapLocation.place,
                                 state : input.load.pickup.address.mapLocation.state,
                                 country : input.load.pickup.address.mapLocation.country,
-                                pincode : input.load.pickup.address.pincode
+                                pincode : (input.load.pickup.address.pincode != "undefined" && input.load.pickup.address.pincode != null)
+                                                ? input.load.pickup.address.pincode : null
                             }
                         },
                         delivery : {
@@ -839,7 +849,8 @@ exports.editLoad = function(req, res){
                                 city : input.load.delivery.address.mapLocation.place,
                                 state : input.load.delivery.address.mapLocation.state,
                                 country : input.load.delivery.address.mapLocation.country,
-                                pincode : input.load.delivery.address.pincode
+                                pincode : (input.load.delivery.address.pincode != "undefined" && input.load.delivery.address.pincode != null)
+                                    ? input.load.delivery.address.pincode : null
                             },
                             contact : input.load.delivery.contact,
                             alt_address : {
@@ -849,7 +860,8 @@ exports.editLoad = function(req, res){
                                 city : input.load.delivery.address.mapLocation.place,
                                 state : input.load.delivery.address.mapLocation.state,
                                 country : input.load.delivery.address.mapLocation.country,
-                                pincode : input.load.delivery.address.pincode
+                                pincode : (input.load.delivery.address.pincode != "undefined" && input.load.delivery.address.pincode != null)
+                                    ? input.load.delivery.address.pincode : null
                             }
                         }
                     },

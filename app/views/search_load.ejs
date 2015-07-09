@@ -24,7 +24,7 @@
 			</div>
 			<div class="location">
 				<label>Date</label>
-				<input class="custom-dp" type="text" ng-required="true" placeholder="Available Date" name="daterange"
+				<input class="custom-dp" type="text" placeholder="Available Date" name="daterange"
 					   ui-date-format="yy-mm-dd" ng-model="loadPostList.filter.dt" ui-date="loadPostList.filter.dateRangeOptions"
 					   ng-class="{ 'has-error' : searchLoadForm.daterange.$invalid,
 										'has-success' : !(searchLoadForm.daterange.$invalid),
@@ -88,7 +88,10 @@
 						{{post.pickupDate}}
 					</td>
 					<td>
-                        <button style="background:none; color:white;"><img src="images/view.png" class="view-action" alt="" />View</button>
+						<!-- img src="images/view.png" class="view-action" alt=""
+                             ng-click="viewLoad(post.load_id)"/>View -->
+                        <button style="background:none; color:white;"><img src="images/view.png" class="view-action" alt=""
+                                                                           ng-click="viewLoad(post.load_id)"/>View</button>
 					</td>
 				</tr>
 				</tbody>

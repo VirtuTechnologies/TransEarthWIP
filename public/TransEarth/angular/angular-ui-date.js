@@ -32,7 +32,6 @@ angular.module('ui.date', [])
                   isDate = angular.isDate(controller.$modelValue),
                   preserve = {};
 
-              //console.log("Options for UI Date view value: "+controller.$modelValue);
               if (isDate) {
 
                 angular.forEach(keys, function(key) {
@@ -46,7 +45,7 @@ angular.module('ui.date', [])
                   controller.$viewValue['set' + key](preserve[key]);
                 });
               }
-
+              console.log("Options for UI Date view value: "+controller.$modelValue);
               console.log("Options for UI Date value: "+JSON.stringify(preserve));
             }
 
@@ -88,7 +87,7 @@ angular.module('ui.date', [])
               // Update the date picker when the model changes
               controller.$render = function () {
                 var date = controller.$modelValue;
-                console.log("Controller render: "+date);
+                //console.log("Controller render: "+date);
                 if ( angular.isDefined(date) && date !== null && !angular.isDate(date) ) {
                   if ( angular.isString(controller.$modelValue) ) {
                     date = uiDateConverter.stringToDate(attrs.uiDateFormat, controller.$modelValue);
@@ -144,8 +143,10 @@ angular.module('ui.date', [])
       function stringToDate(dateFormat, value) {
         dateFormat = dateFormat || uiDateFormatConfig;
         if ( angular.isString(value) ) {
+            console.log("String to Date convert for "+value);
           if (dateFormat) {
-            return jQuery.datepicker.parseDate(dateFormat, value);
+            //return jQuery.datepicker.parseDate(dateFormat, value);
+              return new Date(value);
           }
 
           var isoDate = new Date(value);

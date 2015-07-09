@@ -9,7 +9,7 @@ var succesAlert = function (message, id) {
 
     items.push('<strong>Success!</strong> ' + message);
     items.push('</div>');
-    console.log(items.join(''));
+    //console.log(items.join(''));
     $('#'+id).html (items.join(''));
 };
 

@@ -228,7 +228,7 @@ function loadListCtrl($scope, $http, $location, $modal, UserRequest) {
     };
     $scope.getMaterials();
 
-    $scope.loadDetails = {};
+    /*$scope.loadDetails = {};
     $scope.loadInfo = {};
     $scope.loadDetails.open = function (size) {
         var modalInstance = $modal.open({
@@ -300,6 +300,6 @@ function loadListCtrl($scope, $http, $location, $modal, UserRequest) {
                     succesError(err.statusMsg, 'myLoadList_alert');
                 });
         }
-    };
+    };*/
     //$location.url('/TransEarth/forms');
 }

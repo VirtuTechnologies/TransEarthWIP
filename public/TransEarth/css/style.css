@@ -144,12 +144,12 @@ textarea{
     border-bottom: 2px solid #0074D2;
     padding: 4px;
 }
-/*.has-error {
+.has-error {
     border:1px solid red;
 }
 .has-success {
     border:1px solid green;
-}*/
+}
 .line-error {
     color: red;
 }
@@ -331,9 +331,9 @@ header {
     line-height: 28px;
     margin-bottom: 30px;
 }
-.step2, .step3 {
+/*.step2, .step3 {
     display:none;
-}
+}*/
 .closediv {
     float:right;
     position:absolute;
@@ -534,6 +534,17 @@ header {
     height:55px;
     padding:10px;
     float:left;
+}
+.runtime-icon button {
+    outline: none;
+    background-color: transparent;
+    border: none;
+    float: left;
+    height: 45px;
+    margin: 17px 3px;
+    font-size: 11px;
+    width: 32px;
+    color: #f5f5f5;
 }
 .runtime-options {
     float:right;
@@ -1065,7 +1076,7 @@ header {
     color: white;
 }
 
-@media screen and (max-width:1280px) {
+@media screen and (max-width:1270px) {
     body {
     width: 1280px;
     overflow:scroll;
