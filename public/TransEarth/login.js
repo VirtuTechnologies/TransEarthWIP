@@ -126,6 +126,25 @@ function loginCtrl($scope, $http, $location, $anchorScroll, UserRequest) {
         $scope.register = {};
     };
 
+    $scope.showStep1 = true;
+    $scope.styleStep1 = {
+        'background' : "url('images/current.png')",
+        'background-size' : "cover",
+        'color' : "#000000"
+    };
+    $scope.showStep = function(stepId){
+        $scope.showStep1 = false;
+        $scope.showStep2 = false;
+        $scope.showStep3 = false;
+        $scope["showStep"+stepId] = true;
+        $scope["styleStep"+stepId] = {
+            'background' : "url('images/current.png')",
+            'background-size' : "cover",
+            'color' : "#000000"
+        };
+        //console.log("$scope[showStep"+stepId+"] = "+$scope["showStep"+stepId]);
+    };
+
     $scope.submitForm = function () {
 
         // Set the 'submitted' flag to true
