@@ -6,6 +6,7 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
         $scope.getMaterials();
     } ;
 
+    $scope.minDate = new Date((new Date()).getFullYear(), (new Date()).getMonth(), (new Date()).getDate());
     clearAlert("manage_load_alert");
     $scope.chooseOne = "Choose One";
     $scope.blanks = "";
@@ -17,13 +18,47 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
         $scope.page.template = "/TransEarth/load_owner_home";
         $scope.page.scope = "Load Owner Home";
     };
-
+    $scope.showLoadDetails = false;
+    $scope.trackDays= function(){
+        //console.log("Tracking Days for frequency "+$scope.truckToPost.post.schedule.frequency);
+        if(typeof $scope.load.load.schedule.frequency != "undefined" && $scope.load.load.schedule.frequency != null){
+            if($scope.load.load.schedule.frequency == "Weekly"){
+                $scope.dateRange = 7;
+                $scope.showLoadDetails = true;
+            }else if($scope.load.load.schedule.frequency == "Monthly"){
+                $scope.monthRange = 1;
+                $scope.showLoadDetails = true;
+            }else if($scope.load.load.schedule.frequency == "Daily"){
+                $scope.showLoadDetails = true;
+            }else if($scope.load.load.schedule.frequency == "One Time"){
+                $scope.showLoadDetails = true;
+            }else{
+                $scope.showLoadDetails = false;
+            }
+        }
+    };
+    $scope.showPickupSection = function(){
+        var returnValue = false;
+        if(typeof $scope.load.load != "undefined" && $scope.load.load != null && typeof $scope.load.load.schedule != "undefined" && $scope.load.load.schedule != null
+            && typeof $scope.load.load.schedule.frequency != "undefined" && $scope.load.load.schedule.frequency != null && $scope.load.load.schedule.frequency=='One Time'){
+            if(typeof $scope.load.load.end_date != "undefined" && $scope.load.load.end_date != null){
+                returnValue = true;
+            }
+        }else{
+            if(typeof $scope.load.load != "undefined" && $scope.load.load != null
+                && typeof $scope.load.load.start_date != "undefined" && $scope.load.load.start_date != null
+                && typeof $scope.load.load.end_date != "undefined" && $scope.load.load.end_date != null){
+                returnValue = true;
+            }
+        }
+        return returnValue;
+    };
     $scope.getMaterials = function(){
         $http.get("/TransEarth/getMaterialTypes")
             .success(function(data) {
                 $scope.materialTypeList = data;
                 //console.log("Materials looked up:"+JSON.stringify($scope.materialTypeList));
-                var options = '';
+                /*var options = '';
                 options += '<option data-hidden="true">'+$scope.chooseOne+'</option>';
                 $.each(data, function (i, row) {
                     //console.log(JSON.stringify(row));
@@ -37,7 +72,7 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
                     //$('#materialType').selectpicker('val', $scope.load.load.material.type);
                     $('#materialType').val($scope.load.load.material.type);
                     $('#materialType').selectpicker('refresh');
-                }
+                }*/
                 //console.log("Materials assigned: "+$scope.load.load.material.type);
                 //$('#materialType').selectpicker('refresh');
             }).error(function(err) {
@@ -50,7 +85,7 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
             .success(function(data) {
                 //console.log("Truck Types looked up:"+JSON.stringify(data));
                 $scope.truckTypeList = data;
-                var options = '';
+                /*var options = '';
                 options += '<option data-hidden="true">'+$scope.chooseOne+'</option>';
                 $.each(data, function (i, row) {
                     //console.log(JSON.stringify(row));
@@ -64,7 +99,7 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
                     //$('#truckType').selectpicker('val', $scope.load.load.preferredTruck.type);
                     $('#truckType').val($scope.load.load.preferredTruck.type);
                     $('#truckType').selectpicker('refresh');
-                }
+                }*/
             }).error(function(err) {
                 //console.log("truckType Lookup failed:"+JSON.stringify(err));
             });
@@ -136,9 +171,14 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
         sharedLoad.load.delivery.contact  =
             (typeof sharedLoad.load.delivery.contact != "undefined" && sharedLoad.load.delivery.contact != null) ? sharedLoad.load.delivery.contact.toString() : "";
         sharedLoad.load.quantity  = sharedLoad.load.quantity.toString();
-        $scope.load = sharedLoad;
+        var schedule = sharedLoad.load.schedule;
+        sharedLoad.load.schedule = {};
+        sharedLoad.load.schedule.frequency = schedule;
 
-        //console.log("Shared Load: "+JSON.stringify($scope.load));
+        $scope.load = sharedLoad;
+        $scope.trackDays();
+
+        console.log("Shared Load: "+JSON.stringify($scope.load));
         //$scope.disableAddress = $scope.load.company.address_same_as_owner;
         //$scope.disableContact = $scope.load.company.contact_same_as_owner;
         $scope.loadProcess.indicator.showCompanyDetails = true;
@@ -169,9 +209,14 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
             disable : false
         };
         $scope.load.load = {};
+        $scope.load.load.schedule = {};
+        $scope.load.load.schedule.frequency = "";
         $scope.load.load.material = {};
         $scope.load.load.preferredTruck = {};
         $scope.load.load.pickup = {};
+        $scope.load.load.pickup.date = null;
+        $scope.load.load.start_date = null;
+        $scope.load.load.end_date = null;
         $scope.load.load.pickup.address = {};
         $scope.load.load.pickup.address.mapLocation = {
             place : "",
@@ -196,11 +241,48 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
         $scope.loadProcess.indicator.showOwnerDetails = true;
     }
 
+    $scope.frequency = ["One Time", "Daily", "Weekly", "Monthly"];
+    /*var frequency = ["One Time", "Daily", "Weekly", "Monthly"];
+    var options = '';
+    options += '<option value="">Choose one</option>';
+    $.each(frequency, function (i, row) {
+        //console.log(JSON.stringify(row));
+        if(typeof $scope.load.load.schedule != "undefined"
+            && $scope.load.load.schedule != null
+            && $scope.load.load.schedule.frequency == row){
+            options += '<option selected>' + row + '</option>';
+        }else{
+            options += '<option>' + row + '</option>';
+        }
+    });*/
+
+    $scope.showStep1 = true;
+    $scope.styleStep1 = {
+        'background' : "url('images/current.png')",
+        'background-size' : "cover",
+        'color' : "#000000"
+    };
+    $scope.showStep = function(stepId){
+        $scope.showStep1 = false;
+        $scope.showStep2 = false;
+        $scope.showStep3 = false;
+        $scope["showStep"+stepId] = true;
+        $scope["styleStep"+stepId] = {
+            'background' : "url('images/current.png')",
+            'background-size' : "cover",
+            'color' : "#000000"
+        };
+        //console.log("$scope[showStep"+stepId+"] = "+$scope["showStep"+stepId]);
+    };
+
     $scope.pickup = {};
     $scope.pickup.date = new Date();
-    $scope.pickup.dateOptions = {
-        formatYear: 'yy',
-        startingDay: 1
+    $scope.pickup.dateRangeOptions = {
+        format: 'DD-MMM-YYYY',
+        popup : "dd-MMMM-yyyy",
+        //"is-open" : "pickup.dateRangeOpened",
+        minDate: $scope.minDate
+        //maxDate: $scope.maxDate
     };
     $scope.pickup.opened = false;
     $scope.pickup.open = function($event) {
@@ -212,7 +294,7 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
 
     $scope.delivery = {};
     $scope.delivery.date = new Date();
-    $scope.delivery.dateOptions = {
+    $scope.delivery.dateRangeOptions = {
         formatYear: 'yy',
         startingDay: 1
     };
@@ -641,7 +723,7 @@ function loadManageCtrl($scope, $http, $location, $anchorScroll, UserRequest, Lo
                 });
         }
         else {
-            //alert("Please correct errors!");
+            alert("Please correct errors!");
             $scope.loadProcess.indicator.showAlert = true;
             succesError("Please correct the errors", 'manage_load_alert');
             // set the location.hash to the id of

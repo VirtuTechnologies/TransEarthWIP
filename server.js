@@ -19,6 +19,7 @@ var mongoose = require('mongoose');
 var ejs = require('ejs');
 var passport = require('passport');
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+process.env.TZ="Asia/Calcutta";
 //var authentication = require('./config/authentication');
 var User = require('./app/models/User');
 var config = require('./config/config');
@@ -235,6 +236,7 @@ function clearSession(req){
         req.session.user_profile = null;
         req.session.auth = null;
         req.session.invalid = null;
+        req.session.registered = null;
     }
 }
 
@@ -302,6 +304,12 @@ app.get('/TransEarth', function (req, res) {
         console.log("User Session invalid: "+req.session.invalid);
         local.session.validity = false;
         req.session.validity = null;
+    }
+    if(typeof req.session.registered != "undefined" && req.session.registered != null && req.session.registered){
+        //console.log("Login failed and including login template: "+JSON.stringify(req.session.auth));
+        local.session.registrationSuccess = true;
+        local.session.registrationMessage = "User Registered Successfully";
+        req.session.registered = null;
     }
     console.log("Rendering Index Home session details: "+JSON.stringify(local));
     res.render('index', local);
@@ -381,7 +389,12 @@ app.get('/TransEarth/add_trucks', ensureAuthenticated, function (req, res) {
     res.render('add_trucks');
 });
 
-app.post("/TransEarth/createUser", UserRoute.createUser);
+app.post("/TransEarth/createUser", function (req, res) {
+    console.log("Create User");
+    //res.session.registered = false;
+    UserRoute.createUser(req, res);
+    //res.render('add_trucks');
+});
 
 app.post("/TransEarth/getTruckPostingsSummary", TruckRoute.getTruckPostSummary);
 app.post("/TransEarth/getLoadPostingsSummary", LoadRoute.getLoadListSummary);

@@ -19,6 +19,7 @@ TransEarthApp.factory('redirectInterceptor', function($q,$location,$window){
             //console.log("Response Interceptor!!"+JSON.stringify(response));
             if (typeof response.data === 'string' && response.data.indexOf("LOGIN")>-1) {
                 console.log("LOGIN Redirect!!");
+                alert("Session Expired or Not logged in yet. Please login");
                 //console.log(response.data);
                 $window.location.href = "/";
                 return $q.reject(response);
@@ -1042,7 +1043,7 @@ function coreController($scope, $rootScope, $http, $location, $modal, UserReques
     };
 
     $scope.$watch('local', function(){
-        //console.log("Core ng-init local: "+$scope.local);
+        console.log("Core ng-init local: "+$scope.local);
         $scope.loginRedirect = false;
         $scope.ifSessionInvalid = false;
         if(typeof $scope.local != "undefined" && $scope.local != null){
@@ -1080,6 +1081,14 @@ function coreController($scope, $rootScope, $http, $location, $modal, UserReques
                 $scope.loginClicked();
                 //$scope.$apply();
                 //window.location.reload(true);
+            }
+            if(typeof $scope.session != "undefined" && $scope.session != null && $scope.session.registrationSuccess){
+                console.log("Redirecting to Login: "+JSON.stringify($scope.session));
+                $scope.serverAuth.authFailed = false;
+                $scope.serverAuth.messageAvailable = true;
+                $scope.serverAuth.message = "User Registered Successfully. Please login.";
+                $scope.core.menuInitLoad();
+                $scope.loginClicked();
             }
         }
         //console.log("$scope.loginRedirect: "+$scope.loginRedirect);
@@ -1296,42 +1305,46 @@ function coreController($scope, $rootScope, $http, $location, $modal, UserReques
     $scope.getTruckPostDetailById = function(truckId, postId){
         //console.log("Get truck post details: "+truckId);
 
-        $http.post("/TransEarth/getTruckPostDetailById", {truckId : truckId, postId : postId})
-            .success(function(data) {
-                // succesAlert(data.statusMsg, 'eaiSaveStatus');
-                //console.log(data);
-                if(typeof data != 'undefined' && data != null && data.length > 0){
-                    //console.log(JSON.stringify(data));
-                    var post = data[0];
-                    if(typeof post.posts != "undefined" && post.posts != null
-                        && typeof post.posts.truck_post != "undefined" && post.posts.truck_post != null
-                        && typeof post.posts.truck_post.availability != "undefined" && post.posts.truck_post.availability != null
-                        && typeof post.posts.truck_post.availability.start_date != "undefined" && post.posts.truck_post.availability.start_date != null){
-                        post.posts.truck_post.availability.start_date = moment(post.posts.truck_post.availability.start_date).format("Do MMM YYYY");
+        if(!$scope.core.loggedIn){
+            alert("Should login to view details");
+        }else{
+            $http.post("/TransEarth/getTruckPostDetailById", {truckId : truckId, postId : postId})
+                .success(function(data) {
+                    // succesAlert(data.statusMsg, 'eaiSaveStatus');
+                    //console.log(data);
+                    if(typeof data != 'undefined' && data != null && data.length > 0){
+                        //console.log(JSON.stringify(data));
+                        var post = data[0];
+                        if(typeof post.posts != "undefined" && post.posts != null
+                            && typeof post.posts.truck_post != "undefined" && post.posts.truck_post != null
+                            && typeof post.posts.truck_post.availability != "undefined" && post.posts.truck_post.availability != null
+                            && typeof post.posts.truck_post.availability.start_date != "undefined" && post.posts.truck_post.availability.start_date != null){
+                            post.posts.truck_post.availability.start_date = moment(post.posts.truck_post.availability.start_date).format("Do MMM YYYY");
+                        }
+                        if(typeof post.posts != "undefined" && post.posts != null
+                            && typeof post.posts.truck_post != "undefined" && post.posts.truck_post != null
+                            && typeof post.posts.truck_post.availability != "undefined" && post.posts.truck_post.availability != null
+                            && typeof post.posts.truck_post.availability.end_date != "undefined" && post.posts.truck_post.availability.end_date != null){
+                            post.posts.truck_post.availability.end_date = moment(post.posts.truck_post.availability.end_date).format("Do MMM YYYY");
+                        }
+                        $scope.truckPostDetails.post = post;
+                        //TruckRequest.setSharedTruck(data);
+                        //console.log("Get Shared Truck Request: "+JSON.stringify(TruckRequest.getSharedTruck()));
+                        $scope.truckPostDetails.open('sm');
+                    }else{
+                        //$scope.myTruckList.messageAvailable = true;
+                        //$scope.truckOwnerPage.showAlert = true;
+                        //succesError("Truck Details Not available", 'myTrucklist_alert');
+                        alert("No Post Detail Available");
                     }
-                    if(typeof post.posts != "undefined" && post.posts != null
-                        && typeof post.posts.truck_post != "undefined" && post.posts.truck_post != null
-                        && typeof post.posts.truck_post.availability != "undefined" && post.posts.truck_post.availability != null
-                        && typeof post.posts.truck_post.availability.end_date != "undefined" && post.posts.truck_post.availability.end_date != null){
-                        post.posts.truck_post.availability.end_date = moment(post.posts.truck_post.availability.end_date).format("Do MMM YYYY");
-                    }
-                    $scope.truckPostDetails.post = post;
-                    //TruckRequest.setSharedTruck(data);
-                    //console.log("Get Shared Truck Request: "+JSON.stringify(TruckRequest.getSharedTruck()));
-                    $scope.truckPostDetails.open('sm');
-                }else{
+                }).error(function(err) {
+                    //$scope.myTruckList.listShow = false;
                     //$scope.myTruckList.messageAvailable = true;
                     //$scope.truckOwnerPage.showAlert = true;
-                    //succesError("Truck Details Not available", 'myTrucklist_alert');
-                    alert("No Post Detail Available");
-                }
-            }).error(function(err) {
-                //$scope.myTruckList.listShow = false;
-                //$scope.myTruckList.messageAvailable = true;
-                //$scope.truckOwnerPage.showAlert = true;
-                //succesError(err.statusMsg, 'myTrucklist_alert');
-                alert("Please Login");
-            });
+                    //succesError(err.statusMsg, 'myTrucklist_alert');
+                    alert("Please Login");
+                });
+        }
     };
 
     $scope.loadPostDetails = {};
@@ -1380,29 +1393,33 @@ function coreController($scope, $rootScope, $http, $location, $modal, UserReques
 
     $scope.viewLoad = function(loadId){
 
-        //console.log("Get load post details: "+loadId);
-        $http.post("/TransEarth/getLoadById", {loadId : loadId})
-            .success(function(data) {
-                // succesAlert(data.statusMsg, 'eaiSaveStatus');
-                if(typeof data != 'undefined' && data != null){
-                    //console.log(JSON.stringify(data));
-                    $scope.loadPostDetails.post = data;
-                    //TruckRequest.setSharedTruck(data);
-                    //console.log("Get Shared Truck Request: "+JSON.stringify(TruckRequest.getSharedTruck()));
-                    $scope.loadPostDetails.open('sm');
-                }else{
+        console.log("Get load post details: "+loadId);
+        if(!$scope.core.loggedIn){
+            alert("Should login to view details");
+        }else{
+            $http.post("/TransEarth/getLoadById", {loadId : loadId})
+                .success(function(data) {
+                    // succesAlert(data.statusMsg, 'eaiSaveStatus');
+                    if(typeof data != 'undefined' && data != null){
+                        //console.log(JSON.stringify(data));
+                        $scope.loadPostDetails.post = data;
+                        //TruckRequest.setSharedTruck(data);
+                        //console.log("Get Shared Truck Request: "+JSON.stringify(TruckRequest.getSharedTruck()));
+                        $scope.loadPostDetails.open('sm');
+                    }else{
+                        //$scope.loadPostList.messageAvailable = true;
+                        //$scope.loadPostList.message = "No data available";
+                        //succesWarning("Load details not found", 'loadlist_alert');
+                        alert("No Data Available");
+                        //console.log("No data available");
+                    }
+                }).error(function(err) {
                     //$scope.loadPostList.messageAvailable = true;
                     //$scope.loadPostList.message = "No data available";
-                    //succesWarning("Load details not found", 'loadlist_alert');
-                    alert("No Data Available");
-                    //console.log("No data available");
-                }
-            }).error(function(err) {
-                //$scope.loadPostList.messageAvailable = true;
-                //$scope.loadPostList.message = "No data available";
-                //succesError(err.statusMsg, 'myLoadList_alert');
-                alert(err.statusMsg);
-            });
+                    //succesError(err.statusMsg, 'myLoadList_alert');
+                    alert(err.statusMsg);
+                });
+        }
     };
 
     //$scope.$route = $route;

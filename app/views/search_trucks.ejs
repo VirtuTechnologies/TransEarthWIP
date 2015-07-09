@@ -28,7 +28,7 @@
 			</div>
 			<div class="location">
 				<label>Date</label>
-				<input class="custom-dp" type="text" ng-required="true" placeholder="Available Date" name="daterange"
+				<input class="custom-dp" type="text" placeholder="Available Date" name="daterange"
 					   ui-date-format="yy-mm-dd" ng-model="truckPostList.filter.dt" ui-date="truckPostList.filter.dateRangeOptions"
 					   ng-class="{ 'has-error' : searchTruckForm.daterange.$invalid,
 										'has-success' : !(searchTruckForm.daterange.$invalid),
@@ -86,7 +86,11 @@
 						{{post.availableDate}}
 					</td>
 					<td>
-						<button style="background:none; color:white;" ng-click="getTruckPostDetailById(post.truck_id, post.post_id)"><img src="images/view.png" class="view-action" alt=""/>View</button>
+						<!-- img src="images/view.png" class="view-action" alt=""
+								ng-click="getTruckPostDetailById(post.truck_id, post.post_id)"/>View -->
+                        <button style="background:none; color:white;" ng-click="getTruckPostDetailById(post.truck_id, post.post_id)">
+                            <img src="images/view.png" class="view-action" alt=""/>View
+                        </button>
 					</td>
 				</tr>
 				</tbody>
