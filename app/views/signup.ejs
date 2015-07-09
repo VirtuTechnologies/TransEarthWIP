@@ -2,14 +2,18 @@
     <div id="signup_alert"></div>
     <div class="signuppanel" >
         <ul class="signup-head">
-            <li><img id="panel-logo" style="margin-left:21px; margin-top: 15px;" src="images/logo1.png" alt="" /></li>
-            <li><p class="steps" style="background : url('images/current.png');background-size : cover;color : #000000;">1</p>
-                <p class="steps step-note2">2</p>
-                <p class="steps step-note3">3</p></li>
+            <li>
+                <img id="panel-logo" style="margin-left:21px; margin-top: 15px;" src="images/logo1.png" alt="" />
+            </li>
+            <li>
+                <p class="steps" ng-style="styleStep1">1</p>
+                <p class="steps" ng-style="styleStep2">2</p>
+                <p class="steps" ng-style="styleStep3">3</p>
+            </li>
         </ul>
     <form name="userForm" ng-submit="submitForm()" novalidate>
         <div class="signup-list">
-            <ul class="step1 scroll-alignment">
+            <ul ng-show="showStep1" class="step1 scroll-alignment">
                 <li>
                     <div class="input-group" id="user_role">
                         <label for="user_type">User Type</label>
@@ -38,9 +42,9 @@
                     <!-- pre>{{userForm.user_type.$valid}}</pre -->
                     <!-- a class="btn btn-primary btn-sm pull-right next" href="#" ng-disabled="!register.showAccountDetails">Continue</a -->
                 </li>
-                <li><button style="background:#006FD7; float:right;"ng-disabled="userForm.user_type.$invalid" class="buttons next-btn">Next</button></li>
+                <li><button style="background:#006FD7; float:right;"ng-disabled="userForm.user_type.$invalid" class="buttons next-btn" ng-click="showStep(2)">Next</button></li>
             </ul>
-            <ul class="step2 scroll-alignment">
+            <ul ng-show="showStep2" class="step2 scroll-alignment">
                 <li>
                     <div class="input-group">
                         <label for="username">Email ID</label>
@@ -112,10 +116,10 @@
                         Password does not match
                     </div>
                 </li>
-                <li><button style="background:#006FD7; float:left;" class="buttons back-btn">Back</button></li>
-                <li><button style="background:#006FD7; float:right;" ng-disabled="passwordMismatch" class="buttons next-btn">Next</button></li>
+                <li><button style="background:#006FD7; float:left;" class="buttons back-btn" ng-click="showStep(1)">Back</button></li>
+                <li><button style="background:#006FD7; float:right;" ng-disabled="passwordMismatch" class="buttons next-btn" ng-click="showStep(3)">Next</button></li>
             </ul>
-            <ul class="step3 scroll-alignment">
+            <ul ng-show="showStep3" class="step3 scroll-alignment">
                 <li>
                     <div class="input-group">
                         <label for="first_name">First Name</label>
@@ -287,15 +291,15 @@
                          for="contact">Contact Number is mandatory
                     </div>
                 </li>
-                <li><button style="background:#006FD7; float:left;" class="buttons back-btn">Back</button></li>
-                <li><button style="background:#006FD7; float:right; display:none;" class="buttons submit-button" type="submit">Register</button></li>
+                <li><button style="background:#006FD7; float:left;" class="buttons back-btn" ng-click="showStep(2)">Back</button></li>
+                <li><button style="background:#006FD7; float:right;" class="buttons submit-button" ng-show="userForm.$valid" type="submit">Register</button></li>
             </ul>
         </div>
         <label style="color:red; padding-left: 10px; font-size: 13px;" ng-show="userForm.$invalid">*  Please correct the errors to complete registration</label>
     </form>
 </div>
     </div>
-<script>
+<!-- script>
     $('.next-btn, .back-btn').click(function( event ) {
         event.preventDefault();});
 
@@ -333,5 +337,5 @@
             }
         }
     });
-</script>
+</script -->
 <script src="login.js"></script>
