@@ -36,22 +36,11 @@
 				<div class="row">
 					<div class="col-md-6 col-md-offset-1">Do you want to remove this post?</div>
 					<div class="col-md-12 col-md-offset-1">
-						<table class="table">
-							<thead>
-							<tr>
-								<th>Reg No</th>
-								<th>Available Ton</th>
-								<th>Available Date</th>
-							</tr>
-							</thead>
-							<tbody>
-							<tr>
-								<td>{{truckPostToInactivate.reg_no}}</td>
-								<td>{{truckPostToInactivate.available_ton}}</td>
-								<td>{{truckPostToInactivate.available_date}}</td>
-							</tr>
-							</tbody>
-						</table>
+						<ul class="delete-post">
+								<li><b>Reg no.:</b>  {{truckPostToInactivate.reg_no}}</li>
+								<li><b>Available tons:</b>  {{truckPostToInactivate.available_ton}}</li>
+								<li><b>Available date:</b>  {{truckPostToInactivate.available_date}}</li>
+					</ul>
 					</div>
 				</div>
 			</div>
