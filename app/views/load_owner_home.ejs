@@ -19,11 +19,7 @@
                 <ul ng-show="myLoadList.listShow" ng-repeat="load in myLoadList.list  | filter:myLoadList.myLoads_filter"
                     class="runtime-load-div slide-right">
                     <!-- img class="runtime-icon" src="images/load.png" alt="" / -->
-                    <li class="runtime-icon">
-                        <button ng-click="editLoad(load.load_id)"><img class="edit-icon" src="images/edit-w.png" alt="" />Edit</button>
-                        <button ng-click="removeLoad(load.load_id, load.source, load.destination, load.load, load.material, load.pickupDate)"><img class="edit-icon" src="images/delete-w.png" alt="" />Delete</button>
-                        <button ng-click="viewLoad(load.load_id)"><img class="view-action" src="images/view.png" alt="" />View</button>
-                    </li>
+
                     <!-- li class="runtime-icon">
                         <b>
                             <a href="#" ng-click="getTruckDetails(truck.truck_id)">
@@ -37,6 +33,11 @@
                     <li class="runtime-load-details"><b style="color:lightgreen">Load:</b> {{load.load}}</li>
                     <li class="runtime-load-details"><b style="color:lightgreen">Material:</b> {{load.materialType}}</li>
                     <li class="runtime-load-details"><b style="color:lightgreen">Pickup:</b> {{load.pickupDate}}</li>
+                    <li class="runtime-load-icon">
+                        <button ng-click="editLoad(load.load_id)"><img class="edit-icon" src="images/edit-w.png" alt="" />Edit</button>
+                        <button ng-click="removeLoad(load.load_id, load.source, load.destination, load.load, load.material, load.pickupDate)"><img class="edit-icon" src="images/delete-w.png" alt="" />Delete</button>
+                        <button ng-click="viewLoad(load.load_id)"><img class="edit-icon" src="images/view-w.png" alt="" />View</button>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -55,26 +56,13 @@
                 <div class="row">
                     <div ng-if="!showClose" class="col-md-6 col-md-offset-1">Do you want to remove this load?</div>
                     <div class="col-md-12 col-md-offset-1">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>From</th>
-                                <th>To</th>
-                                <th>Material</th>
-                                <th>Load</th>
-                                <th>Pickup Date</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>{{loadToInactivate.source}}</td>
-                                <td>{{loadToInactivate.destination}}</td>
-                                <td>{{loadToInactivate.material}}</td>
-                                <td>{{loadToInactivate.load}}</td>
-                                <td>{{loadToInactivate.pickupDate}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <ul class="delete-post">
+                                <li><b>From:</b>  {{loadToInactivate.source}}</li>
+                                <li><b>To:</b>  {{loadToInactivate.destination}}</li>
+                                <li><b>Material type:</b>  {{loadToInactivate.material}}</li>
+                                <li><b>Load:</b>  {{loadToInactivate.load}}</li>
+                                <li><b>Pickup date:</b>  {{loadToInactivate.pickupDate}}</li>
+                         </ul>
                     </div>
                 </div>
             </div>

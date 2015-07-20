@@ -31,6 +31,7 @@ a {
 }
 ::-webkit-scrollbar {
     width: 7px;
+    height:2px;
     border-radius:4px;
     cursor: pointer;
 }
@@ -102,19 +103,14 @@ textarea{
     color:white;
 }
 .modal-display{
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.49);
-    position: fixed;
-    z-index: 500;
-    top: 0;
+
 }
 .modal-dialog {
     background-color: white;
     z-index: 150;
-    position: absolute;
+    position: fixed;
     width: 100%;
-    margin-top: 200px;
+    top: 200px;
     box-shadow: 0 0 41px #242424;
     color: rgb(52, 52, 52);
 }
@@ -321,7 +317,7 @@ header {
 }
 .steps {
     width: 30px;
-    text-align: -webkit-center;
+    text-align: center;
     background: url('../images/next.png') no-repeat;
     background-size: cover;
     font-size: 16px;
@@ -594,15 +590,16 @@ header {
 }
 .runtime-load-div {
     width:auto;
-    height:75px;
+    height:55px;
     margin-bottom: 10px;
+    border-bottom: 1px solid #3886D6;
 }
 .runtime-load-details{
     float:left;
     font-size:14px;
-    padding:2px 25px;
-    margin-top: 27px;
+    padding:10px 10px 0 10px;
     color:#f5f5f5;
+    width:160px;
 }
 .posts-load {
     height:400px;
@@ -615,23 +612,17 @@ header {
     color:#F9FF02;
 }
 .runtime-load-icon {
-    height:55px;
-    padding:10px;
+    height:100%;
+    padding:0 10px;
     float:left;
 }
-.runtime-load-options {
-    /* float:right; */
-    /* width: 125px; */
-    height: 75px;
-    /* margin-top: -63px; */
-}
-.runtime-load-options button {
+.runtime-load-icon button {
     outline: none;
     background-color: transparent;
     border: none;
     float: left;
     height: 45px;
-    margin: 17px 3px;
+    margin:0 3px;
     font-size: 11px;
     width: 32px;
     color: #f5f5f5;
@@ -1075,7 +1066,27 @@ header {
     text-align: center;
     color: white;
 }
-
+.truck-modal{
+    float:left;
+    width:55%;
+    padding-bottom:15px;
+    padding-top: 0;
+}
+.view-truck li{
+    float:none;
+    padding:3px 0;
+}
+.post-detail{
+    float:left;
+    }
+.post-detail li{
+    float:none;
+    padding:3px 0;
+}
+.delete-post li{
+    float:left;
+    padding:2px 2px;
+}
 @media screen and (max-width:1270px) {
     body {
     width: 1280px;
