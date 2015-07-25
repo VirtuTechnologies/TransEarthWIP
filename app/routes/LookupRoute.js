@@ -5,6 +5,7 @@
 var Lookup = require('../models/Lookup').Lookup;
 var _ = require("lodash");
 var moment = require("moment");
+var mongoose = require("mongoose");
 
 exports.getMaterialTypes = function(req,res){
 
