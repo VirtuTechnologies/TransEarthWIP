@@ -49,7 +49,7 @@ app.configure(function(){
     //app.use(express.session({secret: '1234567890QWERTY', cookie: {expires: new Date(Date.now() + 90000), maxAge: 90000}}));
     app.use(express.session({
         secret: '1234567890QWERTY',
-        rolling: true,
+        rolling: true
         //cookie: {maxAge : validSessionDuration}
         //cookie: {maxAge : 0}
     }));
@@ -273,10 +273,11 @@ function isLoggedInMiddleware(req, res, next) {
 }
 //Base URL
 app.get('/', function (req, res) {
-    //console.log("Redirect base URL to Home page");
+    console.log("Redirect base URL to Home page");
     //fs.createReadStream('./logfile.log').pipe(res);
     //clearSession(req);
-    res.redirect('/TransEarth');
+    //res.redirect('/TransEarth');
+    res.render('dummy');
 });
 
 app.get('/TransEarth', function (req, res) {
