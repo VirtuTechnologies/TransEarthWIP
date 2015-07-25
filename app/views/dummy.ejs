@@ -16,7 +16,12 @@ Designed by Pal
         <link rel="stylesheet" type="text/css" href="TransEarth/css/master.css">
     </head>
 
-    <body id="home">
+    <body id="home" ng-app="countApp" ng-controller="countController">
+        <div class="backstretch"
+             style="left: 0px; top: 0px; overflow: hidden; margin: 0px; padding: 0px; height: 900px; width: 1280px; z-index: -999999; position: fixed;">
+            <img src="TransEarth/images/city_dark.jpg"
+                 style="position: absolute; margin: 0px; padding: 0px; border: none; width: 1280px; height: 100%; max-height: none; max-width: none; z-index: -999999; left: 0px; top: -253.154295246038px;">
+        </div>
         <div id="Header">
             <div class="wrapper">
                 <h1><img src="TransEarth/images/logo123.png" alt="loadx" /></h1>
@@ -25,25 +30,11 @@ Designed by Pal
         <div id="Content" class="wrapper">
             <h4 class="intro" style="text-align:center;  font-style: italic;">alpha in progress... </h4>
             <h4 class="intro" style="text-align:center; margin-top:-20px;  font-style: italic;">Please Call: <span style="color:#ffaa00; font-weight:bold;">044-45110115</span> to be a part of it.</h4>
-
-            <div class="countdown styled" style="margin-top:125px;"></div>
-
-            <!-- commented <div id="subscribe">
-                <form action="" method="post" onsubmit="">
-                    <p><input name="" value="Enter your e-mail" type="text" id=""/>
-                    <input type="button" value="Submit"/></p>
-                </form>
-                <div id="socialIcons">
-                    <ul>
-                        <li><a href="" title="Twitter" class="twitterIcon"></a></li>
-                        <li><a href="" title="facebook" class="facebookIcon"></a></li>
-                        <li><a href="" title="linkedIn" class="linkedInIcon"></a></li>
-                        <li><a href="" title="Pintrest" class="pintrestIcon"></a></li>
-                    </ul>
-                </div>
-            </div> -->
-            <!-- <span class="tempBy"><h4>Please Call: 1-809-200-0000</h4></span> -->
-            <!-- <span class="tempBy">Please Call: <a href="http://amtexsystems.com" alt="amtex systems">Amtex Systems</a></span> -->
+            <div ng-if="fetched" class="countdown styled" style="margin-top:125px;">
+                <div> {{trips}} <span>Trips Completed</span></div>
+                <div> {{kms}} <span>KM Travelled</span></div>
+                <div> {{tons}} <span>Tons Moved</span></div>
+            </div>
         </div>
 
         <div id="overlay"></div>
@@ -52,7 +43,44 @@ Designed by Pal
         <script type="text/javascript" src="TransEarth/scripts/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="TransEarth/scripts/fullscreenbg.js"></script>
         <script type="text/javascript" src="TransEarth/scripts/jquery.countdown.js"></script>
-        <script type="text/javascript" src="TransEarth/scripts/master.js"></script>
+        <!-- script type="text/javascript" src="TransEarth/scripts/master.js"></script -->
+        <script type="text/javascript" src="TransEarth/angular/angular.min.js"></script>
+        <script type="text/javascript" src="TransEarth/scripts/alert.js"></script>
+        <script language="JavaScript">
+
+            var countApp = angular.module('countApp',[]);
+
+            function countController($scope, $window, $http) {
+                //console.log('Count Controller');
+                $scope.trips = 0;
+                $scope.kms = 0;
+                $scope.tons = 0;
+                $scope.fetched = false;
+
+                $scope.countsFetch = function(){
+                    console.log('Fetch Counts');
+                    $http.get("/TransEarth/getCounts")
+                            .success(function(data) {
+                                if(typeof data != 'undefined' && data != null){
+                                    //console.log(JSON.stringify(data));
+                                    $scope.fetched = true;
+                                    $scope.trips = data[0].tripsCompleted;
+                                    $scope.kms = data[0].kmsTravelled;
+                                    $scope.tons = data[0].tonsMoved;
+                                    //console.log($scope.trips+" "+$scope.kms+" "+$scope.tons);
+                                    setTimeout($scope.countsFetch(), 10000);
+                                }
+                            }).error(function(data) {
+                                $scope.trips = 1276;
+                                $scope.kms = 40346;
+                                $scope.tons = 233625;
+                                succesError(data.statusMsg, 'countManageMessage');
+                            });
+                };
+                $scope.countsFetch();
+            }
+
+        </script>
 
     </body>
 </html>

@@ -11,6 +11,7 @@ var TruckRoute = require('./app/routes/TruckRoute');
 var UserRoute = require('./app/routes/UserRoute');
 var LoadRoute = require('./app/routes/LoadRoute');
 var LookupRoute = require('./app/routes/LookupRoute');
+var CountRoute = require('./app/routes/CountRoute');
 
 var http = require('http');
 var https = require('https');
@@ -278,6 +279,20 @@ app.get('/', function (req, res) {
     //clearSession(req);
     //res.redirect('/TransEarth');
     res.render('dummy');
+});
+//UPdate Counts
+app.get('/updateCounts', function (req, res) {
+    console.log("Update Counts Page");
+    //LookupRoute.getCounts(req, res);
+    res.render('updateCount');
+});
+app.get('/TransEarth/getCounts', function (req, res) {
+    console.log("Get Counts Method");
+    CountRoute.getCounts(req, res);
+});
+app.post("/TransEarth/updateCounts", function(req, res){
+    console.log("Update Counts Method");
+    CountRoute.updateCounts(req, res);
 });
 
 app.get('/TransEarth', function (req, res) {

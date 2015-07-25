@@ -1,0 +1,99 @@
+<!--
+Designed by Pal
+-->
+<!DOCTYPE HTML>
+    <!--[if lt IE 7 ]> <html lang="en" class="ie ie6"> <![endif]-->
+    <!--[if IE 7 ]>	<html lang="en" class="ie ie7"> <![endif]-->
+    <!--[if IE 8 ]>	<html lang="en" class="ie ie8"> <![endif]-->
+    <!--[if IE 9 ]>	<html lang="en" class="ie ie9"> <![endif]-->
+    <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>Loadx Counter Updates...</title>
+        <meta name="description" content="Loadx alpha in progress...">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:regular,bold">
+        <link rel="stylesheet" type="text/css" href="TransEarth/css/master.css">
+    </head>
+
+    <body id="home">
+        <div id="Header">
+            <div class="wrapper">
+                <h1><img src="TransEarth/images/logo123.png" alt="loadx" /></h1>
+            </div>
+        </div>
+        <div id="Content" class="wrapper">
+            <div class="app" ng-app>
+                <div ng-controller="countController">
+                    <div id="countManageMessage"></div>
+                    <form name="updateCountsForm">
+                        <label>Trips: <input ng-model="trips" type="number" placeholder="Trips Completed"></label>
+                        <label>KiloMeters: <input ng-model="kms" type="number" placeholder="KiloMeters Travelled"></label>
+                        <label>Tons: <input ng-model="tons" type="number" placeholder="Tons Moved"></label>
+                        <button ng-disabled="trips==undefined||trips==undefined||trips==undefined"
+                                ng-click="countsUpdate()" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="overlay"></div>
+
+        <!--Scripts-->
+        <script type="text/javascript" src="TransEarth/scripts/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="TransEarth/scripts/fullscreenbg.js"></script>
+        <script type="text/javascript" src="TransEarth/scripts/jquery.countdown.js"></script>
+        <script type="text/javascript" src="TransEarth/scripts/master.js"></script>
+        <script type="text/javascript" src="TransEarth/angular/angular.min.js"></script>
+        <script type="text/javascript" src="TransEarth/scripts/alert.js"></script>
+        <script language="JavaScript">
+
+            var countApp = angular.module('countApp',[]);
+
+            function countController($scope, $window, $http) {
+                //alert('Inside loginController'+$.fn.jquery);
+                $scope.trips = 0;
+                $scope.kms = 0;
+                $scope.tons = 0;
+
+                $scope.countsFetch = function(){
+                    $http.get("/TransEarth/getCounts")
+                            .success(function(data) {
+                                if(typeof data != 'undefined' && data != null){
+                                    console.log(JSON.stringify(data));
+                                    $scope.trips = data.trips;
+                                    $scope.kms = data.kms;
+                                    $scope.tons = data.tons;
+                                }
+                            }).error(function(data) {
+                                $scope.trips = 0;
+                                $scope.kms = 0;
+                                $scope.tons = 0;
+                                succesError(data.statusMsg, 'countManageMessage');
+                            });
+                };
+                $scope.countsFetch();
+                $scope.countsUpdate = function(){
+                    $http.post("/TransEarth/updateCounts", {trips: $scope.trips, kms: $scope.kms, tons: $scope.tons})
+                            .success(function(data) {
+                                succesAlert("Counts fetched successfully", 'countManageMessage');
+                                if(typeof data != 'undefined' && data != null){
+                                    console.log(JSON.stringify(data));
+                                    $scope.trips = data.trips;
+                                    $scope.kms = data.kms;
+                                    $scope.tons = data.tons;
+                                    $scope.message = data.message;
+                                    //succesError(data.statusMsg, 'countManageMessage');
+                                }
+                            }).error(function(err) {
+                                $scope.trips = 0;
+                                $scope.kms = 0;
+                                $scope.tons = 0;
+                                succesError(err.statusMsg, 'countManageMessage');
+                            });
+                };
+            }
+
+        </script>
+    </body>
+</html>
